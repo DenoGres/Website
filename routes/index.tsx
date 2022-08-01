@@ -25,13 +25,13 @@ export default function Home() {
       <img
         class={tw`mx-auto`}
         src="/logo.png"
-        height="250px"
-        width="250px"
+        height="500px"
+        width="500px"
         alt="the DenoGres logo: a blue elephant and a purple dinosaur"
       />
       {/* <p class={tw`bg-gray-200 ${false && "rounded"}`}> */}
       <p class={tw`text-2xl text-center`}>
-        Welcome to DenoGres!
+        {/* Welcome to DenoGres! */}
       </p>
     </div>
   );

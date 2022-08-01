@@ -14,12 +14,11 @@ export default function MethodsPage() {
   const box = tw`border rounded shadow-md mx-auto box-content w-[45rem] bg-gray-100 text-black font-mono max-w-screen-md p-4 border-4 ...`;
 
   return (
-    
     <div class={tw`min-h-screen text-white bg-gradient-to-b from-gray-600 to-gray-800`}>
       <NavBar/>
       <DocsNav/>
       <h1 class={h1}>How to use DenoGres Methods</h1><br/>
-      <p class={tw`mx-auto max-w-screen-md`}>
+      <p class={description}>
         <h2 class={h2} id="instance">Instance Methods</h2>
         <br/>
         <h3 class={h3}>save</h3>
