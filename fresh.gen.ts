@@ -2,35 +2,23 @@
 // This file SHOULD be checked into source version control.
 // This file is automatically updated during development when running `dev.ts`.
 
-import * as $0 from "./routes/[name].tsx";
-import * as $1 from "./routes/about.tsx";
-import * as $2 from "./routes/about/contact.tsx";
-import * as $3 from "./routes/api/joke.ts";
-import * as $4 from "./routes/api/random-uuid.ts";
-import * as $5 from "./routes/countdown.tsx";
-import * as $6 from "./routes/docs.tsx";
-import * as $7 from "./routes/docs/methods.tsx";
-import * as $8 from "./routes/greet/[name].tsx";
-import * as $9 from "./routes/index.tsx";
-import * as $$0 from "./islands/Countdown.tsx";
-import * as $$1 from "./islands/Counter.tsx";
+import * as $0 from "./routes/docs/associations.tsx";
+import * as $1 from "./routes/docs/getting-started.tsx";
+import * as $2 from "./routes/docs/methods.tsx";
+import * as $3 from "./routes/index.tsx";
+import * as $$0 from "./islands/DocsNav.tsx";
+import * as $$1 from "./islands/NavBar.tsx";
 
 const manifest = {
   routes: {
-    "./routes/[name].tsx": $0,
-    "./routes/about.tsx": $1,
-    "./routes/about/contact.tsx": $2,
-    "./routes/api/joke.ts": $3,
-    "./routes/api/random-uuid.ts": $4,
-    "./routes/countdown.tsx": $5,
-    "./routes/docs.tsx": $6,
-    "./routes/docs/methods.tsx": $7,
-    "./routes/greet/[name].tsx": $8,
-    "./routes/index.tsx": $9,
+    "./routes/docs/associations.tsx": $0,
+    "./routes/docs/getting-started.tsx": $1,
+    "./routes/docs/methods.tsx": $2,
+    "./routes/index.tsx": $3,
   },
   islands: {
-    "./islands/Countdown.tsx": $$0,
-    "./islands/Counter.tsx": $$1,
+    "./islands/DocsNav.tsx": $$0,
+    "./islands/NavBar.tsx": $$1,
   },
   baseUrl: import.meta.url,
 };
