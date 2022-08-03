@@ -11,12 +11,19 @@ export default function MethodsPage() {
   const h3 = tw`mx-auto max-w-screen-md font-bold text-xl`;
   const comment = tw`text-[#97C2DB]`;
   const description = tw`mx-auto max-w-screen-md`;
-  const box = tw`border rounded shadow-md mx-auto box-content w-[45rem] bg-gray-100 text-black font-mono max-w-screen-md p-4 border-4 ...`;
+  const box = tw`border rounded shadow-md mx-auto box-content bg-gray-100 text-black font-mono max-w-screen-md p-4 border-4 ...`;
 
   return (
     <div class={tw`min-h-screen text-white bg-gradient-to-b from-gray-600 to-gray-800`}>
-      <NavBar/>
-      <DocsNav/>
+    <div class={tw`sticky top-0`}>
+        <NavBar/>
+    </div>
+    <div class={tw`grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5`}>
+      <aside class={tw`self-start sticky top-24 col-span-1`}>
+        <DocsNav/>
+      </aside>
+      <main class={tw`col-span-1 md:col-span-2 lg:col-span-3 xl:col-span-4`}>
+        <br/>
       <h1 class={h1}>How to use DenoGres Methods</h1><br/>
       <p class={description}>
         <h2 class={h2} id="instance">Instance Methods</h2>
@@ -165,6 +172,8 @@ export default function MethodsPage() {
         </div>
         <br/><br/>
       </p>
+      </main>
+    </div>
     </div>
   );
 }

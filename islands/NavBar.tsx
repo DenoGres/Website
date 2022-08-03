@@ -9,8 +9,7 @@ export default function NavBar() {
 
   return (
     <div>
-      {/* <nav class={tw`flex justify-end ... w-full px-r py-5 text-white mb-10 bg-gradient-to-r from-[#B293B6] to-[#97C2DB]`}> */}
-      <nav class={tw`flex justify-end ... w-full px-r py-5 text-white mb-10 bg-gray-800 dark:bg-gray-800`}>
+      <nav class={tw`flex justify-end ... w-full px-r py-5 text-white bg-gray-800 dark:bg-gray-800`}>
         <a class={tw`${button} bg-[#97C2DB]`} href="/">Home</a>
         <a class={tw`${button} bg-[#B293B6]`} href="/docs/getting-started">Docs</a>
         <a class={tw`${button} bg-gray-700`} href="https://github.com/oslabs-beta/DenoGres">GitHub</a>
