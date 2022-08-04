@@ -27,7 +27,7 @@ export default function ModelPage() {
           </p>
           <br />
           <div class={box}>
-            import {'{'} Model {'}'} from https://deno.land/x/denogres/src/class/Model.ts<br />
+            import {'{'} Model {'}'} from 'https://deno.land/x/denogres/mod.ts'<br />
             <br />
             interface User {'{'}<br />
             &nbsp;&nbsp;id:string;<br />

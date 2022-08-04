@@ -64,6 +64,8 @@ export default function AssociationsPage() {
         <br/>
         <p class={description}>2. Forming new relationships (when you want to make changes to your schema)</p><br/>
         <div class={box}>
+          import {'{'} Model {'}'} from 'https://deno.land/x/denogres/mod.ts'<br />
+          <br />
           <p class={comment}>// forming a new relationship between this User and Profile model</p>
           interface User {'{'}<br/>
           &nbsp;&nbsp;id:string;<br/>
@@ -197,6 +199,7 @@ For existing association in the database (e.g. existing foreign key constraints)
         <h3 class={h3}>Forming a new one-to-many association: </h3>
         <p class={description}>- Execute belongsTo method first and execute syncAssociation to make call to the database that will alter existing table schema in your database.</p><br/>
         <div class={box}>
+          import {'{'} Model {'}'} from 'https://deno.land/x/denogres/mod.ts'<br /><br />
           interface User {'{ ... }'}<br/>
           class User extends Model {'{'}<br/>
           &nbsp;&nbsp;static table = 'users';<br/>
@@ -235,8 +238,6 @@ For existing association in the database (e.g. existing foreign key constraints)
         <p class={description}>Unlike other association methods, manyToMany is not a functionality inside the model class, so you need to import to use it. Many-To-Many relationship between two models is through a cross-table (aka. pivot table, through table). 
 For existing Many-To-Many association in the database, you need to specify the model representing the cross-table.</p>
         <div class={box}>
-          import {'{ manyToMany }'} from '../src/class/Model.ts'<br/>
-          <br/>
           await manyToMany(Person, Film, {'{ through: PeopleInFilm }'});<br/>
           <br/>
           const luke = await Person.where('name = Luke Skywalker').queryInstance();<br/>
