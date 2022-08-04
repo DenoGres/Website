@@ -5,15 +5,14 @@ import NavBar from "../../islands/NavBar.tsx";
 import DocsNav from "../../islands/DocsNav.tsx"
 
 export default function GettingStartedPage() {
-  const h1 = tw`mx-auto max-w-screen-md font-bold text-3xl`;
-  const h2 = tw`mx-auto max-w-screen-md font-bold text-1xl`;
+  const h1 = tw`mx-auto max-w-screen-md font-bold text-5xl`;
+  const h2 = tw`mx-auto max-w-screen-md font-bold text-3xl`;
 
   const description = tw`mx-auto max-w-screen-md`;
   const box = tw`border rounded shadow-md mx-auto box-content bg-gray-100 text-black font-mono max-w-screen-md p-4 border-4 ...`;
-  const comment = tw`text-[#97C2DB]`;
 
   return (
-    <div class={tw`text-white min-h-screen bg-gradient-to-b from-gray-600 to-gray-800`}>
+    <div class={tw`text-white min-h-screen min-w-screen bg-gradient-to-b from-gray-600 to-gray-800`}>
     <div class={tw`sticky top-0`}>
         <NavBar/>
     </div>
@@ -23,7 +22,7 @@ export default function GettingStartedPage() {
       </aside>
       <main class={tw`col-span-1 md:col-span-2 lg:col-span-3 xl:col-span-4`}>
         <br/>
-        <p class={tw`font-bold text-5xl text-center`}>Welcome To DenoGres </p>
+        <h1 class={h1}>Welcome To DenoGres</h1>
         <p class={description}>
           <br/>
             To begin, let's download DenoGres! Execute the below in the terminal - 
@@ -39,9 +38,9 @@ export default function GettingStartedPage() {
           <p class={description}>After installation is complete, ensure deno is added to PATH.</p>
           <br/>
           <br/>
-          <p class={tw`text-2xl text-center`}>
+          <h2 class={h2}>
             Using DenoGres
-          </p>
+          </h2>
           <br/>
           <p class={description}>
             Before using DenoGres in a project, run the below. In your 
