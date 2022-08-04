@@ -12,6 +12,7 @@ export default function MethodsPage() {
   const comment = tw`text-[#97C2DB]`;
   const description = tw`mx-auto max-w-screen-md`;
   const box = tw`border rounded shadow-md mx-auto box-content bg-gray-100 text-black font-mono max-w-screen-md p-4 border-4 ...`;
+  const anchor = tw`absolute`;
 
   return (
     <div class={tw`min-h-screen min-w-screen text-white bg-gradient-to-b from-gray-600 to-gray-800`}>
@@ -22,11 +23,13 @@ export default function MethodsPage() {
       <aside class={tw`self-start sticky top-24 col-span-1`}>
         <DocsNav/>
       </aside>
+      <a class={anchor} name="instance"></a>
       <main class={tw`col-span-1 md:col-span-2 lg:col-span-3 xl:col-span-4`}>
         <br/>
       <h1 class={h1}>How to use DenoGres Methods</h1><br/>
       <p class={description}>
-        <h2 class={h2} id="instance">Instance Methods</h2>
+        <br />
+        <h2 class={h2}>Instance Methods</h2>
         <br/>
         <h3 class={h3}>save</h3>
         <p class={description}>Insert created properties on an instance object into the database.</p><br/>
@@ -44,12 +47,12 @@ export default function MethodsPage() {
         <h3 class={h3}>update</h3>
         <p class={description}>Update properties on an instance object in the database.</p><br/>
         <div class={box}>
+        <a class={anchor} name="model"></a>
           person.hair_color = 'blue'; <span class={comment}>// reassign property value</span><br/>
           await person.update(); <span class={comment}>// updates reassigned value in database</span>
         </div>
         <br/><br/>
-
-        <h2 class={h2} id="model"><b>Model Methods</b></h2>
+        <h2 class={h2}>Model Methods</h2>
         <p class={description}>Note: ensure single spaces are entered around comparison operators ( =, {'>, <, >=, <=, <>' } )</p>
         <br/>
         <h3 class={h3}>insert</h3>

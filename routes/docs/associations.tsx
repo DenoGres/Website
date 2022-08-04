@@ -12,6 +12,7 @@ export default function AssociationsPage() {
   const comment = tw`text-[#97C2DB]`;
   const description = tw`mx-auto max-w-screen-md`;
   const box = tw`border rounded shadow-md mx-auto box-content bg-gray-100 text-black font-mono max-w-screen-md p-4 border-4 ...`;
+  const anchor = tw`absolute`;
 
   return (
     <div class={tw`min-h-screen min-w-screen text-white bg-gradient-to-b from-gray-600 to-gray-800`}>
@@ -22,11 +23,13 @@ export default function AssociationsPage() {
       <aside class={tw`self-start sticky top-24 col-span-1`}>
         <DocsNav/>
       </aside>
+      <a class={anchor} name="one-to-one"></a>
       <main class={tw`col-span-1 md:col-span-2 lg:col-span-3 xl:col-span-4`}>
         <br/>
       <h1 class={h1}>Associations</h1><br/>
       <p class={description}>
-        <h2 class={h2} id="one-to-one">One-to-One</h2>
+        <br />
+        <h2 class={h2}>One-to-One</h2>
         <br/>
         <h3 class={h3}>hasOne(B)</h3>
         <p class={description}>- Utilize (or create if not exist) foreign key in model B’s table<br/>
@@ -94,13 +97,13 @@ export default function AssociationsPage() {
         <div class={box}>
         <p class={comment}>// belongsTo method returns out new association instance</p>
           const userProfileAssociation = await Profile.belongsTo(User);<br/>
-        </div>
+        </div><br />
         <p class={description}>At this point, database tables are not synced yet. 
           Invoking syncAssociation() method on newly created association instance will execute table altering query in database.<br/>
           Foreign key will be created in 'profiles' table with the default name of 'user_id'.</p> 
         <div class={box}>
           userProfileAssociation.syncAssociation();<br/>
-        </div>
+        </div><br />
         <p class={description}>This will execute following command to your database:</p>
           <div class={box}>ALTER TABLE profiles ADD user_id UUID;<br/>
           ALTER TABLE profiles ADD CONSTRAINT fk_user_id<br/>
@@ -115,14 +118,16 @@ export default function AssociationsPage() {
           p1.email = 'foo@foo.com';<br/>
           p1.address = 'foo Main St';<br/>
           <br/>
-          await foo.addProfile(p1);</div>
+          await foo.addProfile(p1);</div><br />
           <p class={description}>This will create new record in profiles table and set the foreign key 'user_id' as the user instances id.</p>
           <p class={description}>Alternate flow: for existing profile instance when you're aware of the profile's id</p>
-          <div class={box}>await foo.addProfile({'{ id: 3 }'})</div>
+          <a class={anchor} name="one-to-many"></a>
+          <div class={box}>
+            await foo.addProfile({'{ id: 3 }'})
+          </div>
           <p class={description}>This will update profile table's 'user_id' foreign key field with the user instance's id.</p>
         <br/>
-
-        <h2 class={h2} id="one-to-many"><b>One-to-Many</b></h2>
+        <h2 class={h2}>One-to-Many</h2>
         <p class={description}>One-To-Many association can be formed with 'belongsTo' or 'hasOne' method. 
 For existing association in the database (e.g. existing foreign key constraints), invoking these method will create ‘getter’ method to the model.</p>
         <br/>
@@ -213,19 +218,20 @@ For existing association in the database (e.g. existing foreign key constraints)
         </div>
         <br/>
         <p class={description}>Create belongsTo association first. This will attach 'getTeam()' instance method to the User model.</p>
-        <div class={box}>const userTeamAssociation = await User.belongsTo(Team);</div>
+        <div class={box}>const userTeamAssociation = await User.belongsTo(Team);</div><br />
         <p class={description}>Executing syncAssociation() will make an asynchronous call to the database.</p>
-        <div class={box}>userTeamAssociation.syncAssociation();</div>
+        <div class={box}>userTeamAssociation.syncAssociation();</div><br />
         <p class={description}>This will execute following SQL query on your database:</p>
         <div class={box}>
           ALTER TABLE users ADD team_id INT<br/>
           ALTER TABLE users ADD CONSTRAINT fk_team_id FOREIGN KEY (team_id)<br/>
 		      REFERENCES teams ON DELETE SET NULL ON UPDATE CASCADE
-        </div>
+        </div><br />
+        <a class={anchor} name="many-to-many"></a>
         <p class={description}>Then invoke hasMany() method. This will attach 'getUsers()' instance method to the Team model.</p>
         <div class={box}>await Team.hasMany(User);</div><br/>
 
-        <h2 class={h2} id="many-to-many">Many-to-Many</h2>
+        <h2 class={h2}>Many-to-Many</h2>
         <p class={description}>Unlike other association methods, manyToMany is not a functionality inside the model class, so you need to import to use it. Many-To-Many relationship between two models is through a cross-table (aka. pivot table, through table). 
 For existing Many-To-Many association in the database, you need to specify the model representing the cross-table.</p>
         <div class={box}>
@@ -238,10 +244,9 @@ For existing Many-To-Many association in the database, you need to specify the m
           <br/>
           const newHope = await Film.where('title = A New Hope').queryInstance();<br/>
           const newHopeCharacters = await newHope.getPersons();<br/>
-        </div>
+        </div><br />
         <p class={description}>Getter method name will be by default:<br/>
-          Get + target model's name  + 's' (for plural)</p> 
-        <br/>
+          Get + target model's name  + 's' (for plural)</p>
         <div class={box}>console.log(lukeFilms)<br/>
         [<br/>
         &nbsp;&nbsp;{'{'}<br/>
@@ -266,7 +271,6 @@ For existing Many-To-Many association in the database, you need to specify the m
         ]
         </div>
         <br/>
-        <h3 class={h3}>Forming a new many-to-many association</h3>
       </p>
       </main>
     </div>

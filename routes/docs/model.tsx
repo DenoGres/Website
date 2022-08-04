@@ -6,9 +6,6 @@ import DocsNav from "../../islands/DocsNav.tsx";
 
 export default function ModelPage() {
   const h1 = tw`mx-auto max-w-screen-md font-bold text-3xl`;
-  const h2 = tw`mx-auto max-w-screen-md font-bold text-2xl`;
-  const h3 = tw`mx-auto max-w-screen-md font-bold text-xl`;
-  const comment = tw`text-[#97C2DB]`;
   const description = tw`mx-auto max-w-screen-md`;
   const box = tw`border rounded shadow-md mx-auto box-content bg-gray-100 text-black font-mono max-w-screen-md p-4 border-4 ...`;
 
@@ -30,6 +27,8 @@ export default function ModelPage() {
           </p>
           <br />
           <div class={box}>
+            import {'{'} Model {'}'} from https://deno.land/x/denogres/src/class/Model.ts<br />
+            <br />
             interface User {'{'}<br />
             &nbsp;&nbsp;id:string;<br />
             &nbsp;&nbsp;firstname:string;<br />
@@ -37,6 +36,7 @@ export default function ModelPage() {
             &nbsp;&nbsp;points?: number;<br />
             &nbsp;&nbsp;team_id:number;<br />
             {'}'}<br />
+            <br/>
             class User extends Model {'{'}<br />
             &nbsp;&nbsp;static table = 'users';<br />
             &nbsp;&nbsp;static columns = {'{'}<br />
