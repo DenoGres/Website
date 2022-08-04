@@ -1,38 +1,35 @@
 /** @jsx h */
 import { h, render } from "preact";
 import { apply, setup, tw } from "@twind";
-import { style } from 'twind/style'
-import Counter from "../islands/Counter.tsx";
-import Countdown from "../islands/Countdown.tsx"
-
-// import { setup, tw } from "https://esm.sh/twind@0.16.16";
-import { getStyleTag, virtualSheet } from "https://esm.sh/twind@0.16.16/sheets";
-
-
-const base = style({
-  base: `bg-purple-500 text(white md) font-bold`,
-  variants: {
-    size: {
-      small: `text-sm h-5 px-2`,
-      large: `text-lg h-7 px-5`,
-    },
-  },
-})
+import { style } from "twind/style";
+import NavBar from "../islands/NavBar.tsx";
 
 export default function Home() {
   return (
-    <div class={tw`p-4 mx-auto max-w-screen-md`}>
+    <div class={tw`min-h-screen bg-gradient-to-b from-gray-500 via-gray-800 to-gray-900`}>
+      <div class={tw`sticky top-0`}>
+        <NavBar/>
+      </div>
+      <br/>
       <img
+        class={tw`mx-auto`}
         src="/logo.png"
-        height="200px"
-        width="200px"
+        height="500px"
+        width="500px"
         alt="the DenoGres logo: a blue elephant and a purple dinosaur"
       />
-      <p class={tw`bg-gray-200 ${false && 'rounded'}`}>
-        Welcome to DenoGres! Try update this message in the ./routes/index.tsx
-        file, and refresh.
+      <p class={tw`text-2xl text-center text-white`}>
+        <br/>
+        DenoGres is a new Object-Relationship Mapper (ORM) for the Deno runtime environment!
       </p>
-      <Counter start={3} />
+      <p class={tw` text-center text-white mx-auto max-w-screen-md`}>
+        <br/>
+        DenoGres implements a Model class which "models" (or represents) your database tables. This class contains functionality
+        which allows you to interact with your database tables without the need for typed queries. Via the DenoGres CLI, it's
+        possible to introspect your database - automatically generating Model sub-classes for each of your database tables in
+        TypeScript! To learn more and get started, dive into our documentation.
+      </p>
+      <br/>
     </div>
   );
 }
