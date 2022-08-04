@@ -32,7 +32,7 @@ export default function GettingStartedPage() {
           <br/>
           <div class={box}>
           deno install --allow-read --allow-write --allow-net --allow-env 
-          --name denogres https://raw.githubusercontent.com/oslabs-beta/DenoGres/dev/mod.ts
+          --name denogres https://deno.land/x/denogres/mod.ts
           </div>
           <br/>
           <p class={description}>After installation is complete, ensure deno is added to PATH.</p>
