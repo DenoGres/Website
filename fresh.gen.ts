@@ -2,25 +2,23 @@
 // This file SHOULD be checked into source version control.
 // This file is automatically updated during development when running `dev.ts`.
 
-import * as $0 from "./routes/docs.tsx";
-import * as $1 from "./routes/docs/associations.tsx";
-import * as $2 from "./routes/docs/development.tsx";
-import * as $3 from "./routes/docs/getting-started.tsx";
-import * as $4 from "./routes/docs/methods.tsx";
-import * as $5 from "./routes/docs/model.tsx";
-import * as $6 from "./routes/index.tsx";
+import * as $0 from "./routes/docs/associations.tsx";
+import * as $1 from "./routes/docs/development.tsx";
+import * as $2 from "./routes/docs/getting-started.tsx";
+import * as $3 from "./routes/docs/methods.tsx";
+import * as $4 from "./routes/docs/model.tsx";
+import * as $5 from "./routes/index.tsx";
 import * as $$0 from "./islands/DocsNav.tsx";
 import * as $$1 from "./islands/NavBar.tsx";
 
 const manifest = {
   routes: {
-    "./routes/docs.tsx": $0,
-    "./routes/docs/associations.tsx": $1,
-    "./routes/docs/development.tsx": $2,
-    "./routes/docs/getting-started.tsx": $3,
-    "./routes/docs/methods.tsx": $4,
-    "./routes/docs/model.tsx": $5,
-    "./routes/index.tsx": $6,
+    "./routes/docs/associations.tsx": $0,
+    "./routes/docs/development.tsx": $1,
+    "./routes/docs/getting-started.tsx": $2,
+    "./routes/docs/methods.tsx": $3,
+    "./routes/docs/model.tsx": $4,
+    "./routes/index.tsx": $5,
   },
   islands: {
     "./islands/DocsNav.tsx": $$0,
