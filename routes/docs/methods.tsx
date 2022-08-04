@@ -14,8 +14,8 @@ export default function MethodsPage() {
   const box = tw`border rounded shadow-md mx-auto box-content bg-gray-100 text-black font-mono max-w-screen-md p-4 border-4 ...`;
 
   return (
-    <div class={tw`min-h-screen text-white bg-gradient-to-b from-gray-600 to-gray-800`}>
-    <div class={tw`sticky top-0`}>
+    <div class={tw`min-h-screen min-w-screen text-white bg-gradient-to-b from-gray-600 to-gray-800`}>
+    <div class={tw`sticky top-0 z-50`}>
         <NavBar/>
     </div>
     <div class={tw`grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5`}>
