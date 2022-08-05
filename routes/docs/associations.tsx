@@ -238,6 +238,7 @@ For existing association in the database (e.g. existing foreign key constraints)
         <p class={description}>Unlike other association methods, manyToMany is not a functionality inside the model class, so you need to import to use it. Many-To-Many relationship between two models is through a cross-table (aka. pivot table, through table). 
 For existing Many-To-Many association in the database, you need to specify the model representing the cross-table.</p>
         <div class={box}>
+	  import {'{'} manyToMany {'}'} from 'https://deno.land/x/denogres/mod.ts'<br /><br />
           await manyToMany(Person, Film, {'{ through: PeopleInFilm }'});<br/>
           <br/>
           const luke = await Person.where('name = Luke Skywalker').queryInstance();<br/>
