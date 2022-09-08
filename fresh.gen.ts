@@ -7,9 +7,22 @@ import * as $1 from "./routes/docs/development.tsx";
 import * as $2 from "./routes/docs/getting-started.tsx";
 import * as $3 from "./routes/docs/methods.tsx";
 import * as $4 from "./routes/docs/model.tsx";
-import * as $5 from "./routes/index.tsx";
-import * as $$0 from "./islands/DocsNav.tsx";
-import * as $$1 from "./islands/NavBar.tsx";
+import * as $5 from "./routes/gui/api/getConnections.tsx";
+import * as $6 from "./routes/gui/api/handleConnectionSave.ts";
+import * as $7 from "./routes/gui/api/handleModelSave.ts";
+import * as $8 from "./routes/gui/api/handleQueryRun.ts";
+import * as $9 from "./routes/gui/api/handleQuerySave.ts";
+import * as $10 from "./routes/gui/api/writeUriToFile.ts";
+import * as $11 from "./routes/gui/connections.tsx";
+import * as $12 from "./routes/gui/explorer.tsx";
+import * as $13 from "./routes/gui/index.tsx";
+import * as $14 from "./routes/gui/migrations.tsx";
+import * as $15 from "./routes/index.tsx";
+import * as $$0 from "./islands/Connections.tsx";
+import * as $$1 from "./islands/Console.tsx";
+import * as $$2 from "./islands/DocsNav.tsx";
+import * as $$3 from "./islands/Migrations.tsx";
+import * as $$4 from "./islands/NavBar.tsx";
 
 const manifest = {
   routes: {
@@ -18,11 +31,24 @@ const manifest = {
     "./routes/docs/getting-started.tsx": $2,
     "./routes/docs/methods.tsx": $3,
     "./routes/docs/model.tsx": $4,
-    "./routes/index.tsx": $5,
+    "./routes/gui/api/getConnections.tsx": $5,
+    "./routes/gui/api/handleConnectionSave.ts": $6,
+    "./routes/gui/api/handleModelSave.ts": $7,
+    "./routes/gui/api/handleQueryRun.ts": $8,
+    "./routes/gui/api/handleQuerySave.ts": $9,
+    "./routes/gui/api/writeUriToFile.ts": $10,
+    "./routes/gui/connections.tsx": $11,
+    "./routes/gui/explorer.tsx": $12,
+    "./routes/gui/index.tsx": $13,
+    "./routes/gui/migrations.tsx": $14,
+    "./routes/index.tsx": $15,
   },
   islands: {
-    "./islands/DocsNav.tsx": $$0,
-    "./islands/NavBar.tsx": $$1,
+    "./islands/Connections.tsx": $$0,
+    "./islands/Console.tsx": $$1,
+    "./islands/DocsNav.tsx": $$2,
+    "./islands/Migrations.tsx": $$3,
+    "./islands/NavBar.tsx": $$4,
   },
   baseUrl: import.meta.url,
 };
