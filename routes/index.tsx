@@ -1,5 +1,4 @@
-/** @jsx h */
-import { h, render } from "preact";
+import { render } from "preact";
 import { apply, setup } from "twind";
 import { style } from "twind/style";
 import NavBar from "../islands/NavBar.tsx";
@@ -8,9 +7,9 @@ export default function Home() {
   return (
     <div class="min-h-screen bg-gradient-to-b from-gray-500 via-gray-800 to-gray-900">
       <div class="sticky top-0">
-        <NavBar/>
+        <NavBar />
       </div>
-      <br/>
+      <br />
       <img
         class="mx-auto"
         src="/logo.png"
@@ -19,17 +18,21 @@ export default function Home() {
         alt="the DenoGres logo: a blue elephant and a purple dinosaur"
       />
       <p class="text-2xl text-center text-white">
-        <br/>
-        DenoGres is a new Object-Relationship Mapper (ORM) for the Deno runtime environment!
+        <br />
+        DenoGres is a new Object-Relationship Mapper (ORM) for the Deno runtime
+        environment!
       </p>
       <p class=" text-center text-white mx-auto max-w-screen-md">
-        <br/>
-        DenoGres implements a Model class which "models" (or represents) your database tables. This class contains functionality
-        which allows you to interact with your database tables without the need for typed queries. Via the DenoGres CLI, it's
-        possible to introspect your database - automatically generating Model sub-classes for each of your database tables in
-        TypeScript! To learn more and get started, dive into our documentation.
+        <br />
+        DenoGres implements a Model class which "models" (or represents) your
+        database tables. This class contains functionality which allows you to
+        interact with your database tables without the need for typed queries.
+        Via the DenoGres CLI, it's possible to introspect your database -
+        automatically generating Model sub-classes for each of your database
+        tables in TypeScript! To learn more and get started, dive into our
+        documentation.
       </p>
-      <br/>
+      <br />
     </div>
   );
 }

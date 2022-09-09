@@ -1,6 +1,3 @@
-/** @jsx h */
-import { h } from "preact";
-import { tw } from "twind";
 import { useState } from "preact/hooks";
 import connectionsJson from "../data/connections.json" assert { type: "json" };
 // import { nanoid } from "nanoid";
@@ -125,9 +122,9 @@ export default function Connections() {
     const handleClick = (): void => {
     };
 
-    const labelStyle: string = tw`py-1`;
-    const inputStyle: string =
-      tw`my-1 py-2 px-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-11/12`;
+    const labelStyle = "py-1";
+    const inputStyle =
+      "my-1 py-2 px-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-11/12";
 
     return (
       <form className="flex flex-col my-5 py-5">
@@ -180,9 +177,7 @@ export default function Connections() {
         {connectionsList()}
       </div>
       <div className="flex flex-col w-full">
-        <div
-          className="flex flex-col h-full bg-white p-3 rounded"
-        >
+        <div className="flex flex-col h-full bg-white p-3 rounded">
           <div>
             <h2>Connection Details</h2>
             {connectionForm()}

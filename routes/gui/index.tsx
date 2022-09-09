@@ -1,21 +1,17 @@
-/** @jsx h */
-import { h } from "preact";
 import Layout from "../../components/Layout.tsx";
 import NavBarGUI from "../../components/NavBarGUI.tsx";
 
 export default function index() {
   return (
     <Layout>
-      <NavBarGUI active="/" />
+      <NavBarGUI active="/gui" />
       <div className="w-full flex flex-row ml-3">
         <div className="flex flex-col w-full">
-          <div
-            className="flex flex-col h-full bg-white p-3 rounded"
-          >
+          <div className="flex flex-col h-full bg-white p-3 rounded">
             <div className="overflow-y-scroll">
               <h2 className="mb-5">Welcome to Denogres!</h2>
               <div className="bg-gray-900 w-96 h-96 p-5">
-              <img src="../logo.png"></img>
+                <img src="../logo.png"></img>
               </div>
               <br></br>
               <p>

@@ -1,6 +1,3 @@
-/** @jsx h */
-import { h } from "preact";
-import { tw } from "twind";
 import { useState } from "preact/hooks";
 import Record from "../components/Record.tsx";
 import queriesJson from "../data/queries.json" assert { type: "json" };
@@ -109,7 +106,7 @@ export default function Console() {
 
   // Tailwind CSS styling - for textArea;
   const textArea =
-    tw`bg-gray-50 appearance-none border-1 border-gray-200 rounded p-2 my-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 text-xs font-mono`;
+    "bg-gray-50 appearance-none border-1 border-gray-200 rounded p-2 my-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 text-xs font-mono";
 
   return (
     <div className="w-full flex flex-row">
@@ -133,18 +130,12 @@ export default function Console() {
           {showModal
             ? (
               <div>
-                <div
-                  className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-non"
-                >
+                <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-non">
                   <div className="relative w-auto my-6 mx-auto max-w-3xl">
                     {/*content*/}
-                    <div
-                      className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none"
-                    >
+                    <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                       {/*header*/}
-                      <div
-                        className="flex items-start justify-between p-5 rounded-t"
-                      >
+                      <div className="flex items-start justify-between p-5 rounded-t">
                         <h2 className="text-xl font-semibold">
                           Import Model File
                         </h2>
@@ -169,9 +160,7 @@ export default function Console() {
                         />
                       </div>
                       {/*footer*/}
-                      <div
-                        className="flex items-center justify-end p-6 border-solid border-slate-200 rounded-b"
-                      >
+                      <div className="flex items-center justify-end p-6 border-solid border-slate-200 rounded-b">
                         <button
                           className="bg-gray-500 text-white font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-300"
                           type="button"
@@ -198,9 +187,7 @@ export default function Console() {
         </div>
       </div>
       <div className="flex flex-col w-full">
-        <div
-          className="flex flex-col h-2/4 bg-white p-3 mb-3 rounded"
-        >
+        <div className="flex flex-col h-2/4 bg-white p-3 mb-3 rounded">
           <h2>
             Query Console
           </h2>
@@ -244,9 +231,7 @@ export default function Console() {
             </button>
           </div>
         </div>
-        <div
-          className="bg-white h-full rounded p-3 overflow-y-scroll flex flex-col"
-        >
+        <div className="bg-white h-full rounded p-3 overflow-y-scroll flex flex-col">
           <h2 className="mb-3">Results</h2>
           {queryRows}
         </div>
