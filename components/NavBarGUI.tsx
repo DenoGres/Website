@@ -1,6 +1,5 @@
 /** @jsx h */
 import { h } from "preact";
-import { tw } from "@twind";
 import NavLink from "./NavLink.tsx";
 
 function NavBarGUI(props: { active: string }) {
@@ -13,7 +12,7 @@ function NavBarGUI(props: { active: string }) {
       viewBox="0 0 24 24"
       stroke-width={1.25}
       stroke="currentColor"
-      className={tw`w-7 h-7`}
+      className="w-7 h-7"
     >
       <path
         strokeLinecap="round"
@@ -27,7 +26,7 @@ function NavBarGUI(props: { active: string }) {
       viewBox="0 0 24 24"
       stroke-width={1.35}
       stroke="currentColor"
-      className={tw`w-7 h-7 stroke-current`}
+      className="w-7 h-7 stroke-current"
     >
       <path
         strokeLinecap="round"
@@ -41,7 +40,7 @@ function NavBarGUI(props: { active: string }) {
       viewBox="0 0 24 24"
       stroke-width={1.5}
       stroke="currentColor"
-      className={tw`w-7 h-7`}
+      className="w-7 h-7"
     >
       <path
         strokeLinecap="round"
@@ -55,7 +54,7 @@ function NavBarGUI(props: { active: string }) {
       viewBox="0 0 24 24"
       stroke-width={1.5}
       stroke="currentColor"
-      className={tw`w-7 h-7`}
+      className="w-7 h-7"
     >
       <path
         strokeLinecap="round"
@@ -67,7 +66,7 @@ function NavBarGUI(props: { active: string }) {
 
   return (
     <nav
-      class={tw`flex flex-col p-3 bg-gradient-to-b from-white to-gray-50 rounded`}
+      class="flex flex-col p-3 bg-gradient-to-b from-white to-gray-50 rounded"
     >
       <NavLink href="/gui" active={active} svg={svgArray[0]} />
       <NavLink href="/gui/connections" active={active} svg={svgArray[1]} />

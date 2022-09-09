@@ -1,6 +1,6 @@
 /** @jsx h */
 import { h } from "preact";
-import { tw } from "@twind";
+import { tw } from "twind";
 import NavBar from "../../islands/NavBar.tsx";
 import DocsNav from "../../islands/DocsNav.tsx";
 
@@ -10,15 +10,15 @@ export default function ModelPage() {
   const box = tw`border rounded shadow-md mx-auto box-content bg-gray-100 text-black font-mono max-w-screen-md p-4 border-4 ...`;
 
   return (
-    <div class={tw`min-h-screen min-w-screen text-white bg-gradient-to-b from-gray-600 to-gray-800`}>
-      <div class={tw`sticky top-0`}>
+    <div class="min-h-screen min-w-screen text-white bg-gradient-to-b from-gray-600 to-gray-800">
+      <div class="sticky top-0">
         <NavBar />
       </div>
-      <div class={tw`grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5`}>
-        <aside class={tw`self-start sticky top-24 col-span-1`}>
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+        <aside class="self-start sticky top-24 col-span-1">
           <DocsNav />
         </aside>
-        <main class={tw`col-span-1 md:col-span-2 lg:col-span-3 xl:col-span-4`}>
+        <main class="col-span-1 md:col-span-2 lg:col-span-3 xl:col-span-4">
           <br />
           <h1 class={h1}>How to Set Up Model Class</h1>
           <p class={description}><br />

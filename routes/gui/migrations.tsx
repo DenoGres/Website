@@ -1,7 +1,6 @@
 /** @jsx h */
 
 import { h } from "preact";
-import { tw } from "@twind";
 import Layout from "../../components/Layout.tsx";
 import NavBar from "../../components/NavBarGUI.tsx";
 import Migrations from "../../islands/Migrations.tsx";

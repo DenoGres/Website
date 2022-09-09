@@ -1,6 +1,6 @@
 /** @jsx h */
 import { h } from "preact";
-import { tw } from "@twind";
+import { tw } from "twind";
 
 function NavLink(
   props: { href: string; active: string; svg: h.JSX.Element },

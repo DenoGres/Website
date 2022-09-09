@@ -1,6 +1,5 @@
 /** @jsx h */
 import { h } from "preact";
-import { tw } from "@twind";
 import Layout from "../../components/Layout.tsx";
 import NavBarGUI from "../../components/NavBarGUI.tsx";
 
@@ -8,14 +7,14 @@ export default function index() {
   return (
     <Layout>
       <NavBarGUI active="/" />
-      <div className={tw`w-full flex flex-row ml-3`}>
-        <div className={tw`flex flex-col w-full`}>
+      <div className="w-full flex flex-row ml-3">
+        <div className="flex flex-col w-full">
           <div
-            className={tw`flex flex-col h-full bg-white p-3 rounded`}
+            className="flex flex-col h-full bg-white p-3 rounded"
           >
-            <div className={tw`overflow-y-scroll`}>
-              <h2 className={tw`mb-5`}>Welcome to Denogres!</h2>
-              <div className={tw`bg-gray-900 w-96 h-96 p-5`}>
+            <div className="overflow-y-scroll">
+              <h2 className="mb-5">Welcome to Denogres!</h2>
+              <div className="bg-gray-900 w-96 h-96 p-5">
               <img src="../logo.png"></img>
               </div>
               <br></br>
@@ -24,7 +23,7 @@ export default function index() {
                 Deno.
               </p>
               <p>
-                <h2 className={tw`mt-10 mb-5`}>Getting Started</h2>
+                <h2 className="mt-10 mb-5">Getting Started</h2>
                 <p>
                   To begin, let's download DenoGres! Execute the below in the
                   terminal - this will give you access to DenoGres's CLI
@@ -36,7 +35,7 @@ export default function index() {
                   <br></br>
                   After installation is complete, ensure deno is added to PATH.
                 </p>
-                <h2 className={tw`mt-10 mb-5`}>Using DenoGres</h2>
+                <h2 className="mt-10 mb-5">Using DenoGres</h2>
                 <p>
                   Before using DenoGres in a project, run the below. In your
                   project's root directory, a .env file, for your database
@@ -54,7 +53,7 @@ export default function index() {
                   create TypeScript models of your database tables in the
                   .models/model.ts file. >`denogres --db-pull`
                 </p>
-                <h2 className={tw`mt-10 mb-5`}>Under Development</h2>
+                <h2 className="mt-10 mb-5">Under Development</h2>
                 <p>
                   DenoGres includes some functionality that is still in
                   development - including database sync functionality. The sync
@@ -64,13 +63,13 @@ export default function index() {
                   executes queries to update the database so all points of
                   reference once again align >`denogres --db-sync`
                 </p>
-                <h2 className={tw`mt-10 mb-5`}>Documentation</h2>
+                <h2 className="mt-10 mb-5">Documentation</h2>
                 <p>
                   More information on how to use DenoGres and leverage all its
                   wonderful abstraction functionality can be found here:
                   https://denogres.deno.dev/
                 </p>
-                <h2 className={tw`mt-10 mb-5`}>Contributors</h2>
+                <h2 className="mt-10 mb-5">Contributors</h2>
                 <p>
                   Ben Engelberg | [GitHub](https://github.com/bengelberg) |
                   [LinkedIn](https://linkedin.com/in/benengelberg)
