@@ -104,7 +104,7 @@ export default function Connections() {
     return (
       <div className="flex flex-col">
         {connections}
-        <div className="flex flex-row justify-end">
+        <div className="flex flex-row justify-end my-1">
           <button
             onClick={createConnection}
             type="button"

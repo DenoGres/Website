@@ -13,12 +13,14 @@ import * as $6 from "./routes/gui/api/handleConnectionSave.ts";
 import * as $7 from "./routes/gui/api/handleModelSave.ts";
 import * as $8 from "./routes/gui/api/handleQueryRun.ts";
 import * as $9 from "./routes/gui/api/handleQuerySave.ts";
-import * as $10 from "./routes/gui/api/writeUriToFile.ts";
-import * as $11 from "./routes/gui/connections.tsx";
-import * as $12 from "./routes/gui/explorer.tsx";
-import * as $13 from "./routes/gui/index.tsx";
-import * as $14 from "./routes/gui/migrations.tsx";
-import * as $15 from "./routes/index.tsx";
+import * as $10 from "./routes/gui/api/signIn.tsx";
+import * as $11 from "./routes/gui/api/signUp.tsx";
+import * as $12 from "./routes/gui/api/writeUriToFile.ts";
+import * as $13 from "./routes/gui/connections.tsx";
+import * as $14 from "./routes/gui/explorer.tsx";
+import * as $15 from "./routes/gui/index.tsx";
+import * as $16 from "./routes/gui/migrations.tsx";
+import * as $17 from "./routes/index.tsx";
 import * as $$0 from "./islands/Connections.tsx";
 import * as $$1 from "./islands/Console.tsx";
 import * as $$2 from "./islands/DocsNav.tsx";
@@ -37,12 +39,14 @@ const manifest = {
     "./routes/gui/api/handleModelSave.ts": $7,
     "./routes/gui/api/handleQueryRun.ts": $8,
     "./routes/gui/api/handleQuerySave.ts": $9,
-    "./routes/gui/api/writeUriToFile.ts": $10,
-    "./routes/gui/connections.tsx": $11,
-    "./routes/gui/explorer.tsx": $12,
-    "./routes/gui/index.tsx": $13,
-    "./routes/gui/migrations.tsx": $14,
-    "./routes/index.tsx": $15,
+    "./routes/gui/api/signIn.tsx": $10,
+    "./routes/gui/api/signUp.tsx": $11,
+    "./routes/gui/api/writeUriToFile.ts": $12,
+    "./routes/gui/connections.tsx": $13,
+    "./routes/gui/explorer.tsx": $14,
+    "./routes/gui/index.tsx": $15,
+    "./routes/gui/migrations.tsx": $16,
+    "./routes/index.tsx": $17,
   },
   islands: {
     "./islands/Connections.tsx": $$0,
