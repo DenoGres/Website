@@ -1,7 +1,7 @@
 import { HandlerContext, Handlers } from "$fresh/server.ts";
 
 // obtain plain text of model.ts and write file in user folder
-export const handler: Handlers = {
+export const handler = {
   async POST(req: Request, ctx: HandlerContext): Promise<Response> {
     // could potentially use fileTextWriter to add import statement in model.ts
     const modelFileText: string = await req.json();

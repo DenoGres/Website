@@ -6,7 +6,7 @@ import { IConnectionObject } from "../../../islands/Connections.tsx";
 export const handler: Handlers = {
   async POST(req: Request, ctx: HandlerContext): Promise<Response> {
     const newConnectionObject: IConnectionObject = await req.json();
-    const path: string = "./data/connections.json";
+    const path = "./data/connections.json";
     const savedConnections: IConnectionObject[] = JSON.parse(
       Deno.readTextFileSync(path),
     );

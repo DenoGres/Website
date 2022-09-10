@@ -18,14 +18,16 @@ import * as $11 from "./routes/gui/api/signUp.tsx";
 import * as $12 from "./routes/gui/api/writeUriToFile.ts";
 import * as $13 from "./routes/gui/connections.tsx";
 import * as $14 from "./routes/gui/explorer.tsx";
-import * as $15 from "./routes/gui/index.tsx";
-import * as $16 from "./routes/gui/migrations.tsx";
-import * as $17 from "./routes/index.tsx";
+import * as $15 from "./routes/gui/home.tsx";
+import * as $16 from "./routes/gui/index.tsx";
+import * as $17 from "./routes/gui/migrations.tsx";
+import * as $18 from "./routes/index.tsx";
 import * as $$0 from "./islands/Connections.tsx";
 import * as $$1 from "./islands/Console.tsx";
 import * as $$2 from "./islands/DocsNav.tsx";
-import * as $$3 from "./islands/Migrations.tsx";
-import * as $$4 from "./islands/NavBar.tsx";
+import * as $$3 from "./islands/Login.tsx";
+import * as $$4 from "./islands/Migrations.tsx";
+import * as $$5 from "./islands/NavBar.tsx";
 
 const manifest = {
   routes: {
@@ -44,16 +46,18 @@ const manifest = {
     "./routes/gui/api/writeUriToFile.ts": $12,
     "./routes/gui/connections.tsx": $13,
     "./routes/gui/explorer.tsx": $14,
-    "./routes/gui/index.tsx": $15,
-    "./routes/gui/migrations.tsx": $16,
-    "./routes/index.tsx": $17,
+    "./routes/gui/home.tsx": $15,
+    "./routes/gui/index.tsx": $16,
+    "./routes/gui/migrations.tsx": $17,
+    "./routes/index.tsx": $18,
   },
   islands: {
     "./islands/Connections.tsx": $$0,
     "./islands/Console.tsx": $$1,
     "./islands/DocsNav.tsx": $$2,
-    "./islands/Migrations.tsx": $$3,
-    "./islands/NavBar.tsx": $$4,
+    "./islands/Login.tsx": $$3,
+    "./islands/Migrations.tsx": $$4,
+    "./islands/NavBar.tsx": $$5,
   },
   baseUrl: import.meta.url,
   config,

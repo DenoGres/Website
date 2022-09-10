@@ -64,7 +64,7 @@ function NavBarGUI(props: { active: string }) {
 
   return (
     <nav class="flex flex-col p-3 bg-gradient-to-b from-white to-gray-50 rounded">
-      <NavLink href="/gui" active={active} svg={svgArray[0]} />
+      <NavLink href="/gui/home" active={active} svg={svgArray[0]} />
       <NavLink href="/gui/connections" active={active} svg={svgArray[1]} />
       <NavLink href="/gui/explorer" active={active} svg={svgArray[2]} />
       <NavLink href="/gui/migrations" active={active} svg={svgArray[3]} />

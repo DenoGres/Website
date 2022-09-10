@@ -2,15 +2,15 @@ import { useState } from "preact/hooks";
 import connectionsJson from "../data/connections.json" assert { type: "json" };
 // import { nanoid } from "nanoid";
 
-// export interface IConnectionObject {
-//   _id: string,
-//   name: string,
-//   address: string,
-//   port: string,
-//   username: string,
-//   defaultdb: string,
-//   password: string
-// };
+export interface IConnectionObject {
+  _id: string;
+  name: string;
+  address: string;
+  port: string;
+  username: string;
+  defaultdb: string;
+  password: string;
+}
 
 // list of saved connections
 export default function Connections() {

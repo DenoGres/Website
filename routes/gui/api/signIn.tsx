@@ -42,6 +42,7 @@ export const handler: Handlers = {
       `,
       );
 
+      // check the PW against the DB
       if (checkUser.rows.length > 0) {
         // TODO: set up JWT and redirect passing JWT
         const checkPW: boolean = await bcrypt.compare(
@@ -56,12 +57,14 @@ export const handler: Handlers = {
             exp: getNumericDate(60 * 60),
           };
 
+          // generate the JWT
           const jwt: string = await create(
             { alg: "HS512", typ: "JWT" },
             { payload },
             key,
           );
 
+          // set the cookie and send the response
           if (jwt) {
             const res = new Response(
               JSON.stringify({
@@ -75,6 +78,7 @@ export const handler: Handlers = {
             cookie.setCookie(res.headers, {
               name: "jwt",
               value: jwt,
+              path: "/",
               httpOnly: true,
             });
 
@@ -84,7 +88,9 @@ export const handler: Handlers = {
       }
     } catch (err) {
       console.log(err);
-      return new Response("Error", { status: 404 });
+      return new Response("Error - please contact your administrator", {
+        status: 404,
+      });
     }
 
     return new Response("Invalid Credentials", { status: 404 });

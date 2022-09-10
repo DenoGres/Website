@@ -1,4 +1,4 @@
-import { HandlerContext } from "$fresh/server.ts";
+import { Handler, HandlerContext } from "$fresh/server.ts";
 import * as bcrypt from "https://deno.land/x/bcrypt/mod.ts";
 import { create } from "https://deno.land/x/djwt/mod.ts";
 import { Pool, PoolClient } from "https://deno.land/x/postgres/mod.ts";
@@ -19,7 +19,7 @@ export interface Ilogin {
   password: string;
 }
 
-export const handler: Handler<any, { data: string }> = {
+export const handler = {
   async POST(req: Request, res: Response, ctx: HandlerContext) {
     const body: Ilogin = await req.json();
     const { username, password } = body;
