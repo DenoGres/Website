@@ -1,20 +1,28 @@
 import { useState } from "preact/hooks";
 
+export interface loginFail {
+  show: boolean;
+  text: string;
+}
+
+interface reqBody {
+  username: string;
+  password: string;
+}
+
 export default function Login() {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [loginFail, setLoginFail] = useState<boolean>(false);
+  const [loginStatus, setLoginStatus] = useState<loginFail>({
+    show: false,
+    text: "",
+  });
 
   const labelStyle = "py-3";
   const inputStyle =
     "my-3 py-2 px-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-11/12";
 
-  const login = async (): Promise<any> => {
-    interface reqBody {
-      username: string;
-      password: string;
-    }
-
+  const login = async (): Promise<void> => {
     const reqBody: reqBody = {
       username,
       password,
@@ -29,16 +37,36 @@ export default function Login() {
     if (response.ok) {
       window.location.href = "/gui/home";
     } else {
-      setLoginFail(true);
+      setLoginStatus({ show: true, text: "Login failed. Please try again." });
     }
   };
 
-  const signup = (): void => {
-    console.log("hello");
+  const signup = async (): Promise<void> => {
+    const reqBody: reqBody = {
+      username,
+      password,
+    };
+
+    const response = await fetch("gui/api/signUp", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(reqBody),
+    });
+
+    if (response.ok) {
+      login();
+    } else {
+      setLoginStatus({
+        show: true,
+        text: "That account is already taken. Please try again.",
+      });
+    }
   };
 
-  const failStyle: string = "text-red-900" +
-    ((loginFail) ? " visible" : " invisible");
+  const statusStyle: string = "text-red-600 z-50" +
+    ((loginStatus.show) ? " visible" : " invisible");
+
+  const statusText: string = loginStatus.text;
 
   return (
     <div className="flex flex-col px-5 z-10 w-5/12 h-96 m-auto bg-deno-blue-100 drop-shadow-2xl rounded">
@@ -66,9 +94,9 @@ export default function Login() {
         >
         </input>
         <div
-          className={failStyle}
+          className={statusStyle}
         >
-          Login failed. Please try again
+          {statusText}
         </div>
       </div>
       <div className="flex flex-row justify-end pb-5">

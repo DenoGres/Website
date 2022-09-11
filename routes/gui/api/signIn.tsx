@@ -1,6 +1,5 @@
 import { HandlerContext, Handlers } from "$fresh/server.ts";
 import "https://deno.land/x/dotenv/load.ts";
-
 import { Pool } from "https://deno.land/x/postgres/mod.ts";
 import * as cookie from "https://deno.land/std/http/cookie.ts";
 import * as bcrypt from "https://deno.land/x/bcrypt/mod.ts";
@@ -54,7 +53,7 @@ export const handler: Handlers = {
           const payload = {
             id: checkUser.rows[0].id,
             username: checkUser.rows[0].username,
-            exp: getNumericDate(60 * 60),
+            exp: getNumericDate(30 * 60),
           };
 
           // generate the JWT
@@ -88,9 +87,6 @@ export const handler: Handlers = {
       }
     } catch (err) {
       console.log(err);
-      return new Response("Error - please contact your administrator", {
-        status: 404,
-      });
     }
 
     return new Response("Invalid Credentials", { status: 404 });

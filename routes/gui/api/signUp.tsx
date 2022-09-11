@@ -1,7 +1,6 @@
-import { Handler, HandlerContext } from "$fresh/server.ts";
+import { HandlerContext } from "$fresh/server.ts";
+import { Pool } from "https://deno.land/x/postgres/mod.ts";
 import * as bcrypt from "https://deno.land/x/bcrypt/mod.ts";
-import { create } from "https://deno.land/x/djwt/mod.ts";
-import { Pool, PoolClient } from "https://deno.land/x/postgres/mod.ts";
 import "https://deno.land/x/dotenv/load.ts";
 import {
   QueryArrayResult,
@@ -21,26 +20,39 @@ export interface Ilogin {
 
 export const handler = {
   async POST(req: Request, res: Response, ctx: HandlerContext) {
-    const body: Ilogin = await req.json();
-    const { username, password } = body;
-    const salt: string = await bcrypt.genSalt(8);
-    const hashedPW: string = await bcrypt.hash(password, salt);
+    try {
+      const body: Ilogin = await req.json();
+      const { username, password } = body;
+      const salt: string = await bcrypt.genSalt(8);
+      const hashedPW: string = await bcrypt.hash(password, salt);
 
-    // write to DB
-    const checkUser: QueryObjectResult = await connection.queryObject(
-      `
-      SELECT * FROM users WHERE username = '${username}'
-      `,
-    );
-
-    if (checkUser.rows.length === 0) {
-      // TODO: set up JWT and redirect passing JWT
-      const result: QueryArrayResult = await connection.queryObject(
-        `INSERT INTO users (username, password) VALUES ('${username}', '${hashedPW}')`,
+      // write to DB
+      const checkUser: QueryObjectResult = await connection.queryObject(
+        `
+        SELECT * FROM users WHERE username = '${username}'
+        `,
       );
-      return new Response(JSON.stringify({ username, password }), {
-        status: 201,
-      });
+
+      if (checkUser.rows.length === 0) {
+        // TODO: set up JWT and redirect passing JWT
+        const insert: QueryArrayResult = await connection.queryObject(
+          `INSERT INTO users (username, password) VALUES ('${username}', '${hashedPW}')`,
+        );
+
+        const checkUser: QueryObjectResult = await connection.queryObject(
+          `
+        SELECT id, username, password FROM users WHERE username = '${username}'
+        `,
+        );
+
+        return new Response(JSON.stringify({ username, password }), {
+          status: 201,
+        });
+      }
+    } catch (err) {
+      console.log(err);
     }
+
+    return new Response("Invalid Credentials", { status: 404 });
   },
 };
