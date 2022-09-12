@@ -12,16 +12,26 @@ export interface IConnectionObject {
   password: string;
 }
 
+export interface ModalStatus {
+  show: boolean;
+  text: string;
+}
+
 // list of saved connections
 export default function Connections() {
   const [connectList, setConnectList] = useState<any[]>(connectionsJson);
   const [connectionId, setConnectionId] = useState<number>(-Infinity);
   const [connectionName, setconnectionName] = useState<string>("");
   const [address, setAddress] = useState<string>("");
-  const [port, setPort] = useState<string>("");
+  const [port, setPort] = useState<number>();
   const [username, setUsername] = useState<string>("");
   const [defaultDB, setDefaultDB] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [showCreateModal, setShowCreateModal] = useState<boolean>(false);
+  const [modalCreateStatus, setModalCreateStatus] = useState<ModalStatus>({
+    show: false,
+    text: "",
+  });
 
   // <------------ EVENT LISTENERS ------------>
 
@@ -53,7 +63,7 @@ export default function Connections() {
     // in future this will be a request to db to save connection assoc. w/ user
 
     // must be a better way to do this. maybe can get preact router working?
-    window.location.href = "http://localhost:8000/explorer";
+    window.location.href = "/gui/explorer";
   };
 
   // <------------ LIST OF CONNECTIONS ------------>
@@ -80,25 +90,33 @@ export default function Connections() {
     });
 
     // ADD NEW CONNECTION
-    const createConnection = async (): Promise<void> => {
-      const emptyObj = {
-        _id: connectionsJson.length + 1,
-        name: "",
-        address: "",
-        port: "",
-        username: "",
-        defaultdb: "",
-        password: "",
-      };
+    const openCreateModal = (): void => {
+      setConnectionId("");
+      setconnectionName("");
+      setAddress("");
+      setPort("");
+      setDefaultDB("");
+      setUsername("");
+      setPassword("");
 
-      const emptyObjString = JSON.stringify(emptyObj);
+      setShowCreateModal(true);
+      // const emptyObj = {
+      //   name: "",
+      //   address: "",
+      //   port: "",
+      //   username: "",
+      //   defaultdb: "",
+      //   password: "",
+      // };
 
-      const response = await fetch("/api/getConnections", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-      });
-      const data = await response.json();
-      console.log(data);
+      // const emptyObjString = JSON.stringify(emptyObj);
+
+      // const response = await fetch("/api/getConnections", {
+      //   method: "POST",
+      //   headers: { "Content-Type": "application/json" },
+      // });
+      // const data = await response.json();
+      // console.log(data);
     };
 
     return (
@@ -106,7 +124,7 @@ export default function Connections() {
         {connections}
         <div className="flex flex-row justify-end my-1">
           <button
-            onClick={createConnection}
+            onClick={openCreateModal}
             type="button"
             className="flex-0 bg-gray-300 py-1 px-2 text-sm shadow-sm font-medium text-gray-600 hover:shadow-2xl hover:bg-gray-400 rounded"
           >
@@ -118,13 +136,20 @@ export default function Connections() {
   }
 
   // <------------ CONNECTION FORM ------------>
-  function connectionForm(): h.JSX.Element {
-    const handleClick = (): void => {
-    };
-
+  function connectionForm(type: string) {
     const labelStyle = "py-1";
     const inputStyle =
       "my-1 py-2 px-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-11/12";
+
+    const handleClick = async (): Promise<void> => {
+      const method = (type === "new") ? "POST" : "PATCH";
+      const response = await fetch("/api/handleQuerySave", {
+        method,
+        headers: { "Content-Type": "application/json" },
+      });
+      const data = await response.json();
+      console.log(data);
+    };
 
     return (
       <form className="flex flex-col my-5 py-5">
@@ -147,7 +172,7 @@ export default function Connections() {
         <div className="flex flex-row py-5">
           <button
             type="button"
-            className="bg-gray-300 px-5 mx-1 py-3 text-sm shadow-sm font-medium tracking-wider text-gray-600 rounded-full hover:shadow-2xl hover:bg-gray-400"
+            className="bg-gray-300 px-5 mx-1 py-3 text-sm shadow-sm font-medium tracking-wider text-gray-600 rounded-full hover:shadow-2xl hover:bg-gray-400 hidden"
           >
             Test Connection
           </button>
@@ -160,10 +185,21 @@ export default function Connections() {
           </button>
           <button
             type="button"
-            className="bg-deno-blue-100 px-5 mx-1 py-3 text-sm shadow-sm font-medium tracking-wider text-gray-600 rounded-full hover:shadow-2xl hover:bg-deno-blue-200"
+            className={"bg-deno-blue-100 px-5 mx-1 py-3 text-sm shadow-sm font-medium tracking-wider text-gray-600 rounded-full hover:shadow-2xl hover:bg-deno-blue-200" +
+              ((type === "new") ? " hidden" : "")}
             onClick={handleUriSaveAndRedirect}
           >
             Connect
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              setShowCreateModal(false);
+            }}
+            className={"bg-gray-300 px-5 mx-1 py-3 text-sm shadow-sm font-medium tracking-wider text-gray-600 rounded-full hover:shadow-2xl hover:bg-gray-400" +
+              ((type === "new") ? "" : " hidden")}
+          >
+            Close
           </button>
         </div>
       </form>
@@ -180,10 +216,25 @@ export default function Connections() {
         <div className="flex flex-col h-full bg-white p-3 rounded">
           <div>
             <h2>Connection Details</h2>
-            {connectionForm()}
+            {connectionForm("existing")}
           </div>
         </div>
       </div>
+      {/* <--------Import Model File MODAL--------> */}
+      {showCreateModal
+        ? (
+          <div>
+            <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
+              <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-3/12 max-w-3/12 pl-3 py-5 bg-white outline-none focus:outline-none">
+                <h2 className="text-xl font-semibold">
+                  Add New Connection
+                </h2>
+                {connectionForm("new")}
+              </div>
+            </div>
+          </div>
+        )
+        : null}
     </div>
   );
 }

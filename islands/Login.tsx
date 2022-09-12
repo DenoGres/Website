@@ -1,6 +1,6 @@
 import { useState } from "preact/hooks";
 
-export interface loginFail {
+export interface loginStatus {
   show: boolean;
   text: string;
 }
@@ -13,7 +13,7 @@ interface reqBody {
 export default function Login() {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [loginStatus, setLoginStatus] = useState<loginFail>({
+  const [loginStatus, setLoginStatus] = useState<loginStatus>({
     show: false,
     text: "",
   });
@@ -22,22 +22,29 @@ export default function Login() {
   const inputStyle =
     "my-3 py-2 px-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-11/12";
 
-  const login = async (): Promise<void> => {
-    const reqBody: reqBody = {
-      username,
-      password,
-    };
-
-    const response = await fetch("gui/api/signIn", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(reqBody),
-    });
-
-    if (response.ok) {
-      window.location.href = "/gui/home";
+  const login = async (e?: Event): Promise<void> => {
+    if (username === "" || password === "") {
+      setLoginStatus({
+        show: true,
+        text: "Username/Password fields cannot be blank. Please try again.",
+      });
     } else {
-      setLoginStatus({ show: true, text: "Login failed. Please try again." });
+      const reqBody: reqBody = {
+        username,
+        password,
+      };
+
+      const response = await fetch("gui/api/signIn", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(reqBody),
+      });
+
+      if (response.ok) {
+        window.location.href = "/gui/home";
+      } else {
+        setLoginStatus({ show: true, text: "Login failed. Please try again." });
+      }
     }
   };
 

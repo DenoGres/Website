@@ -23,7 +23,7 @@ interface State {
   data: string;
 }
 
-export const handler: Handlers = {
+export const handler = {
   async POST(
     req: Request,
     res: Response,
@@ -86,9 +86,7 @@ export const handler: Handlers = {
         }
       }
     } catch (err) {
-      console.log(err);
+      return new Response(err, { status: 404 });
     }
-
-    return new Response("Invalid Credentials", { status: 404 });
   },
 };

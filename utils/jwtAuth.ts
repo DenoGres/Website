@@ -1,6 +1,5 @@
 import * as cookie from "https://deno.land/std/http/cookie.ts";
 import { decode } from "https://deno.land/x/djwt/mod.ts";
-import { HandlerContext } from "$fresh/server.ts";
 
 export default function jwtAuth(req: Request) {
   const cookies = cookie.getCookies(req.headers);
