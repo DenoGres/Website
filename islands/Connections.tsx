@@ -142,7 +142,7 @@ export default function Connections() {
       "my-1 py-2 px-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-11/12";
 
     const handleClick = async (): Promise<void> => {
-      const method = (type === "new") ? "POST" : "PATCH";
+      const method = (connectionType === "new") ? "POST" : "PATCH";
 
       const reqBody = {
         connectionId,
