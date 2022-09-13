@@ -108,7 +108,7 @@ export default function Connections() {
       return (
         <button
           key={idx}
-          className="text-sm shadow-sm font-medium text-gray-600 text-left flex-1 p-3 bg-deno-pink-100 tracking-wider rounded flex flex-row justify-between my-1"
+          className="text-sm shadow-sm font-medium text-gray-600 text-left flex-1 p-3 bg-deno-blue-100 tracking-wider rounded flex flex-row justify-between my-1"
           type="button"
           onClick={() => {
             setConnectionId(ele.id);
@@ -158,6 +158,19 @@ export default function Connections() {
 
       await fetch("/gui/api/handleConnectionSave", {
         method,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(reqBody),
+      });
+      window.location.reload();
+    };
+
+    const handleDelete = async (): Promise<void> => {
+      const reqBody = {
+        connectionId,
+      };
+
+      await fetch("/gui/api/handleConnectionSave", {
+        method: "DELETE",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(reqBody),
       });
@@ -226,7 +239,7 @@ export default function Connections() {
           </button>
           <button
             type="button"
-            className={"bg-deno-blue-100 px-5 mx-1 py-3 text-sm shadow-sm font-medium tracking-wider text-gray-600 rounded-full hover:shadow-2xl hover:bg-deno-blue-200" +
+            className={"bg-gray-300 px-5 mx-1 py-3 text-sm shadow-sm font-medium tracking-wider text-gray-600 rounded-full hover:shadow-2xl hover:bg-gray-400" +
               ((connectionType === "new") ? " hidden" : "")}
             onClick={handleDelete}
           >
