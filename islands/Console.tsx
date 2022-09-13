@@ -10,8 +10,8 @@ export interface IQueryObject {
 }
 
 interface IModelDisplayRowObject {
-  level: number,
-  content: string
+  level: number;
+  content: string;
 }
 
 export default function Console() {
@@ -27,24 +27,24 @@ export default function Console() {
   const [indexToDisplay, setIndexToDisplay] = useState<number>(-1);
 
   const getModels = async (): Promise<any> => {
-    const res = await fetch('/gui/api/handleQueryRun', {
+    const res = await fetch("/gui/api/handleQueryRun", {
       method: "POST",
-      body: JSON.stringify({ getTextModels: true })
+      body: JSON.stringify({ getTextModels: true }),
     });
     if (res.status === 400) {
       return;
     }
     const parsed = await res.json();
-    return [ parsed[0], parsed[1] ];
+    return [parsed[0], parsed[1]];
   };
 
   // on first load, make GET request to retrieve models names & content to display
   useEffect(() => {
     const getModelsToDisplay = async (): Promise<void> => {
-      const [ names, content ] = await getModels();
+      const [names, content] = await getModels();
       setModelNames(names);
       setModelContent(content);
-    }
+    };
     getModelsToDisplay();
   }, []);
 
@@ -56,7 +56,7 @@ export default function Console() {
   const handleSave = async (e: MouseEvent) => {
     e.preventDefault();
     const newQuery: IQueryObject = {
-      _id: 'placeholderid',
+      _id: "placeholderid",
       queryName,
       queryText,
     };
@@ -73,11 +73,11 @@ export default function Console() {
   const handleRun = async (e: MouseEvent) => {
     e.preventDefault();
     const bodyObj = {
-      queryText
-    }
-    const res = await fetch('/gui/api/handleQueryRun', {
+      queryText,
+    };
+    const res = await fetch("/gui/api/handleQueryRun", {
       method: "POST",
-      body: JSON.stringify(bodyObj)
+      body: JSON.stringify(bodyObj),
     });
     const data: object[] = await res.json();
     setRecords(data);
@@ -93,10 +93,10 @@ export default function Console() {
   //   });
   //   setShowModal(false);
   //   setModelText("");
-    // after model.ts has been saved, server can return an array of strings
-    // representing names of models in the file
-    // these can be displayed on the left hand side under "availale models"
-    // stretch: clicking name of model pulls up its schema
+  // after model.ts has been saved, server can return an array of strings
+  // representing names of models in the file
+  // these can be displayed on the left hand side under "availale models"
+  // stretch: clicking name of model pulls up its schema
   // };
 
   // map saved queries to display components
@@ -159,36 +159,41 @@ export default function Console() {
 
     // IIFE to generate arrays of objects representing each row to be rendered
     // each object has level (num) indicating indentation, and content (string)
-    (function generateTextRowObjs (arr, obj, level = 0, recurse = false): IModelDisplayRowObject[] {
+    (function generateTextRowObjs(
+      arr,
+      obj,
+      level = 0,
+      recurse = false,
+    ): IModelDisplayRowObject[] {
       for (const [key, value] of Object.entries(obj)) {
-        if (typeof value === 'object') {
+        if (typeof value === "object") {
           // if value is obj, add key name and curly braces on current indentation level
           // and recursively call function at level + 1
           // n.b. need to 'backtrack' and reset to prev. indent level
-          arr.push({ level, content: `${String(key)} : {`});
+          arr.push({ level, content: `${String(key)} : {` });
           level++;
           arr.push(...generateTextRowObjs([], value, level, true));
           level--;
-          arr.push({ level, content: '}'});
+          arr.push({ level, content: "}" });
         } else {
           // else if value is primitive, check if we are in a recursive call
           // if so, need to add 1 indent level to k-v string
           if (recurse) {
             level++;
-            arr.push({ level, content: `${String(key)} : ${String(value)}`});
+            arr.push({ level, content: `${String(key)} : ${String(value)}` });
             level--;
           } else {
-            arr.push({ level, content: `${String(key)} : ${String(value)}`});
+            arr.push({ level, content: `${String(key)} : ${String(value)}` });
           }
         }
       }
       return arr;
     })(results, ele);
 
-    // map results to JSX elements with proper left-margin 
+    // map results to JSX elements with proper left-margin
     results = results.map((ele) => {
       const leftMarginClass = `mx-${ele.level}`;
-      return <li className={`${leftMarginClass}`}>{ele.content}</li>
+      return <li className={`${leftMarginClass}`}>{ele.content}</li>;
     });
 
     return (
@@ -209,20 +214,24 @@ export default function Console() {
       <div className="w-5/12 bg-white rounded mx-3">
         <div className="h-2/4 p-3 flex flex-col items-center">
           <h2 className="mb-3">Saved Queries</h2>
-          <div className="flex flex-col w-full">
+          <div className="flex flex-col w-full overflow-y-scroll">
             {savedQueries}
           </div>
         </div>
         <div className="flex flex-col items-center p-3 h-2/4">
-          <h2 className="flex-1">Active Models</h2>
-          {activeModelNames}
-          {/* <button
+          <h2 className="mb-3">Active Models</h2>
+          <div className="flex flex-col w-full overflow-y-scroll">
+            {activeModelNames}
+          </div>
+          {
+            /* <button
             type="button"
             className="bg-gray-300 px-5 mx-1 py-3 text-sm shadow-sm font-medium tracking-wider text-gray-600 rounded-full hover:shadow-2xl hover:bg-gray-400"
             onClick={() => setShowModal(true)}
           >
             Import Model File
-          </button> */}
+          </button> */
+          }
           {/* <--------Import Model File MODAL--------> */}
           {showModal
             ? (
@@ -244,7 +253,8 @@ export default function Console() {
                         </button>
                       </div>
                       {/*body*/}
-                      {/* <div className="relative px-6 flex-auto">
+                      {
+                        /* <div className="relative px-6 flex-auto">
                         <textarea
                           className={textArea}
                           onInput={(e) => {
@@ -256,17 +266,20 @@ export default function Console() {
                           rows={20}
                           cols={70}
                         />
-                      </div> */}
+                      </div> */
+                      }
                       {activeModelContent[indexToDisplay]}
                       {/*footer*/}
                       <div className="flex items-center justify-end p-6 border-solid border-slate-200 rounded-b">
-                        {/* <button
+                        {
+                          /* <button
                           className="bg-gray-500 text-white font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-300"
                           type="button"
                           onClick={handleModelSave}
                         >
                           Save
-                        </button> */}
+                        </button> */
+                        }
                         <button
                           className="bg-gray-500 text-white font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-300"
                           type="button"

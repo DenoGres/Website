@@ -2,33 +2,35 @@
 // since they normally live on the denogres code outside of app folder
 import { introspect } from "https://deno.land/x/denogresdev@v1.0.5/src/functions/introspect.ts";
 import { createClassName } from "https://deno.land/x/denogresdev@v1.0.5/src/functions/StringFormat.ts";
-import { Model } from "https://deno.land/x/denogresdev/mod.ts";
+import { Model } from "https://deno.land/x/denogresdev@v1.0.5/mod.ts";
 
 // helper func to delete any keys in models that have value of false
 // applies to k-v pairs such as "notNull: false" (i.e. no 'NOT NULL' constraint)
 const deleteFalseKeys = (modelsObj: any) => {
   for (const key in modelsObj) {
-    if (typeof modelsObj[key] === 'object') {
-      deleteFalseKeys(modelsObj[key])
+    if (typeof modelsObj[key] === "object") {
+      deleteFalseKeys(modelsObj[key]);
     }
     if (modelsObj[key] === false) {
       delete modelsObj[key];
     }
   }
   return modelsObj;
-}
+};
 
-// return object containing all model classes given the db uri 
+// return object containing all model classes given the db uri
 // if "asText" option set to true, return a stringifiable models object for FE to render
-export const generateModels = async (userUri: string, options?: { 'asText': boolean }): Promise<any> => {
-
+export const generateModels = async (
+  userUri: string,
+  options?: { "asText": boolean },
+): Promise<any> => {
   // introspect by default would attempt to load URI from env if not provided
   // here we explicitly check for missing URI and throw error
   if (!userUri) {
-    return new Error('Please provide valid database URI to obtain models.');
+    return new Error("Please provide valid database URI to obtain models.");
   }
 
-  const [ tableListObj, enumObj ] = await introspect(userUri);
+  const [tableListObj, enumObj] = await introspect(userUri);
 
   let modelsList: any = {};
 
@@ -39,7 +41,7 @@ export const generateModels = async (userUri: string, options?: { 'asText': bool
     if (options?.asText) {
       modelsList[className] = {};
     } else {
-      modelsList[className] = class extends Model{};
+      modelsList[className] = class extends Model {};
     }
     modelsList[className].table = key;
     modelsList[className].columns = tableListObj[key].columns;
@@ -47,7 +49,7 @@ export const generateModels = async (userUri: string, options?: { 'asText': bool
 
   modelsList = deleteFalseKeys(modelsList);
 
-  /* 
+  /*
   iterate over all enum objs from db
   create each as an enum object and insert into "denogres" models object
   sample form of enum object: {"sad": 0, "ok": 1, "happy": 2, "0": "sad", "1": "ok", "2": happy}

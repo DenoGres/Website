@@ -43,7 +43,8 @@ export default function Login() {
       if (response.ok) {
         window.location.href = "/gui/home";
       } else {
-        setLoginStatus({ show: true, text: "Login failed. Please try again." });
+        const data = await response.json();
+        setLoginStatus({ show: true, text: data.err });
       }
     }
   };

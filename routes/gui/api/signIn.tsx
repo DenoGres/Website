@@ -83,10 +83,18 @@ export const handler = {
 
             return res;
           }
+        } else {
+          return new Response(
+            JSON.stringify({ err: "Login failed - invalid credentials " }),
+            { status: 404 },
+          );
         }
       }
     } catch (err) {
-      return new Response(err, { status: 404 });
+      return new Response(
+        JSON.stringify({ err }),
+        { status: 404 },
+      );
     }
   },
 };
