@@ -1,7 +1,7 @@
 // will need to refactor these imports to pull from our deno module instead of locally
 // since they normally live on the denogres code outside of app folder
-import { introspect } from "https://deno.land/x/denogresdev/src/functions/introspect.ts";
-import { createClassName } from "https://deno.land/x/denogresdev/src/functions/StringFormat.ts";
+import { introspect } from "https://deno.land/x/denogresdev@v1.0.5/src/functions/introspect.ts";
+import { createClassName } from "https://deno.land/x/denogresdev@v1.0.5/src/functions/StringFormat.ts";
 import { Model } from "https://deno.land/x/denogresdev/mod.ts";
 
 // helper func to delete any keys in models that have value of false

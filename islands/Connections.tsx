@@ -56,7 +56,7 @@ export default function Connections() {
     const bodyObj = {
       uri: uriText
     };
-    const response = await fetch('/api/handleQueryRun', {
+    const response = await fetch('/gui/api/handleQueryRun', {
       method: "POST",
       body: JSON.stringify(bodyObj)
     });

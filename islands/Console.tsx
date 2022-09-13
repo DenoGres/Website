@@ -27,7 +27,7 @@ export default function Console() {
   const [indexToDisplay, setIndexToDisplay] = useState<number>(-1);
 
   const getModels = async (): Promise<any> => {
-    const res = await fetch('/api/handleQueryRun', {
+    const res = await fetch('/gui/api/handleQueryRun', {
       method: "POST",
       body: JSON.stringify({ getTextModels: true })
     });
@@ -61,7 +61,7 @@ export default function Console() {
       queryText,
     };
     setQueriesList([...queriesList, newQuery]);
-    await fetch("/api/handleQuerySave", {
+    await fetch("/gui/api/handleQuerySave", {
       method: "POST",
       body: JSON.stringify(newQuery),
     });
@@ -75,7 +75,7 @@ export default function Console() {
     const bodyObj = {
       queryText
     }
-    const res = await fetch('/api/handleQueryRun', {
+    const res = await fetch('/gui/api/handleQueryRun', {
       method: "POST",
       body: JSON.stringify(bodyObj)
     });
