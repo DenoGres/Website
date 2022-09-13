@@ -54,7 +54,7 @@ export const handler: Handlers = {
 
   // POST REQUEST
   async POST(req: Request, ctx: HandlerContext): Promise<Response> {
-    console.log("in POST: handleConnectionSave");
+    console.log("in POST: handleConnectionSave - POST");
     try {
       const cookies = cookie.getCookies(req.headers);
 
@@ -88,9 +88,46 @@ export const handler: Handlers = {
     }
   },
 
+  // PATCH REQUEST
+  async PATCH(req: Request, ctx: HandlerContext): Promise<Response> {
+    console.log("in POST: handleConnectionSave - PATCH");
+    try {
+      const cookies = cookie.getCookies(req.headers);
+
+      // if jwt exists, get user id from jwt, insert connection record
+      if (cookies.jwt) {
+        const [header, payload, signature] = decode(cookies.jwt);
+        const body = await req.json();
+        const {
+          connectionId,
+          connectionName,
+          address,
+          port,
+          username,
+          defaultDB,
+          password,
+        } = body;
+
+        const updateData: QueryObjectResult = await connection.queryObject(
+          `
+        UPDATE connections SET 
+        connection_name = '${connectionName}', connection_address ='${address}', port_number = ${port}, default_db = '${defaultDB}', db_username = '${username}', db_password = '${password}'
+        WHERE id = ${connectionId}
+      ;`,
+        );
+
+        return new Response("Successfully updated connection", {
+          status: 200,
+        });
+      }
+    } catch (err) {
+      return new Response(err, { status: 404 });
+    }
+  },
+
   // POST REQUEST
   async DELETE(req: Request, ctx: HandlerContext): Promise<Response> {
-    console.log("in POST: handleConnectionDELETE");
+    console.log("in POST: handleConnectionSave - DELETE");
     try {
       const cookies = cookie.getCookies(req.headers);
 
