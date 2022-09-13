@@ -159,6 +159,7 @@ export default function Connections() {
       const method = (type === "new") ? "POST" : "PATCH";
 
       const reqBody = {
+        connectionId,
         connectionName,
         address,
         port,
