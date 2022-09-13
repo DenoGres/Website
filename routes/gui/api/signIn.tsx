@@ -85,7 +85,7 @@ export const handler = {
           }
         } else {
           return new Response(
-            JSON.stringify({ err: "Login failed - invalid credentials " }),
+            JSON.stringify({ err: "Login failed - invalid credentials." }),
             { status: 404 },
           );
         }

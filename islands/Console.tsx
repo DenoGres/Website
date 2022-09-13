@@ -198,7 +198,7 @@ export default function Console() {
 
     return (
       <div
-        className={`bg-gray-100 m-1 p-2 text-gray-700 text-xs font-mono rounded`}
+        className={`bg-gray-100 m-3 p-5 pr-10 max-h-60 overflow-y-auto text-gray-700 text-xs font-mono rounded`}
       >
         <ul>{results}</ul>
       </div>
@@ -214,13 +214,13 @@ export default function Console() {
       <div className="w-5/12 bg-white rounded mx-3">
         <div className="h-2/4 p-3 flex flex-col items-center">
           <h2 className="mb-3">Saved Queries</h2>
-          <div className="flex flex-col w-full overflow-y-scroll">
+          <div className="flex flex-col w-full overflow-y-auto">
             {savedQueries}
           </div>
         </div>
         <div className="flex flex-col items-center p-3 h-2/4">
           <h2 className="mb-3">Active Models</h2>
-          <div className="flex flex-col w-full overflow-y-scroll">
+          <div className="flex flex-col w-full overflow-y-auto">
             {activeModelNames}
           </div>
           {
@@ -237,7 +237,7 @@ export default function Console() {
             ? (
               <div>
                 <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
-                  <div className="relative w-auto my-6 mx-auto max-w-3xl">
+                  <div className="relative w-auto my-6 mx-auto px-20 max-w-3xl">
                     {/*content*/}
                     <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                       {/*header*/}

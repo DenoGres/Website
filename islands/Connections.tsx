@@ -23,7 +23,6 @@ export default function Connections() {
     const getData = async (): Promise<void> => {
       const response = await fetch("/gui/api/handleConnectionSave");
       const data = await response.json();
-      console.log(data);
       setConnectList(data);
     };
     getData();
@@ -37,28 +36,24 @@ export default function Connections() {
   const [defaultDB, setDefaultDB] = useState<string>("");
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [showCreateModal, setShowCreateModal] = useState<boolean>(false);
-  const [modalCreateStatus, setModalCreateStatus] = useState<ModalStatus>({
-    show: false,
-    text: "",
-  });
   const [showErrorModal, setShowErrorModal] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<any[]>([]);
+  const [connectionType, setConnectionType] = useState<string>("new");
 
   // <------------ EVENT LISTENERS ------------>
 
-  // on clicking connect, save connection details (currently to local file) 
+  // on clicking connect, save connection details (currently to local file)
   // and post to handleQueryRun in order to cache that uri string for further queries
   const handleUriSaveAndRedirect = async (e: MouseEvent) => {
     e.preventDefault();
     const uriText =
       `postgres://${username}:${password}@${address}:${port}/${defaultDB}`;
     const bodyObj = {
-      uri: uriText
+      uri: uriText,
     };
-    const response = await fetch('/gui/api/handleQueryRun', {
+    const response = await fetch("/gui/api/handleQueryRun", {
       method: "POST",
-      body: JSON.stringify(bodyObj)
+      body: JSON.stringify(bodyObj),
     });
     if (response.status === 400) {
       const error = await response.json();
@@ -111,57 +106,30 @@ export default function Connections() {
 
     const connections = connectList.map((ele, idx) => {
       return (
-        <div className="bg-deno-blue-100 tracking-wider rounded flex flex-row justify-between my-1">
-          <button
-            key={idx}
-            className="text-sm shadow-sm font-medium text-gray-600 text-left flex-1 p-3"
-            type="button"
-            onClick={() => {
-              setConnectionId(ele.id);
-              setConnectionName(ele.connection_name);
-              setAddress(ele.connection_address);
-              setPort(ele.port_number);
-              setDefaultDB(ele.default_db);
-              setUsername(ele.db_username);
-              setPassword(ele.db_password);
-            }}
-          >
-            {ele.connection_name}
-          </button>
-          <button
-            className="text-sm shadow-sm font-medium text-gray-600 text-right p-3"
-            onClick={handleDelete}
-          >
-            x
-          </button>
-        </div>
+        <button
+          key={idx}
+          className="text-sm shadow-sm font-medium text-gray-600 text-left flex-1 p-3 bg-deno-pink-100 tracking-wider rounded flex flex-row justify-between my-1"
+          type="button"
+          onClick={() => {
+            setConnectionId(ele.id);
+            setConnectionName(ele.connection_name);
+            setAddress(ele.connection_address);
+            setPort(ele.port_number);
+            setDefaultDB(ele.default_db);
+            setUsername(ele.db_username);
+            setPassword(ele.db_password);
+            setConnectionType("old");
+          }}
+        >
+          {ele.connection_name}
+        </button>
       );
     });
-
-    // OPEN MODAL TO CREATE NEW CONNECTION
-    const openCreateModal = (): void => {
-      setConnectionId(null);
-      setConnectionName("");
-      setAddress("");
-      setPort(null);
-      setDefaultDB("");
-      setUsername("");
-      setPassword("");
-
-      setShowCreateModal(true);
-    };
 
     return (
       <div className="flex flex-col">
         {connections}
         <div className="flex flex-row justify-end my-1">
-          <button
-            onClick={openCreateModal}
-            type="button"
-            className="flex-0 bg-gray-300 py-1 px-2 text-sm shadow-sm font-medium text-gray-600 hover:shadow-2xl hover:bg-gray-400 rounded"
-          >
-            +
-          </button>
         </div>
       </div>
     );
@@ -254,25 +222,23 @@ export default function Connections() {
             type="button"
             className="bg-deno-pink-100 px-5 mx-1 py-3 text-sm shadow-sm font-medium tracking-wider text-gray-600 rounded-full hover:shadow-2xl hover:bg-deno-pink-200"
           >
-            Save
+            {(connectionType === "new") ? "Create" : "Update"}
           </button>
           <button
             type="button"
             className={"bg-deno-blue-100 px-5 mx-1 py-3 text-sm shadow-sm font-medium tracking-wider text-gray-600 rounded-full hover:shadow-2xl hover:bg-deno-blue-200" +
-              ((type === "new") ? " hidden" : "")}
-            onClick={handleUriSaveAndRedirect}
+              ((connectionType === "new") ? " hidden" : "")}
+            onClick={handleDelete}
           >
-            Connect
+            Delete
           </button>
           <button
             type="button"
-            onClick={() => {
-              setShowCreateModal(false);
-            }}
-            className={"bg-gray-300 px-5 mx-1 py-3 text-sm shadow-sm font-medium tracking-wider text-gray-600 rounded-full hover:shadow-2xl hover:bg-gray-400" +
-              ((type === "new") ? "" : " hidden")}
+            className={"bg-deno-blue-100 px-5 mx-1 py-3 text-sm shadow-sm font-medium tracking-wider text-gray-600 rounded-full hover:shadow-2xl hover:bg-deno-blue-200" +
+              ((connectionType === "new") ? " hidden" : "")}
+            onClick={handleUriSaveAndRedirect}
           >
-            Close
+            Connect
           </button>
         </div>
       </form>
@@ -295,50 +261,36 @@ export default function Connections() {
       </div>
       {/* <--------Import Model File MODAL--------> */}
       {showErrorModal
-            ? (
-              <div>
-                <div
-                  className={`justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-non`}
-                >
-                  <div className={`relative w-auto my-6 mx-auto max-w-3xl`}>
-                    {/*content*/}
-                    <div
-                      className={`border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none`}
-                    >
-                      {/*header*/}
-                      <div
-                        className={`flex items-start justify-between p-5 rounded-t`}
-                      >
-                      </div>
-                      <p>{errorMessage[0].Error}</p>
-                      <div
-                        className={`flex items-center justify-end p-6 border-solid border-slate-200 rounded-b`}
-                      >
-                        <button
-                          className={`bg-gray-500 text-white font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-300`}
-                          type="button"
-                          onClick={() => {
-                            setShowErrorModal(false);
-                          }}
-                        >
-                          Close
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )
-            : null}
-      {showCreateModal
         ? (
           <div>
-            <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
-              <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-3/12 max-w-3/12 pl-3 py-5 bg-white outline-none focus:outline-none">
-                <h2 className="text-xl font-semibold">
-                  Add New Connection
-                </h2>
-                {connectionForm("new")}
+            <div
+              className={`justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-non`}
+            >
+              <div className={`relative w-auto my-6 mx-auto max-w-3xl`}>
+                {/*content*/}
+                <div
+                  className={`border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none`}
+                >
+                  {/*header*/}
+                  <div
+                    className={`flex items-start justify-between p-5 rounded-t`}
+                  >
+                  </div>
+                  <p className="mx-5">{errorMessage[0].Error}</p>
+                  <div
+                    className={`flex items-center justify-end p-6 border-solid border-slate-200 rounded-b`}
+                  >
+                    <button
+                      className={`bg-gray-500 text-white font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-300`}
+                      type="button"
+                      onClick={() => {
+                        setShowErrorModal(false);
+                      }}
+                    >
+                      Close
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
