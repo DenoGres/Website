@@ -1,6 +1,6 @@
-import { useState } from "preact/hooks";
+import data from "https://deno.land/std@0.141.0/_wasm_crypto/crypto.wasm.mjs";
+import { useEffect, useState } from "preact/hooks";
 import connectionsJson from "../data/connections.json" assert { type: "json" };
-// import { nanoid } from "nanoid";
 
 export interface IConnectionObject {
   _id: string;
@@ -19,13 +19,23 @@ export interface ModalStatus {
 
 // list of saved connections
 export default function Connections() {
-  const [connectList, setConnectList] = useState<any[]>(connectionsJson);
-  const [connectionId, setConnectionId] = useState<number>(-Infinity);
-  const [connectionName, setconnectionName] = useState<string>("");
+  useEffect(() => {
+    const getData = async (): Promise<void> => {
+      const response = await fetch("/gui/api/handleConnectionSave");
+      const data = await response.json();
+      console.log(data);
+      setConnectList(data);
+    };
+    getData();
+  }, []);
+
+  const [connectList, setConnectList] = useState<any[]>([]);
+  const [connectionId, setConnectionId] = useState<number>();
+  const [connectionName, setConnectionName] = useState<string>("");
   const [address, setAddress] = useState<string>("");
-  const [port, setPort] = useState<string>("");
-  const [username, setUsername] = useState<string>("");
+  const [port, setPort] = useState<number>();
   const [defaultDB, setDefaultDB] = useState<string>("");
+  const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [showCreateModal, setShowCreateModal] = useState<boolean>(false);
   const [modalCreateStatus, setModalCreateStatus] = useState<ModalStatus>({
@@ -86,55 +96,59 @@ export default function Connections() {
 
   // <------------ LIST OF CONNECTIONS ------------>
   function connectionsList() {
+    const handleDelete = async (): Promise<void> => {
+      const reqBody = {
+        connectionId,
+      };
+
+      await fetch("/gui/api/handleConnectionSave", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(reqBody),
+      });
+      window.location.reload();
+    };
+
     const connections = connectList.map((ele, idx) => {
       return (
-        <button
-          key={idx}
-          className="bg-deno-blue-100 text-sm shadow-sm p-3 my-1 font-medium tracking-wider text-gray-600 rounded text-left"
-          type="button"
-          onClick={() => {
-            setConnectionId(ele._id);
-            setconnectionName(ele.name);
-            setAddress(ele.address);
-            setPort(ele.port);
-            setDefaultDB(ele.defaultdb);
-            setUsername(ele.username);
-            setPassword(ele.password);
-          }}
-        >
-          {ele.name}
-        </button>
+        <div className="bg-deno-blue-100 tracking-wider rounded flex flex-row justify-between my-1">
+          <button
+            key={idx}
+            className="text-sm shadow-sm font-medium text-gray-600 text-left flex-1 p-3"
+            type="button"
+            onClick={() => {
+              setConnectionId(ele.id);
+              setConnectionName(ele.connection_name);
+              setAddress(ele.connection_address);
+              setPort(ele.port_number);
+              setDefaultDB(ele.default_db);
+              setUsername(ele.db_username);
+              setPassword(ele.db_password);
+            }}
+          >
+            {ele.connection_name}
+          </button>
+          <button
+            className="text-sm shadow-sm font-medium text-gray-600 text-right p-3"
+            onClick={handleDelete}
+          >
+            x
+          </button>
+        </div>
       );
     });
 
-    // ADD NEW CONNECTION
+    // OPEN MODAL TO CREATE NEW CONNECTION
     const openCreateModal = (): void => {
-      setConnectionId(0);
-      setconnectionName("");
+      setConnectionId(null);
+      setConnectionName("");
       setAddress("");
-      setPort("");
+      setPort(null);
       setDefaultDB("");
       setUsername("");
       setPassword("");
 
       setShowCreateModal(true);
-      // const emptyObj = {
-      //   name: "",
-      //   address: "",
-      //   port: "",
-      //   username: "",
-      //   defaultdb: "",
-      //   password: "",
-      // };
-
-      // const emptyObjString = JSON.stringify(emptyObj);
-
-      // const response = await fetch("/api/getConnections", {
-      //   method: "POST",
-      //   headers: { "Content-Type": "application/json" },
-      // });
-      // const data = await response.json();
-      // console.log(data);
     };
 
     return (
@@ -161,12 +175,24 @@ export default function Connections() {
 
     const handleClick = async (): Promise<void> => {
       const method = (type === "new") ? "POST" : "PATCH";
-      const response = await fetch("/api/handleQuerySave", {
+
+      const reqBody = {
+        connectionName,
+        address,
+        port,
+        username,
+        defaultDB,
+        password,
+      };
+
+      console.log(reqBody);
+
+      await fetch("/gui/api/handleConnectionSave", {
         method,
         headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(reqBody),
       });
-      const data = await response.json();
-      console.log(data);
+      window.location.reload();
     };
 
     return (
@@ -174,19 +200,47 @@ export default function Connections() {
         <label className={labelStyle}>Connection Name:</label>
         <input
           className={inputStyle}
+          onInput={(e) => setConnectionName(e.currentTarget.value)}
           value={connectionName}
         >
         </input>
         <label className={labelStyle}>HostName/Address :</label>
-        <input className={inputStyle} value={address} onInput={(e) => setAddress(e.currentTarget.value)}></input>
+        <input
+          className={inputStyle}
+          onInput={(e) => setAddress(e.currentTarget.value)}
+          value={address}
+        >
+        </input>
         <label className={labelStyle}>Port Number:</label>
-        <input className={inputStyle} value={port} onInput={(e) => setPort(e.currentTarget.value)}></input>
+        <input
+          type="number"
+          className={inputStyle}
+          onInput={(e) => setPort(e.currentTarget.valueAsNumber)}
+          value={port}
+        >
+        </input>
         <label className={labelStyle}>Default DB:</label>
-        <input className={inputStyle} value={defaultDB} onInput={(e) => setDefaultDB(e.currentTarget.value)}></input>
+        <input
+          className={inputStyle}
+          onInput={(e) => setDefaultDB(e.currentTarget.value)}
+          value={defaultDB}
+        >
+        </input>
         <label className={labelStyle}>UserName:</label>
-        <input className={inputStyle} value={username} onInput={(e) => setUsername(e.currentTarget.value)}></input>
+        <input
+          className={inputStyle}
+          onInput={(e) => setUsername(e.currentTarget.value)}
+          value={username}
+        >
+        </input>
         <label className={labelStyle}>Password:</label>
-        <input className={inputStyle} value={password} type="password" onInput={(e) => setPassword(e.currentTarget.value)}></input>
+        <input
+          className={inputStyle}
+          onInput={(e) => setPassword(e.currentTarget.value)}
+          value={password}
+          type="password"
+        >
+        </input>
         <div className="flex flex-row py-5">
           <button
             type="button"

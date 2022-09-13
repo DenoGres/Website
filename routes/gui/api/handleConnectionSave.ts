@@ -4,9 +4,7 @@ import * as bcrypt from "https://deno.land/x/bcrypt/mod.ts";
 import * as cookie from "https://deno.land/std/http/cookie.ts";
 import { decode } from "https://deno.land/x/djwt/mod.ts";
 import { QueryObjectResult } from "https://deno.land/x/postgres@v0.16.1/query/query.ts";
-
-// obtain connection details from front-end and update local connections.json
-// TODO: add functionality to save to DB once set up
+import "https://deno.land/x/dotenv/load.ts";
 
 const POOL_CONNECTIONS = 3;
 const pool = new Pool(Deno.env.get("DB_URI"), POOL_CONNECTIONS, true);
@@ -22,14 +20,48 @@ interface Connection {
 }
 
 export const handler: Handlers = {
-  async POST(req: Request, ctx: HandlerContext): Promise<Response> {
+  // GET REQUEST
+  async GET(req: Request, ctx: HandlerContext): Promise<Response> {
     try {
       const cookies = cookie.getCookies(req.headers);
 
       // if jwt exists, get user id from jwt, insert connection record
       if (cookies.jwt) {
         const [header, payload, signature] = decode(cookies.jwt);
-        const body: Connection = await req.json();
+
+        const getUser: QueryObjectResult = await connection.queryObject(
+          `
+        SELECT id FROM users WHERE username = '${payload.payload.username}'
+        ;`,
+        );
+
+        const userId = getUser.rows[0].id;
+
+        const getData: QueryObjectResult = await connection.queryObject(
+          `
+          SELECT * FROM connections WHERE user_id = '${userId}'
+        ;`,
+        );
+
+        return new Response(JSON.stringify(getData.rows), {
+          status: 200,
+        });
+      }
+    } catch (err) {
+      return new Response(err, { status: 404 });
+    }
+  },
+
+  // POST REQUEST
+  async POST(req: Request, ctx: HandlerContext): Promise<Response> {
+    console.log("in POST: handleConnectionSave");
+    try {
+      const cookies = cookie.getCookies(req.headers);
+
+      // if jwt exists, get user id from jwt, insert connection record
+      if (cookies.jwt) {
+        const [header, payload, signature] = decode(cookies.jwt);
+        const body = await req.json();
         const { connectionName, address, port, username, defaultDB, password } =
           body;
 
@@ -40,16 +72,42 @@ export const handler: Handlers = {
         );
 
         const userId = getUser.rows[0].id;
-        const salt: string = await bcrypt.genSalt(8);
-        const hashedURIPw: string = await bcrypt.hash(password, salt);
         const insertData: QueryObjectResult = await connection.queryObject(
           `
           INSERT INTO connections (user_id, connection_name, connection_address, port_number, default_db, db_username, db_password)
-          VALUES (${userId}, '${connectionName}', '${address}', ${port}, '${defaultDB}', '${username}', '${hashedURIPw}')
+          VALUES (${userId}, '${connectionName}', '${address}', ${port}, '${defaultDB}', '${username}', '${password}')
         ;`,
         );
 
         return new Response("Successfully saved new connection", {
+          status: 200,
+        });
+      }
+    } catch (err) {
+      return new Response(err, { status: 404 });
+    }
+  },
+
+  // POST REQUEST
+  async DELETE(req: Request, ctx: HandlerContext): Promise<Response> {
+    console.log("in POST: handleConnectionDELETE");
+    try {
+      const cookies = cookie.getCookies(req.headers);
+
+      // if jwt exists, get user id from jwt, insert connection record
+      if (cookies.jwt) {
+        const body = await req.json();
+        const { connectionId } = body;
+
+        console.log(connectionId);
+
+        const deleteData: QueryObjectResult = await connection.queryObject(
+          `
+          DELETE FROM connections WHERE id = '${connectionId}'
+        ;`,
+        );
+
+        return new Response("Successfully deleted new connection", {
           status: 200,
         });
       }
