@@ -47,7 +47,8 @@ export default function Connections() {
   const handleUriSaveAndRedirect = async (e: MouseEvent) => {
     e.preventDefault();
     const uriText =
-      `postgres://${username}:${password}@${address}:${port}/${defaultDB}`;
+      // `postgres://${username}:${password}@${address}:${port}/${defaultDB}`;
+      `postgres://${username}:${password}@${address}/${defaultDB}`;
     const bodyObj = {
       uri: uriText,
     };

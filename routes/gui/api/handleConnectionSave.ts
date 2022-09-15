@@ -6,17 +6,14 @@ import { decode } from "https://deno.land/x/djwt/mod.ts";
 import { QueryObjectResult } from "https://deno.land/x/postgres@v0.16.1/query/query.ts";
 import "https://deno.land/x/dotenv/load.ts";
 
-// const POOL_CONNECTIONS = 3;
-// const pool = new Pool(Deno.env.get("DB_URI"), POOL_CONNECTIONS, true);
-// const connection = await pool.connect();
-
-interface Connection {
-  connectionName: string;
-  address: string;
-  port: string;
+interface payloadObj {
+  id: number;
   username: string;
-  defaultDB: string;
-  password: string;
+  exp: number;
+}
+
+interface payload {
+  payload: payloadObj;
 }
 
 export const handler: Handlers = {
@@ -27,7 +24,7 @@ export const handler: Handlers = {
 
       // if jwt exists, get user id from jwt, insert connection record
       if (cookies.jwt) {
-        const [_header, payload, _signature] = decode(cookies.jwt);
+        const payload = decode(cookies.jwt)[1] as payload;
 
         const POOL_CONNECTIONS = 3;
         const pool = new Pool(Deno.env.get("DB_URI"), POOL_CONNECTIONS, true);
@@ -70,7 +67,8 @@ export const handler: Handlers = {
 
       // if jwt exists, get user id from jwt, insert connection record
       if (cookies.jwt) {
-        const [_header, payload, _signature] = decode(cookies.jwt);
+        const payload = decode(cookies.jwt)[1] as payload;
+
         const body = await req.json();
         const { connectionName, address, port, username, defaultDB, password } =
           body;
@@ -161,8 +159,6 @@ export const handler: Handlers = {
       if (cookies.jwt) {
         const body = await req.json();
         const { connectionId } = body;
-
-        console.log(connectionId);
 
         const POOL_CONNECTIONS = 3;
         const pool = new Pool(Deno.env.get("DB_URI"), POOL_CONNECTIONS, true);
