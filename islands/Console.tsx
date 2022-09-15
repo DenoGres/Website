@@ -1,10 +1,9 @@
 import { useEffect, useState } from "preact/hooks";
 import Record from "../components/Record.tsx";
-import queriesJson from "../data/queries.json" assert { type: "json" };
+// import queriesJson from "../data/queries.json" assert { type: "json" };
 // import { nanoid } from "nanoid";
 
 export interface IQueryObject {
-  _id: string;
   queryName: string;
   queryText: string;
 }
@@ -21,7 +20,7 @@ export default function Console() {
   const [queryText, setQueryText] = useState<string>("");
 
   const [records, setRecords] = useState<object[]>([]);
-  const [queriesList, setQueriesList] = useState<IQueryObject[]>(queriesJson);
+  const [queriesList, setQueriesList] = useState<any[]>([]);
   const [modelNames, setModelNames] = useState<string[]>([]);
   const [modelContent, setModelContent] = useState<object[]>([]);
   const [indexToDisplay, setIndexToDisplay] = useState<number>(-1);
@@ -48,25 +47,53 @@ export default function Console() {
     getModelsToDisplay();
   }, []);
 
+  // on first load, make GET request to retrieve saved queries from DB
+  useEffect(() => {
+    const getQueriesToDisplay = async (): Promise<void> => {
+      const response = await fetch("/gui/api/handleQuerySave");
+      const queries = await response.json();
+      console.log(queries);
+      setQueriesList(queries);
+    };
+    getQueriesToDisplay();
+  }, []);
+
   // ----EVENT LISTENERS -----
 
-  // TODO: loading queryList data from external DB instead of local file
-
-  // Saves query object in local JSON file and reset query name/text fields
-  const handleSave = async (e: MouseEvent) => {
+  // Saves query in external DB
+  const handleSave = async (e: MouseEvent): Promise<void> => {
     e.preventDefault();
     const newQuery: IQueryObject = {
-      _id: "placeholderid",
       queryName,
       queryText,
     };
-    setQueriesList([...queriesList, newQuery]);
+    console.log(newQuery);
     await fetch("/gui/api/handleQuerySave", {
       method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newQuery),
     });
+    // can also opt to reload!
+    // window.location.reload();
+    setQueriesList([...queriesList, newQuery]);
     setQueryName("");
     setQueryText("");
+  };
+
+  // Deletes current query from external DB
+  const handleDelete = async (e: MouseEvent): Promise<void> => {
+    e.preventDefault();
+    const reqBody = {
+      queryName,
+      queryText
+    };
+
+    await fetch("/gui/api/handleConnectionSave", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(reqBody),
+    });
+    window.location.reload();
   };
 
   // Runs query and updates state to render result
@@ -91,11 +118,11 @@ export default function Console() {
         className="bg-deno-blue-100 text-sm shadow-sm p-3 my-1 font-medium tracking-wider text-gray-600 rounded text-left"
         type="button"
         onClick={(e) => {
-          setQueryName(ele.queryName);
-          setQueryText(ele.queryText);
+          setQueryName(ele.query_name);
+          setQueryText(ele.query_text);
         }}
       >
-        {ele.queryName}
+        {ele.query_name}
       </button>
     );
   });

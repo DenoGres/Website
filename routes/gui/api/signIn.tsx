@@ -33,6 +33,9 @@ export const handler = {
       console.log("in signIn Handler");
       const body: Ilogin = await req.json();
       const { username, password } = body;
+      // const body: any = ctx.state.data;
+      // const { username, password } = { username: "ediWu", password: "password"};
+      // console.log(body);
 
       const POOL_CONNECTIONS = 3;
       const pool = new Pool(Deno.env.get("DB_URI"), POOL_CONNECTIONS, true);

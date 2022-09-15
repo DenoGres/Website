@@ -1,6 +1,6 @@
 import data from "https://deno.land/std@0.141.0/_wasm_crypto/crypto.wasm.mjs";
 import { useEffect, useState } from "preact/hooks";
-import connectionsJson from "../data/connections.json" assert { type: "json" };
+// import connectionsJson from "../data/connections.json" assert { type: "json" };
 
 export interface IConnectionObject {
   _id: string;
@@ -51,6 +51,10 @@ export default function Connections() {
     const bodyObj = {
       uri: uriText,
     };
+    await fetch("/gui/api/setConnectionIdCookie", {
+      method: "POST",
+      body: JSON.stringify({ connectionId }),
+    });
     const response = await fetch("/gui/api/handleQueryRun", {
       method: "POST",
       body: JSON.stringify(bodyObj),
