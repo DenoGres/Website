@@ -6,9 +6,9 @@ import { decode } from "https://deno.land/x/djwt/mod.ts";
 import { QueryObjectResult } from "https://deno.land/x/postgres@v0.16.1/query/query.ts";
 import "https://deno.land/x/dotenv/load.ts";
 
-const POOL_CONNECTIONS = 3;
-const pool = new Pool(Deno.env.get("DB_URI"), POOL_CONNECTIONS, true);
-const connection = await pool.connect();
+// const POOL_CONNECTIONS = 3;
+// const pool = new Pool(Deno.env.get("DB_URI"), POOL_CONNECTIONS, true);
+// const connection = await pool.connect();
 
 interface Connection {
   connectionName: string;
@@ -29,6 +29,10 @@ export const handler: Handlers = {
       if (cookies.jwt) {
         const [header, payload, signature] = decode(cookies.jwt);
 
+        const POOL_CONNECTIONS = 3;
+        const pool = new Pool(Deno.env.get("DB_URI"), POOL_CONNECTIONS, true);
+        const connection = await pool.connect();
+
         const getUser: QueryObjectResult = await connection.queryObject(
           `
         SELECT id FROM users WHERE username = '${payload.payload.username}'
@@ -42,6 +46,9 @@ export const handler: Handlers = {
           SELECT * FROM connections WHERE user_id = '${userId}'
         ;`,
         );
+
+        // close connection
+        connection.end();
 
         return new Response(JSON.stringify(getData.rows), {
           status: 200,
@@ -65,6 +72,10 @@ export const handler: Handlers = {
         const { connectionName, address, port, username, defaultDB, password } =
           body;
 
+        const POOL_CONNECTIONS = 3;
+        const pool = new Pool(Deno.env.get("DB_URI"), POOL_CONNECTIONS, true);
+        const connection = await pool.connect();
+
         const getUser: QueryObjectResult = await connection.queryObject(
           `
         SELECT id, username, password FROM users WHERE username = '${payload.payload.username}'
@@ -72,12 +83,14 @@ export const handler: Handlers = {
         );
 
         const userId = getUser.rows[0].id;
-        const insertData: QueryObjectResult = await connection.queryObject(
+        await connection.queryObject(
           `
           INSERT INTO connections (user_id, connection_name, connection_address, port_number, default_db, db_username, db_password)
           VALUES (${userId}, '${connectionName}', '${address}', ${port}, '${defaultDB}', '${username}', '${password}')
         ;`,
         );
+
+        connection.end();
 
         return new Response("Successfully saved new connection", {
           status: 200,
@@ -108,13 +121,19 @@ export const handler: Handlers = {
           password,
         } = body;
 
-        const updateData: QueryObjectResult = await connection.queryObject(
+        const POOL_CONNECTIONS = 3;
+        const pool = new Pool(Deno.env.get("DB_URI"), POOL_CONNECTIONS, true);
+        const connection = await pool.connect();
+
+        await connection.queryObject(
           `
         UPDATE connections SET 
         connection_name = '${connectionName}', connection_address ='${address}', port_number = ${port}, default_db = '${defaultDB}', db_username = '${username}', db_password = '${password}'
         WHERE id = ${connectionId}
       ;`,
         );
+
+        connection.end();
 
         return new Response("Successfully updated connection", {
           status: 200,
@@ -138,11 +157,17 @@ export const handler: Handlers = {
 
         console.log(connectionId);
 
-        const deleteData: QueryObjectResult = await connection.queryObject(
+        const POOL_CONNECTIONS = 3;
+        const pool = new Pool(Deno.env.get("DB_URI"), POOL_CONNECTIONS, true);
+        const connection = await pool.connect();
+
+        await connection.queryObject(
           `
           DELETE FROM connections WHERE id = '${connectionId}'
         ;`,
         );
+
+        connection.end();
 
         return new Response("Successfully deleted new connection", {
           status: 200,
