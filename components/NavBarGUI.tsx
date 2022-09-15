@@ -60,6 +60,20 @@ function NavBarGUI(props: { active: string }) {
         d="M2.25 15a4.5 4.5 0 004.5 4.5H18a3.75 3.75 0 001.332-7.257 3 3 0 00-3.758-3.848 5.25 5.25 0 00-10.233 2.33A4.502 4.502 0 002.25 15z"
       />
     </svg>,
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke-width={1.75}
+      stroke="currentColor"
+      className="w-7 h-7"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75"
+      />
+    </svg>,
   ];
 
   return (
@@ -68,6 +82,7 @@ function NavBarGUI(props: { active: string }) {
       <NavLink href="/gui/connections" active={active} svg={svgArray[1]} />
       <NavLink href="/gui/explorer" active={active} svg={svgArray[2]} />
       <NavLink href="/gui/migrations" active={active} svg={svgArray[3]} />
+      <NavLink href="/gui/logout" active={active} svg={svgArray[4]} />
     </nav>
   );
 }

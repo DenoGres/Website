@@ -10,9 +10,9 @@ import { QueryObjectResult } from "https://deno.land/x/postgres@v0.16.1/query/qu
 
 //import * as postgres from "https://deno.land/x/postgres/mod.ts";
 
-const POOL_CONNECTIONS = 3;
-const pool = new Pool(Deno.env.get("DB_URI"), POOL_CONNECTIONS, true);
-const connection = await pool.connect();
+// const POOL_CONNECTIONS = 3;
+// const pool = new Pool(Deno.env.get("DB_URI"), POOL_CONNECTIONS, true);
+// const connection = await pool.connect();
 
 interface Ilogin {
   username: string;
@@ -34,6 +34,10 @@ export const handler = {
       const body: Ilogin = await req.json();
       const { username, password } = body;
 
+      const POOL_CONNECTIONS = 3;
+      const pool = new Pool(Deno.env.get("DB_URI"), POOL_CONNECTIONS, true);
+      const connection = await pool.connect();
+
       // check if user exists, if user does not exist - return 404
       const checkUser: QueryObjectResult = await connection.queryObject(
         `
@@ -41,9 +45,10 @@ export const handler = {
       `,
       );
 
+      connection.end();
+
       // check the PW against the DB
       if (checkUser.rows.length > 0) {
-        // TODO: set up JWT and redirect passing JWT
         const checkPW: boolean = await bcrypt.compare(
           password,
           checkUser.rows[0].password,
@@ -83,13 +88,13 @@ export const handler = {
 
             return res;
           }
-        } else {
-          return new Response(
-            JSON.stringify({ err: "Login failed - invalid credentials." }),
-            { status: 404 },
-          );
         }
       }
+
+      return new Response(
+        JSON.stringify({ err: "Login failed - invalid credentials." }),
+        { status: 404 },
+      );
     } catch (err) {
       return new Response(
         JSON.stringify({ err }),

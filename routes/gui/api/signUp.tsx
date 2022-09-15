@@ -9,10 +9,6 @@ import {
 
 //import * as postgres from "https://deno.land/x/postgres/mod.ts";
 
-const POOL_CONNECTIONS = 3;
-const pool = new Pool(Deno.env.get("DB_URI"), POOL_CONNECTIONS, true);
-const connection = await pool.connect();
-
 export interface Ilogin {
   username: string;
   password: string;
@@ -25,6 +21,10 @@ export const handler = {
       const { username, password } = body;
       const salt: string = await bcrypt.genSalt(8);
       const hashedPW: string = await bcrypt.hash(password, salt);
+
+      const POOL_CONNECTIONS = 3;
+      const pool = new Pool(Deno.env.get("DB_URI"), POOL_CONNECTIONS, true);
+      const connection = await pool.connect();
 
       // write to DB
       const checkUser: QueryObjectResult = await connection.queryObject(
@@ -44,6 +44,8 @@ export const handler = {
         SELECT id, username, password FROM users WHERE username = '${username}'
         `,
         );
+
+        connection.end();
 
         return new Response(JSON.stringify({ username, password }), {
           status: 201,
