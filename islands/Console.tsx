@@ -83,22 +83,6 @@ export default function Console() {
     setRecords(data);
   };
 
-  // TODO: remove since we will be saving to ext DB
-  // save user supplied model.ts locally for reference
-  // const handleModelSave = async (e: MouseEvent) => {
-  //   e.preventDefault();
-  //   await fetch("/api/handleModelSave", {
-  //     method: "POST",
-  //     body: JSON.stringify(modelText),
-  //   });
-  //   setShowModal(false);
-  //   setModelText("");
-  // after model.ts has been saved, server can return an array of strings
-  // representing names of models in the file
-  // these can be displayed on the left hand side under "availale models"
-  // stretch: clicking name of model pulls up its schema
-  // };
-
   // map saved queries to display components
   const savedQueries = queriesList.map((ele, idx) => {
     return (

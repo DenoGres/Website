@@ -42,8 +42,8 @@ export default function Connections() {
 
   // <------------ EVENT LISTENERS ------------>
 
-  // on clicking connect, save connection details (currently to local file)
-  // and post to handleQueryRun in order to cache that uri string for further queries
+  // on clicking connect, attempt to validate uri by retrieving models
+  // if successful, cache uri in handleQueryRun for further queries
   const handleUriSaveAndRedirect = async (e: MouseEvent) => {
     e.preventDefault();
     const uriText =
@@ -57,30 +57,10 @@ export default function Connections() {
     });
     if (response.status === 400) {
       const error = await response.json();
-      console.log(error);
       await setErrorMessage(error);
       await displayErrorModal();
       return;
     }
-
-    // const newConnectionObject: IConnectionObject = {
-    //   _id: nanoid(),
-    //   name: connectionName,
-    //   address,
-    //   port,
-    //   username,
-    //   defaultdb: defaultDB,
-    //   password
-    // };
-    // setConnectList([...connectList, newConnectionObject]);
-    // await fetch("/api/handleConnectionSave", {
-    //   method: "POST",
-    //   body: JSON.stringify(newConnectionObject),
-    // });
-
-    // can add logic to save connection to list on clicking "connect"
-    // in future this will be a request to db to save connection assoc. w/ user
-
     // must be a better way to do this. maybe can get preact router working?
     window.location.href = "/gui/explorer";
   };
@@ -91,18 +71,18 @@ export default function Connections() {
 
   // <------------ LIST OF CONNECTIONS ------------>
   function connectionsList() {
-    const handleDelete = async (): Promise<void> => {
-      const reqBody = {
-        connectionId,
-      };
+    // const handleDelete = async (): Promise<void> => {
+    //   const reqBody = {
+    //     connectionId,
+    //   };
 
-      await fetch("/gui/api/handleConnectionSave", {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(reqBody),
-      });
-      window.location.reload();
-    };
+    //   await fetch("/gui/api/handleConnectionSave", {
+    //     method: "DELETE",
+    //     headers: { "Content-Type": "application/json" },
+    //     body: JSON.stringify(reqBody),
+    //   });
+    //   window.location.reload();
+    // };
 
     const connections = connectList.map((ele, idx) => {
       return (
@@ -142,7 +122,7 @@ export default function Connections() {
       "my-1 py-2 px-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-11/12";
 
     const handleClick = async (): Promise<void> => {
-      const method = (type === "new") ? "POST" : "PATCH";
+      const method = (connectionType === "new") ? "POST" : "PATCH";
 
       const reqBody = {
         connectionId,

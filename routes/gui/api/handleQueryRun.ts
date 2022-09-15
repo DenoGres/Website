@@ -35,6 +35,7 @@ export const handler: Handlers = {
           { status: 400 }
         );
       }
+      // need to instead return new response
       return new Response('Successfully cached connection URI & database models.', { status: 200 });
     }
 
