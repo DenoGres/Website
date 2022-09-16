@@ -22,9 +22,10 @@ export default function Console() {
   const [queriesList, setQueriesList] = useState<any[]>([]);
   const [modelNames, setModelNames] = useState<string[]>([]);
   const [modelContent, setModelContent] = useState<object[]>([]);
-  const [indexToDisplay, setIndexToDisplay] = useState<number>(-1);
+  const [indexToDisplay, setIndexToDisplay] = useState<number>(NaN);
   const [queryType, setQueryType] = useState<string>("new");
 
+  // retrieve models as stringifiable plain objects (i.e. not classes) to render
   const getModels = async (): Promise<any> => {
     const res = await fetch("/gui/api/handleRequests", {
       method: "POST",
@@ -47,17 +48,28 @@ export default function Console() {
     getModelsToDisplay();
   }, []);
 
+  // fetch all saved queries related to this connection and display
+  // sorted in descending query ID order
+  const getQueriesToDisplay = async (): Promise<void> => {
+    const response = await fetch("/gui/api/handleQuerySave");
+    const queries = await response.json();
+    console.log(queries);
+    const sortedList = queries.sort((a: any, b: any) => b.id - a.id);
+    setQueriesList(sortedList);
+  };
+
   // on first load, make GET request to retrieve saved queries from DB
   useEffect(() => {
-    const getQueriesToDisplay = async (): Promise<void> => {
-      const response = await fetch("/gui/api/handleQuerySave");
-      const queries = await response.json();
-      console.log(queries);
-      const sortedList = queries.sort((a: any, b: any) => b.id - a.id);
-      setQueriesList(sortedList);
-    };
     getQueriesToDisplay();
   }, []);
+
+  // function to reset state for all fields
+  const resetAllFields = (): void => {
+    setQueryName("");
+    setQueryText("");
+    setQueryId(NaN);
+    setQueryType("new");
+  };
 
   // ----EVENT LISTENERS -----
 
@@ -80,7 +92,8 @@ export default function Console() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newQuery),
     });
-    window.location.reload();
+    getQueriesToDisplay();
+    resetAllFields();
   };
 
   // Deletes current query from external DB
@@ -89,13 +102,13 @@ export default function Console() {
     const reqBody = {
       queryId
     };
-    console.log(reqBody);
     await fetch("/gui/api/handleQuerySave", {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(reqBody),
     });
-    window.location.reload();
+    getQueriesToDisplay();
+    resetAllFields();
   };
 
   // Runs query and updates state to render result
@@ -233,12 +246,7 @@ export default function Console() {
             <button
               className="bg-deno-pink-100 text-sm shadow-sm p-3 my-1 font-medium tracking-wider text-gray-600 rounded text-left"
               type="button"
-              onClick={(e) => {
-                setQueryName("");
-                setQueryText("");
-                setQueryId(-1);
-                setQueryType("new");
-              }}
+              onClick={resetAllFields}
             >
               Add New Query
             </button>
@@ -249,15 +257,6 @@ export default function Console() {
           <div className="flex flex-col w-full overflow-y-auto">
             {activeModelNames}
           </div>
-          {
-            /* <button
-            type="button"
-            className="bg-gray-300 px-5 mx-1 py-3 text-sm shadow-sm font-medium tracking-wider text-gray-600 rounded-full hover:shadow-2xl hover:bg-gray-400"
-            onClick={() => setShowModal(true)}
-          >
-            Import Model File
-          </button> */
-          }
           {/* <-------- Model File MODAL--------> */}
           {showModal
             ? (
@@ -279,33 +278,9 @@ export default function Console() {
                         </button>
                       </div>
                       {/*body*/}
-                      {
-                        /* <div className="relative px-6 flex-auto">
-                        <textarea
-                          className={textArea}
-                          onInput={(e) => {
-                            setModelText(e.currentTarget.value);
-                          }}
-                          value={modelText}
-                          id="queryInput"
-                          name="queryInput"
-                          rows={20}
-                          cols={70}
-                        />
-                      </div> */
-                      }
                       {activeModelContent[indexToDisplay]}
                       {/*footer*/}
                       <div className="flex items-center justify-end p-6 border-solid border-slate-200 rounded-b">
-                        {
-                          /* <button
-                          className="bg-gray-500 text-white font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-300"
-                          type="button"
-                          onClick={handleModelSave}
-                        >
-                          Save
-                        </button> */
-                        }
                         <button
                           className="bg-gray-500 text-white font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-300"
                           type="button"

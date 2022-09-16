@@ -1,4 +1,3 @@
-import data from "https://deno.land/std@0.141.0/_wasm_crypto/crypto.wasm.mjs";
 import { useEffect, useState } from "preact/hooks";
 
 export interface IConnectionObject {
@@ -20,16 +19,10 @@ export interface ModalStatus {
   text: string;
 }
 
+
+
 // list of saved connections
 export default function Connections() {
-  useEffect(() => {
-    const getData = async (): Promise<void> => {
-      const response = await fetch("/gui/api/handleConnectionSave");
-      const data = await response.json();
-      setConnectList(data);
-    };
-    getData();
-  }, []);
 
   const [connectList, setConnectList] = useState<IConnectionObject[]>([]);
   const [connectionId, setConnectionId] = useState<number>();
@@ -43,14 +36,37 @@ export default function Connections() {
   const [errorMessage, setErrorMessage] = useState<any[]>([]);
   const [connectionType, setConnectionType] = useState<string>("new");
 
+  // function to retrieve list of connections to render
+  const getData = async (): Promise<void> => {
+    const response = await fetch("/gui/api/handleConnectionSave");
+    const data = await response.json();
+    setConnectList(data);
+  };
+
+  // render connection list on first load
+  useEffect(() => {
+    getData();
+  }, []);
+
+  // function to reset state for all fields
+  const resetAllFields = (): void => {
+    setConnectionId(NaN);
+    setConnectionName("");
+    setAddress("");
+    setPort(NaN);
+    setDefaultDB("");
+    setUsername("");
+    setPassword("");
+    setConnectionType("new");
+  }
+
   // <------------ EVENT LISTENERS ------------>
 
   // on clicking connect, attempt to validate uri by retrieving models
-  // if successful, cache uri in handleRequests for further queries
+  // if successful, cache uri and models in handleRequests for further queries
   const handleUriSaveAndRedirect = async (e: MouseEvent) => {
     e.preventDefault();
     const uriText =
-      // `postgres://${username}:${password}@${address}:${port}/${defaultDB}`;
       `postgres://${username}:${password}@${address}/${defaultDB}`;
     const reqBody = {
       uri: uriText,
@@ -71,7 +87,6 @@ export default function Connections() {
       await displayErrorModal();
       return;
     }
-    // must be a better way to do this. maybe can get preact router working?
     window.location.href = "/gui/explorer";
   };
 
@@ -132,14 +147,13 @@ export default function Connections() {
         password,
       };
 
-      console.log(reqBody);
-
       await fetch("/gui/api/handleConnectionSave", {
         method,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(reqBody),
       });
-      window.location.reload();
+      getData();
+      resetAllFields();
     };
 
     const handleDelete = async (): Promise<void> => {
@@ -152,7 +166,8 @@ export default function Connections() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(reqBody),
       });
-      window.location.reload();
+      getData();
+      resetAllFields();
     };
 
     return (
@@ -244,16 +259,7 @@ export default function Connections() {
         <button
           className="text-sm shadow-sm font-medium text-gray-600 text-left flex-1 p-3 bg-deno-pink-100 tracking-wider rounded flex flex-row justify-between my-1"
           type="button"
-          onClick={(e) => {
-            setConnectionId(NaN);
-            setConnectionName("");
-            setAddress("");
-            setPort(NaN);
-            setDefaultDB("");
-            setUsername("");
-            setPassword("");
-            setConnectionType("new");
-          }}
+          onClick={resetAllFields}
         >
           Add New Connection
         </button>
