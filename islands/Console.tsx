@@ -152,14 +152,14 @@ export default function Console() {
     );
   });
 
-  // map retrieved model names to buttons that open modal on mouse enter
+  // map retrieved model names to buttons that open modal on click
   const activeModelNames = modelNames.map((ele, idx) => {
     return (
       <button
         key={idx}
         className={`bg-deno-blue-100 text-sm shadow-sm p-3 my-1 font-medium tracking-wider text-gray-600 rounded text-left`}
         type="button"
-        onMouseEnter={() => {
+        onClick={() => {
           setShowModal(true);
           setIndexToDisplay(idx);
         }}
@@ -169,7 +169,6 @@ export default function Console() {
     );
   });
 
-  // TODO:  modal dimensions & styling
   // map retrieved model content to an array of records
   const activeModelContent = modelContent.map((ele) => {
     let results: any[] = [];

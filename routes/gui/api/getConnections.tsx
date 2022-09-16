@@ -4,7 +4,7 @@ import { IConnectionObject } from "../../../islands/Connections.tsx";
 // obtain connection details from front-end and update local connections.json
 // TODO: add functionality to save to DB once set up
 export const handler: Handlers = {
-  async POST(req: Request, ctx: HandlerContext): Promise<Response> {
+  async POST(req: Request, _ctx: HandlerContext): Promise<Response> {
     const newConnectionObject: IConnectionObject = await req.json();
     const path = "./data/connections.json";
     const savedConnections: IConnectionObject[] = JSON.parse(

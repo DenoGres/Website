@@ -1,9 +1,9 @@
 import { HandlerContext, Handlers } from "$fresh/server.ts";
-import * as cookie from "https://deno.land/std/http/cookie.ts";
+import * as cookie from "cookie/cookie.ts";
 
 export const handler: Handlers = {
   // GET REQUEST
-  async POST(req: Request, ctx: HandlerContext): Promise<Response> {
+  async POST(req: Request, _ctx: HandlerContext): Promise<Response> {
     const { connectionId } = await req.json();
     const res = new Response(
       null,
@@ -16,5 +16,5 @@ export const handler: Handlers = {
       httpOnly: true,
     });
     return res;
-  }
+  },
 };

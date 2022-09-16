@@ -13,15 +13,17 @@ import * as $6 from "./routes/gui/api/handleConnectionSave.ts";
 import * as $7 from "./routes/gui/api/handleModelSave.ts";
 import * as $8 from "./routes/gui/api/handleQueryRun.ts";
 import * as $9 from "./routes/gui/api/handleQuerySave.ts";
-import * as $10 from "./routes/gui/api/signIn.tsx";
-import * as $11 from "./routes/gui/api/signUp.tsx";
-import * as $12 from "./routes/gui/api/writeUriToFile.ts";
-import * as $13 from "./routes/gui/connections.tsx";
-import * as $14 from "./routes/gui/explorer.tsx";
-import * as $15 from "./routes/gui/home.tsx";
-import * as $16 from "./routes/gui/index.tsx";
-import * as $17 from "./routes/gui/migrations.tsx";
-import * as $18 from "./routes/index.tsx";
+import * as $10 from "./routes/gui/api/mwexp.ts";
+import * as $11 from "./routes/gui/api/setConnectionIdCookie.ts";
+import * as $12 from "./routes/gui/api/signIn.tsx";
+import * as $13 from "./routes/gui/api/signUp.tsx";
+import * as $14 from "./routes/gui/api/writeUriToFile.ts";
+import * as $15 from "./routes/gui/connections.tsx";
+import * as $16 from "./routes/gui/explorer.tsx";
+import * as $17 from "./routes/gui/home.tsx";
+import * as $18 from "./routes/gui/index.tsx";
+import * as $19 from "./routes/gui/migrations.tsx";
+import * as $20 from "./routes/index.tsx";
 import * as $$0 from "./islands/Connections.tsx";
 import * as $$1 from "./islands/Console.tsx";
 import * as $$2 from "./islands/DocsNav.tsx";
@@ -41,15 +43,17 @@ const manifest = {
     "./routes/gui/api/handleModelSave.ts": $7,
     "./routes/gui/api/handleQueryRun.ts": $8,
     "./routes/gui/api/handleQuerySave.ts": $9,
-    "./routes/gui/api/signIn.tsx": $10,
-    "./routes/gui/api/signUp.tsx": $11,
-    "./routes/gui/api/writeUriToFile.ts": $12,
-    "./routes/gui/connections.tsx": $13,
-    "./routes/gui/explorer.tsx": $14,
-    "./routes/gui/home.tsx": $15,
-    "./routes/gui/index.tsx": $16,
-    "./routes/gui/migrations.tsx": $17,
-    "./routes/index.tsx": $18,
+    "./routes/gui/api/mwexp.ts": $10,
+    "./routes/gui/api/setConnectionIdCookie.ts": $11,
+    "./routes/gui/api/signIn.tsx": $12,
+    "./routes/gui/api/signUp.tsx": $13,
+    "./routes/gui/api/writeUriToFile.ts": $14,
+    "./routes/gui/connections.tsx": $15,
+    "./routes/gui/explorer.tsx": $16,
+    "./routes/gui/home.tsx": $17,
+    "./routes/gui/index.tsx": $18,
+    "./routes/gui/migrations.tsx": $19,
+    "./routes/index.tsx": $20,
   },
   islands: {
     "./islands/Connections.tsx": $$0,

@@ -1,19 +1,23 @@
 import { HandlerContext, Handlers } from "$fresh/server.ts";
-import { Pool } from "https://deno.land/x/postgres/mod.ts";
-import * as cookie from "https://deno.land/std/http/cookie.ts";
-import { QueryObjectResult } from "https://deno.land/x/postgres@v0.16.1/query/query.ts";
-import "https://deno.land/x/dotenv/load.ts";
+import { Pool, PoolClient } from "pg/mod.ts";
+import * as cookie from "cookie/cookie.ts";
+import { QueryObjectResult } from "pg/query/query.ts";
 import formatQueryText from "../../../utils/formatQueryTextToSave.ts";
+
+const connectToDb = async (): Promise<PoolClient> => {
+  const POOL_CONNECTIONS = 3;
+  const pool = new Pool(Deno.env.get("DB_URI"), POOL_CONNECTIONS, true);
+  const connection = await pool.connect();
+  return connection;
+}
 
 export const handler: Handlers = {
   // GET REQUEST
-  async GET(req: Request, ctx: HandlerContext): Promise<Response> {
+  async GET(req: Request, _ctx: HandlerContext): Promise<Response> {
     try {
       const { connectionId } = cookie.getCookies(req.headers);
 
-      const POOL_CONNECTIONS = 3;
-      const pool = new Pool(Deno.env.get("DB_URI"), POOL_CONNECTIONS, true);
-      const connection = await pool.connect();
+      const connection = await connectToDb();
 
       const queryList: QueryObjectResult = await connection.queryObject(
         `
@@ -24,8 +28,8 @@ export const handler: Handlers = {
       connection.end();
 
       return new Response(
-        JSON.stringify(queryList.rows), 
-        {status: 200,}
+        JSON.stringify(queryList.rows),
+        { status: 200 },
       );
     } catch (err) {
       return new Response(err, { status: 404 });
@@ -33,14 +37,12 @@ export const handler: Handlers = {
   },
 
   // POST REQUEST
-  async POST(req: Request, ctx: HandlerContext): Promise<Response> {
+  async POST(req: Request, _ctx: HandlerContext): Promise<Response> {
     console.log("in POST: handleQuerySave - POST");
     try {
       const { connectionId } = cookie.getCookies(req.headers);
 
-      const POOL_CONNECTIONS = 3;
-      const pool = new Pool(Deno.env.get("DB_URI"), POOL_CONNECTIONS, true);
-      const connection = await pool.connect();
+      const connection = await connectToDb();
 
       const { queryName, queryText } = await req.json();
       const formattedQuery = formatQueryText(queryText);
@@ -62,16 +64,14 @@ export const handler: Handlers = {
   },
 
   // PATCH REQUEST
-  async PATCH(req: Request, ctx: HandlerContext): Promise<Response> {
+  async PATCH(req: Request, _ctx: HandlerContext): Promise<Response> {
     console.log("in PATCH: handleQuerySave - PATCH");
     try {
-      const POOL_CONNECTIONS = 3;
-      const pool = new Pool(Deno.env.get("DB_URI"), POOL_CONNECTIONS, true);
-      const connection = await pool.connect();
-
       const { queryName, queryText, queryId } = await req.json();
       const formattedQuery = formatQueryText(queryText);
-      console.log('trying to update queryID:', queryId, "querytext:", formattedQuery);
+
+      const connection = await connectToDb();
+
       await connection.queryObject(
         `
         UPDATE queries SET
@@ -91,27 +91,24 @@ export const handler: Handlers = {
   },
 
   // DELETE REQUEST
-  async DELETE(req: Request): Promise<Response> {
+  async DELETE(req: Request, _ctx: HandlerContext): Promise<Response> {
     console.log("in POST: handleQuerySave - DELETE");
     try {
-        const POOL_CONNECTIONS = 3;
-        const pool = new Pool(Deno.env.get("DB_URI"), POOL_CONNECTIONS, true);
-        const connection = await pool.connect();
+      const { queryId } = await req.json();
 
-        const { queryId } = await req.json();
-        console.log(queryId);
+      const connection = await connectToDb();
 
-        await connection.queryObject(
-          `
-          DELETE FROM queries WHERE id = '${queryId}'
-        ;`,
-        );
+      await connection.queryObject(
+        `
+        DELETE FROM queries WHERE id = '${queryId}'
+      ;`,
+      );
 
-        connection.end();
+      connection.end();
 
-        return new Response("Successfully deleted saved query", {
-          status: 200,
-        });
+      return new Response("Successfully deleted saved query", {
+        status: 200,
+      });
     } catch (err) {
       return new Response(err, { status: 404 });
     }
