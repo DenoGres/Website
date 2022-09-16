@@ -5,7 +5,7 @@ import * as cookie from "https://deno.land/std/http/cookie.ts";
 // import { decode } from "https://deno.land/x/djwt/mod.ts";
 import { QueryObjectResult } from "https://deno.land/x/postgres@v0.16.1/query/query.ts";
 import "https://deno.land/x/dotenv/load.ts";
-import formatQueryText from "../../../utils/formatQueryText.ts";
+import formatQueryText from "../../../utils/formatQueryTextToSave.ts";
 
 // interface Connection {
 //   connectionName: string;
@@ -52,22 +52,17 @@ export const handler: Handlers = {
       const { connectionId } = cookie.getCookies(req.headers);
 
       const POOL_CONNECTIONS = 3;
-      console.log(Deno.env.get("DB_URI"));
       const pool = new Pool(Deno.env.get("DB_URI"), POOL_CONNECTIONS, true);
       const connection = await pool.connect();
 
       const { queryName, queryText } = await req.json();
-      console.log('trying to add query:', connectionId, queryName, queryText);
       const formattedQuery = formatQueryText(queryText);
-      console.log(formattedQuery);
       await connection.queryObject(
         `
         INSERT INTO queries (connection_id, query_name, query_text)
         VALUES ('${connectionId}', '${queryName}', (E'${formattedQuery}')::text)
       ;`,
       );
-
-      console.log('after attempt');
 
       connection.end();
 
