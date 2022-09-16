@@ -78,6 +78,6 @@ export const generateModels = async (
       modelsList[enumName] = TempEnum;
     }
   }
-  console.log(modelsList);
+  // console.log(modelsList);
   return modelsList;
 };

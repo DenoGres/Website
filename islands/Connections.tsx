@@ -1,9 +1,5 @@
 import data from "https://deno.land/std@0.141.0/_wasm_crypto/crypto.wasm.mjs";
 import { useEffect, useState } from "preact/hooks";
-<<<<<<< HEAD
-// import connectionsJson from "../data/connections.json" assert { type: "json" };
-=======
->>>>>>> anthony/front-end-build
 
 export interface IConnectionObject {
   id: number;

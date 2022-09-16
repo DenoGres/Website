@@ -4,6 +4,7 @@ import Record from "../components/Record.tsx";
 export interface IQueryObject {
   queryName: string;
   queryText: string;
+  queryId?: number;
 }
 
 interface IModelDisplayRowObject {
@@ -16,12 +17,14 @@ export default function Console() {
   const [showModal, setShowModal] = useState<boolean>(false);
   const [queryName, setQueryName] = useState<string>("");
   const [queryText, setQueryText] = useState<string>("");
+  const [queryId, setQueryId] = useState<number>(-1);
 
   const [records, setRecords] = useState<object[]>([]);
   const [queriesList, setQueriesList] = useState<any[]>([]);
   const [modelNames, setModelNames] = useState<string[]>([]);
   const [modelContent, setModelContent] = useState<object[]>([]);
   const [indexToDisplay, setIndexToDisplay] = useState<number>(-1);
+  const [queryType, setQueryType] = useState<string>("new");
 
   const getModels = async (): Promise<any> => {
     const res = await fetch("/gui/api/handleQueryRun", {
@@ -52,8 +55,8 @@ export default function Console() {
       const response = await fetch("/gui/api/handleQuerySave");
       const queries = await response.json();
       console.log(queries);
-      // { id, cid, query_name, query_text}
-      setQueriesList(queries);
+      const sortedList = queries.sort((a: any, b: any) => b.id - a.id);
+      setQueriesList(sortedList);
     };
     getQueriesToDisplay();
   }, []);
@@ -63,37 +66,39 @@ export default function Console() {
   // Saves query in external DB
   const handleSave = async (e: MouseEvent): Promise<void> => {
     e.preventDefault();
-    const newQuery: IQueryObject = {
-      queryName,
-      queryText,
-    };
+    const method = (queryType === "new") ? "POST" : "PATCH";
+    const newQuery: IQueryObject = (queryType === "new") ? 
+      {
+        queryName,
+        queryText,
+      } :
+      {
+        queryName,
+        queryText,
+        queryId 
+      };
     console.log(newQuery);
     await fetch("/gui/api/handleQuerySave", {
-      method: "POST",
+      method,
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newQuery),
     });
-    // can also opt to reload!
-    // window.location.reload();
-    setQueriesList([...queriesList, newQuery]);
-    setQueryName("");
-    setQueryText("");
+    window.location.reload();
   };
 
   // Deletes current query from external DB
   const handleDelete = async (e: MouseEvent): Promise<void> => {
     e.preventDefault();
     const reqBody = {
-      queryName,
-      queryText
+      queryId
     };
-
+    console.log(reqBody);
     await fetch("/gui/api/handleConnectionSave", {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(reqBody),
     });
-    window.location.reload();
+    // window.location.reload();
   };
 
   // Runs query and updates state to render result
@@ -120,6 +125,8 @@ export default function Console() {
         onClick={(e) => {
           setQueryName(ele.query_name);
           setQueryText(ele.query_text);
+          setQueryId(ele.id);
+          setQueryType("old");
         }}
       >
         {ele.query_name}
@@ -344,8 +351,16 @@ export default function Console() {
               className="bg-deno-pink-100 px-5 mx-1 py-3 text-sm shadow-sm font-medium tracking-wider text-gray-600 rounded-full hover:shadow-2xl hover:bg-deno-pink-200"
               onClick={handleSave}
             >
-              Save
+              {(queryType === "new") ? "Save" : "Update"}
             </button>
+            <button
+            type="button"
+            className={"bg-gray-300 px-5 mx-1 py-3 text-sm shadow-sm font-medium tracking-wider text-gray-600 rounded-full hover:shadow-2xl hover:bg-gray-400" +
+              ((queryType === "new") ? " hidden" : "")}
+            onClick={handleDelete}
+          >
+            Delete
+          </button>
             <button
               className="bg-deno-blue-100 px-5 mx-1 py-3 text-sm shadow-sm font-medium tracking-wider text-gray-600 rounded-full hover:shadow-2xl hover:bg-deno-blue-200"
               onClick={handleRun}

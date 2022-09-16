@@ -36,22 +36,17 @@ export const handler: Handlers = {
           { status: 400 },
         );
       }
-<<<<<<< HEAD
-      // need to instead return new response
-      return new Response('Successfully cached connection URI & database models.', { status: 200 });
-=======
       return new Response(
         "Successfully cached connection URI & database models.",
         { status: 200 },
       );
->>>>>>> anthony/front-end-build
     }
 
     // if req body requests models in plain text (for FE render), try to access cached uri and proceed
     // will throw error to FE if uri not cached / invalid (e.g. did not properly connect before nav to explorer)
     if (reqBodyObj.getTextModels) {
-      console.log("GETTING MODELS");
-      console.log("query uri?:", queryCache.dbUri);
+      // console.log("GETTING MODELS");
+      // console.log("query uri?:", queryCache.dbUri);
       try {
         const modelsListObject = await generateModels(queryCache.dbUri, {
           asText: true,
