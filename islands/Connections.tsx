@@ -54,7 +54,7 @@ export default function Connections() {
       `postgres://${username}:${password}@${address}/${defaultDB}`;
     const reqBody = {
       uri: uriText,
-      task: 'cache uri and validate'
+      task: "cache uri and validate",
     };
     await fetch("/gui/api/setConnectionIdCookie", {
       method: "POST",
@@ -81,7 +81,6 @@ export default function Connections() {
 
   // <------------ LIST OF CONNECTIONS ------------>
   function connectionsList() {
-
     const connections = connectList.map((ele, idx) => {
       return (
         <button
@@ -107,8 +106,6 @@ export default function Connections() {
     return (
       <div className="flex flex-col">
         {connections}
-        <div className="flex flex-row justify-end my-1">
-        </div>
       </div>
     );
   }
@@ -242,7 +239,7 @@ export default function Connections() {
         <h2 className="mb-3 text-center">Connections List</h2>
         {connectionsList()}
         <button
-          className="text-sm shadow-sm font-medium text-gray-600 text-left flex-1 p-3 bg-deno-pink-100 tracking-wider rounded flex flex-row justify-between my-1"
+          className="text-sm shadow-sm font-medium text-gray-600 text-left w-full p-3 bg-deno-pink-100 tracking-wider rounded flex flex-row justify-between my-1"
           type="button"
           onClick={(e) => {
             setConnectionId(NaN);
