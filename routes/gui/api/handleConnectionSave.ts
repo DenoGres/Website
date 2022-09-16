@@ -1,8 +1,8 @@
 import { Handlers } from "$fresh/server.ts";
-import { Pool } from "../../../deps.ts";
-import * as cookie from "../../../deps.ts";
-import { decode } from "../../../deps.ts";
-import { QueryObjectResult } from "https://deno.land/x/postgres@v0.16.1/query/query.ts";
+import { Pool } from "pg/mod.ts";
+import * as cookie from "cookie/cookie.ts";
+import { decode } from "djwt/mod.ts";
+import { QueryObjectResult } from "pg/query/query.ts";
 
 interface payloadObj {
   id: number;

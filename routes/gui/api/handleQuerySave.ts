@@ -18,10 +18,10 @@ import formatQueryText from "../../../utils/formatQueryTextToSave.ts";
 
 export const handler: Handlers = {
   // GET REQUEST
-  async GET(req: Request, ctx: HandlerContext): Promise<Response> {
+  async GET(req: Request, _ctx: HandlerContext): Promise<Response> {
     try {
       const { connectionId } = cookie.getCookies(req.headers);
-      console.log('getting queries for connection id:', connectionId);
+      console.log("getting queries for connection id:", connectionId);
 
       const POOL_CONNECTIONS = 3;
       const pool = new Pool(Deno.env.get("DB_URI"), POOL_CONNECTIONS, true);
@@ -37,8 +37,8 @@ export const handler: Handlers = {
       connection.end();
 
       return new Response(
-        JSON.stringify(queryList.rows), 
-        {status: 200,}
+        JSON.stringify(queryList.rows),
+        { status: 200 },
       );
     } catch (err) {
       return new Response(err, { status: 404 });
@@ -73,81 +73,80 @@ export const handler: Handlers = {
       return new Response(err, { status: 404 });
     }
   },
+  //   // PATCH REQUEST
+  //   async PATCH(req: Request, ctx: HandlerContext): Promise<Response> {
+  //     console.log("in POST: handleConnectionSave - PATCH");
+  //     try {
+  //       const cookies = cookie.getCookies(req.headers);
 
-//   // PATCH REQUEST
-//   async PATCH(req: Request, ctx: HandlerContext): Promise<Response> {
-//     console.log("in POST: handleConnectionSave - PATCH");
-//     try {
-//       const cookies = cookie.getCookies(req.headers);
+  //       // if jwt exists, get user id from jwt, insert connection record
+  //       if (cookies.jwt) {
+  //         const [header, payload, signature] = decode(cookies.jwt);
+  //         const body = await req.json();
+  //         const {
+  //           connectionId,
+  //           connectionName,
+  //           address,
+  //           port,
+  //           username,
+  //           defaultDB,
+  //           password,
+  //         } = body;
 
-//       // if jwt exists, get user id from jwt, insert connection record
-//       if (cookies.jwt) {
-//         const [header, payload, signature] = decode(cookies.jwt);
-//         const body = await req.json();
-//         const {
-//           connectionId,
-//           connectionName,
-//           address,
-//           port,
-//           username,
-//           defaultDB,
-//           password,
-//         } = body;
+  //         const POOL_CONNECTIONS = 3;
+  //         const pool = new Pool(Deno.env.get("DB_URI"), POOL_CONNECTIONS, true);
+  //         const connection = await pool.connect();
 
-//         const POOL_CONNECTIONS = 3;
-//         const pool = new Pool(Deno.env.get("DB_URI"), POOL_CONNECTIONS, true);
-//         const connection = await pool.connect();
+  //         await connection.queryObject(
+  //           `
+  //         UPDATE connections SET
+  //         connection_name = '${connectionName}', connection_address ='${address}', port_number = ${port}, default_db = '${defaultDB}', db_username = '${username}', db_password = '${password}'
+  //         WHERE id = ${connectionId}
+  //       ;`,
+  //         );
 
-//         await connection.queryObject(
-//           `
-//         UPDATE connections SET 
-//         connection_name = '${connectionName}', connection_address ='${address}', port_number = ${port}, default_db = '${defaultDB}', db_username = '${username}', db_password = '${password}'
-//         WHERE id = ${connectionId}
-//       ;`,
-//         );
+  //         connection.end();
 
-//         connection.end();
+  //         return new Response("Successfully updated connection", {
+  //           status: 200,
+  //         });
+  //       }
+  //     } catch (err) {
+  //       return new Response(err, { status: 404 });
+  //     }
+  //   },
 
-//         return new Response("Successfully updated connection", {
-//           status: 200,
-//         });
-//       }
-//     } catch (err) {
-//       return new Response(err, { status: 404 });
-//     }
-//   },
+  //   // POST REQUEST
+  //   async DELETE(req: Request, ctx: HandlerContext): Promise<Response> {
+  //     console.log("in POST: handleConnectionSave - DELETE");
+  //     try {
+  //       const cookies = cookie.getCookies(req.headers);
 
-//   // POST REQUEST
-//   async DELETE(req: Request, ctx: HandlerContext): Promise<Response> {
-//     console.log("in POST: handleConnectionSave - DELETE");
-//     try {
-//       const cookies = cookie.getCookies(req.headers);
+  //       // if jwt exists, get user id from jwt, insert connection record
+  //       if (cookies.jwt) {
+  //         const body = await req.json();
+  //         const { connectionId } = body;
 
-//       // if jwt exists, get user id from jwt, insert connection record
-//       if (cookies.jwt) {
-//         const body = await req.json();
-//         const { connectionId } = body;
+  //         console.log(connectionId);
 
-//         console.log(connectionId);
+  //         const POOL_CONNECTIONS = 3;
+  //         const pool = new Pool(Deno.env.get("DB_URI"), POOL_CONNECTIONS, true);
+  //         const connection = await pool.connect();
 
-//         const POOL_CONNECTIONS = 3;
-//         const pool = new Pool(Deno.env.get("DB_URI"), POOL_CONNECTIONS, true);
-//         const connection = await pool.connect();
+  //         await connection.queryObject(
+  //           `
+  //           DELETE FROM connections WHERE id = '${connectionId}'
+  //         ;`,
+  //         );
 
-//         await connection.queryObject(
-//           `
-//           DELETE FROM connections WHERE id = '${connectionId}'
-//         ;`,
-//         );
+  //         connection.end();
 
-//         connection.end();
-
-//         return new Response("Successfully deleted new connection", {
-//           status: 200,
-//         });
-//       }
-//     } catch (err) {
-//       return new Response(err, { status: 404 });
-//     }
-//   },
+  //         return new Response("Successfully deleted new connection", {
+  //           status: 200,
+  //         });
+  //       }
+  //     } catch (err) {
+  //       return new Response(err, { status: 404 });
+  //     }
+  //   },
 };

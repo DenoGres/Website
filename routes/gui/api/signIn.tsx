@@ -1,52 +1,40 @@
 import { HandlerContext, Handlers } from "$fresh/server.ts";
-import "https://deno.land/x/dotenv/load.ts";
-import { Pool } from "https://deno.land/x/postgres/mod.ts";
-import * as cookie from "https://deno.land/std/http/cookie.ts";
-import * as bcrypt from "https://deno.land/x/bcrypt/mod.ts";
+import { Pool } from "pg/mod.ts";
+import * as cookie from "cookie/cookie.ts";
+import * as bcrypt from "bcrypt/mod.ts";
 import { key } from "../../../utils/key.ts";
-import { create } from "https://deno.land/x/djwt/mod.ts";
-import { getNumericDate } from "https://deno.land/x/djwt@v2.7/mod.ts";
-import { QueryObjectResult } from "https://deno.land/x/postgres@v0.16.1/query/query.ts";
+import { create, getNumericDate } from "djwt/mod.ts";
+import { QueryObjectResult } from "pg/query/query.ts";
+import { Ilogin } from "./signUp.tsx";
 
-//import * as postgres from "https://deno.land/x/postgres/mod.ts";
-
-// const POOL_CONNECTIONS = 3;
-// const pool = new Pool(Deno.env.get("DB_URI"), POOL_CONNECTIONS, true);
-// const connection = await pool.connect();
-
-interface Ilogin {
+interface checkUser {
+  id: number;
   username: string;
   password: string;
-}
-
-interface State {
-  data: string;
 }
 
 export const handler = {
   async POST(
     req: Request,
-    res: Response,
-    ctx: HandlerContext,
+    _res: Response,
+    _ctx: HandlerContext,
   ): Promise<Response> {
     try {
       console.log("in signIn Handler");
       const body: Ilogin = await req.json();
       const { username, password } = body;
-      // const body: any = ctx.state.data;
-      // const { username, password } = { username: "ediWu", password: "password"};
-      // console.log(body);
 
       const POOL_CONNECTIONS = 3;
       const pool = new Pool(Deno.env.get("DB_URI"), POOL_CONNECTIONS, true);
       const connection = await pool.connect();
 
       // check if user exists, if user does not exist - return 404
-      const checkUser: QueryObjectResult = await connection.queryObject(
-        `
+      const checkUser: QueryObjectResult<checkUser> = await connection
+        .queryObject(
+          `
       SELECT id, username, password FROM users WHERE username = '${username}'
       `,
-      );
+        );
 
       connection.end();
 
