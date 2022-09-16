@@ -4,9 +4,9 @@ import { IQueryObject } from "../../../islands/Console.tsx";
 // obtain query object from front-end and update local queries.json
 // TODO: add functionality to save to DB once set up
 export const handler: Handlers = {
-  async POST(req: Request, ctx: HandlerContext): Promise<Response> {
+  async POST(req: Request, _ctx: HandlerContext): Promise<Response> {
     const newQueryObject: IQueryObject = await req.json();
-    const path: string = "./data/queries.json";
+    const path = "./data/queries.json";
     const savedQueries: IQueryObject[] = JSON.parse(
       Deno.readTextFileSync(path),
     );

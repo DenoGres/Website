@@ -1,15 +1,18 @@
 import data from "https://deno.land/std@0.141.0/_wasm_crypto/crypto.wasm.mjs";
 import { useEffect, useState } from "preact/hooks";
-import connectionsJson from "../data/connections.json" assert { type: "json" };
 
 export interface IConnectionObject {
-  _id: string;
-  name: string;
-  address: string;
-  port: string;
-  username: string;
-  defaultdb: string;
-  password: string;
+  id: number;
+  user_id: number;
+  connection_name: string;
+  connection_address: string;
+  port_number: number;
+  default_db: string;
+  db_username: string;
+  db_password: string;
+}
+export interface ErrorMessage {
+  Error: string;
 }
 
 export interface ModalStatus {
@@ -28,7 +31,7 @@ export default function Connections() {
     getData();
   }, []);
 
-  const [connectList, setConnectList] = useState<any[]>([]);
+  const [connectList, setConnectList] = useState<IConnectionObject[]>([]);
   const [connectionId, setConnectionId] = useState<number>();
   const [connectionName, setConnectionName] = useState<string>("");
   const [address, setAddress] = useState<string>("");

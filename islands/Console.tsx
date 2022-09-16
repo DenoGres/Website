@@ -1,7 +1,5 @@
 import { useEffect, useState } from "preact/hooks";
 import Record from "../components/Record.tsx";
-import queriesJson from "../data/queries.json" assert { type: "json" };
-// import { nanoid } from "nanoid";
 
 export interface IQueryObject {
   _id: string;
@@ -21,7 +19,7 @@ export default function Console() {
   const [queryText, setQueryText] = useState<string>("");
 
   const [records, setRecords] = useState<object[]>([]);
-  const [queriesList, setQueriesList] = useState<IQueryObject[]>(queriesJson);
+  const [queriesList, setQueriesList] = useState<IQueryObject[]>([]);
   const [modelNames, setModelNames] = useState<string[]>([]);
   const [modelContent, setModelContent] = useState<object[]>([]);
   const [indexToDisplay, setIndexToDisplay] = useState<number>(-1);
