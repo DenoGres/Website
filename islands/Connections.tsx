@@ -251,6 +251,22 @@ export default function Connections() {
       <div className="w-5/12 bg-white rounded mx-3 p-3 items-center">
         <h2 className="mb-3 text-center">Connections List</h2>
         {connectionsList()}
+        <button
+          className="text-sm shadow-sm font-medium text-gray-600 text-left flex-1 p-3 bg-deno-pink-100 tracking-wider rounded flex flex-row justify-between my-1"
+          type="button"
+          onClick={(e) => {
+            setConnectionId(NaN);
+            setConnectionName("");
+            setAddress("");
+            setPort(NaN);
+            setDefaultDB("");
+            setUsername("");
+            setPassword("");
+            setConnectionType("new");
+          }}
+        >
+          Add New Connection
+        </button>
       </div>
       <div className="flex flex-col w-full">
         <div className="flex flex-col h-full bg-white p-3 rounded">

@@ -1,8 +1,9 @@
 import { Handlers } from "$fresh/server.ts";
-import { Pool } from "pg/mod.ts";
+// import { Pool } from "pg/mod.ts";
 import * as cookie from "cookie/cookie.ts";
 import { decode } from "djwt/mod.ts";
 import { QueryObjectResult } from "pg/query/query.ts";
+import connectToDb from "../../../utils/connectToDb.ts";
 
 interface payloadObj {
   id: number;
@@ -24,9 +25,7 @@ export const handler: Handlers = {
       if (cookies.jwt) {
         const payload = decode(cookies.jwt)[1] as payload;
 
-        const POOL_CONNECTIONS = 3;
-        const pool = new Pool(Deno.env.get("DB_URI"), POOL_CONNECTIONS, true);
-        const connection = await pool.connect();
+        const connection = await connectToDb();
 
         const getUser: QueryObjectResult = await connection.queryObject(
           `
@@ -71,9 +70,7 @@ export const handler: Handlers = {
         const { connectionName, address, port, username, defaultDB, password } =
           body;
 
-        const POOL_CONNECTIONS = 3;
-        const pool = new Pool(Deno.env.get("DB_URI"), POOL_CONNECTIONS, true);
-        const connection = await pool.connect();
+          const connection = await connectToDb();
 
         const getUser: QueryObjectResult = await connection.queryObject(
           `
@@ -122,9 +119,7 @@ export const handler: Handlers = {
           password,
         } = body;
 
-        const POOL_CONNECTIONS = 3;
-        const pool = new Pool(Deno.env.get("DB_URI"), POOL_CONNECTIONS, true);
-        const connection = await pool.connect();
+        const connection = await connectToDb();
 
         await connection.queryObject(
           `
@@ -158,9 +153,7 @@ export const handler: Handlers = {
         const body = await req.json();
         const { connectionId } = body;
 
-        const POOL_CONNECTIONS = 3;
-        const pool = new Pool(Deno.env.get("DB_URI"), POOL_CONNECTIONS, true);
-        const connection = await pool.connect();
+        const connection = await connectToDb();
 
         await connection.queryObject(
           `

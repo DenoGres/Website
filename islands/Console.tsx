@@ -232,6 +232,18 @@ export default function Console() {
           <h2 className="mb-3">Saved Queries</h2>
           <div className="flex flex-col w-full overflow-y-auto">
             {savedQueries}
+            <button
+              className="bg-deno-pink-100 text-sm shadow-sm p-3 my-1 font-medium tracking-wider text-gray-600 rounded text-left"
+              type="button"
+              onClick={(e) => {
+                setQueryName("");
+                setQueryText("");
+                setQueryId(-1);
+                setQueryType("new");
+              }}
+            >
+              Add New Query
+            </button>
           </div>
         </div>
         <div className="flex flex-col items-center p-3 h-2/4">
@@ -248,7 +260,7 @@ export default function Console() {
             Import Model File
           </button> */
           }
-          {/* <--------Import Model File MODAL--------> */}
+          {/* <-------- Model File MODAL--------> */}
           {showModal
             ? (
               <div>

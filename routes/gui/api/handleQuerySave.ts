@@ -1,15 +1,8 @@
 import { HandlerContext, Handlers } from "$fresh/server.ts";
-import { Pool, PoolClient } from "pg/mod.ts";
 import * as cookie from "cookie/cookie.ts";
 import { QueryObjectResult } from "pg/query/query.ts";
 import formatQueryText from "../../../utils/formatQueryTextToSave.ts";
-
-const connectToDb = async (): Promise<PoolClient> => {
-  const POOL_CONNECTIONS = 3;
-  const pool = new Pool(Deno.env.get("DB_URI"), POOL_CONNECTIONS, true);
-  const connection = await pool.connect();
-  return connection;
-}
+import connectToDb from "../../../utils/connectToDb.ts";
 
 export const handler: Handlers = {
   // GET REQUEST

@@ -9,8 +9,6 @@ export const handler: Handlers = {
   async POST(req: Request, _ctx: HandlerContext): Promise<Response> {
     const reqBodyObj = await req.json();
     // TODO: stretch: validate JWT before caching anything (uri / model); redirect if missing/inauthentic
-    // TODO: refactor req obj to have one key "task" whose possible values are cases
-    // TODO:    (e.g. logout/getTextModels/query) in a switch statement
     // if request is to log out user, clear cache here
     // using a loop to delete every k-v pair on cache;
     // alternatively could declare with 'let' and reassign to empty
