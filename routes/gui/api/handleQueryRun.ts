@@ -36,15 +36,10 @@ export const handler: Handlers = {
           { status: 400 },
         );
       }
-<<<<<<< HEAD
-      // need to instead return new response
-      return new Response('Successfully cached connection URI & database models.', { status: 200 });
-=======
       return new Response(
         "Successfully cached connection URI & database models.",
         { status: 200 },
       );
->>>>>>> anthony/front-end-build
     }
 
     // if req body requests models in plain text (for FE render), try to access cached uri and proceed
