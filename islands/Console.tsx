@@ -1,7 +1,5 @@
 import { useEffect, useState } from "preact/hooks";
 import Record from "../components/Record.tsx";
-// import queriesJson from "../data/queries.json" assert { type: "json" };
-// import { nanoid } from "nanoid";
 
 export interface IQueryObject {
   queryName: string;
@@ -47,12 +45,14 @@ export default function Console() {
     getModelsToDisplay();
   }, []);
 
+  // TODO: map results to interface (camelcased) MAYBE
   // on first load, make GET request to retrieve saved queries from DB
   useEffect(() => {
     const getQueriesToDisplay = async (): Promise<void> => {
       const response = await fetch("/gui/api/handleQuerySave");
       const queries = await response.json();
       console.log(queries);
+      // { id, cid, query_name, query_text}
       setQueriesList(queries);
     };
     getQueriesToDisplay();

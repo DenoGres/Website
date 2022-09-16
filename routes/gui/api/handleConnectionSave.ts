@@ -1,33 +1,28 @@
-import { HandlerContext, Handlers } from "$fresh/server.ts";
-import { Pool } from "https://deno.land/x/postgres/mod.ts";
-import * as bcrypt from "https://deno.land/x/bcrypt/mod.ts";
-import * as cookie from "https://deno.land/std/http/cookie.ts";
-import { decode } from "https://deno.land/x/djwt/mod.ts";
+import { Handlers } from "$fresh/server.ts";
+import { Pool } from "../../../deps.ts";
+import * as cookie from "../../../deps.ts";
+import { decode } from "../../../deps.ts";
 import { QueryObjectResult } from "https://deno.land/x/postgres@v0.16.1/query/query.ts";
-import "https://deno.land/x/dotenv/load.ts";
 
-// const POOL_CONNECTIONS = 3;
-// const pool = new Pool(Deno.env.get("DB_URI"), POOL_CONNECTIONS, true);
-// const connection = await pool.connect();
-
-interface Connection {
-  connectionName: string;
-  address: string;
-  port: string;
+interface payloadObj {
+  id: number;
   username: string;
-  defaultDB: string;
-  password: string;
+  exp: number;
+}
+
+interface payload {
+  payload: payloadObj;
 }
 
 export const handler: Handlers = {
   // GET REQUEST
-  async GET(req: Request, ctx: HandlerContext): Promise<Response> {
+  async GET(req: Request): Promise<Response> {
     try {
       const cookies = cookie.getCookies(req.headers);
 
       // if jwt exists, get user id from jwt, insert connection record
       if (cookies.jwt) {
-        const [header, payload, signature] = decode(cookies.jwt);
+        const payload = decode(cookies.jwt)[1] as payload;
 
         const POOL_CONNECTIONS = 3;
         const pool = new Pool(Deno.env.get("DB_URI"), POOL_CONNECTIONS, true);
@@ -55,19 +50,23 @@ export const handler: Handlers = {
         });
       }
     } catch (err) {
-      return new Response(err, { status: 404 });
+      return new Response(JSON.stringify({ err }), { status: 404 });
     }
+    return new Response(JSON.stringify({ error: "Error in middleware" }), {
+      status: 404,
+    });
   },
 
   // POST REQUEST
-  async POST(req: Request, ctx: HandlerContext): Promise<Response> {
+  async POST(req: Request): Promise<Response> {
     console.log("in POST: handleConnectionSave - POST");
     try {
       const cookies = cookie.getCookies(req.headers);
 
       // if jwt exists, get user id from jwt, insert connection record
       if (cookies.jwt) {
-        const [header, payload, signature] = decode(cookies.jwt);
+        const payload = decode(cookies.jwt)[1] as payload;
+
         const body = await req.json();
         const { connectionName, address, port, username, defaultDB, password } =
           body;
@@ -97,19 +96,21 @@ export const handler: Handlers = {
         });
       }
     } catch (err) {
-      return new Response(err, { status: 404 });
+      return new Response(JSON.stringify({ err }), { status: 404 });
     }
+    return new Response(JSON.stringify({ error: "Error in middleware" }), {
+      status: 404,
+    });
   },
 
   // PATCH REQUEST
-  async PATCH(req: Request, ctx: HandlerContext): Promise<Response> {
+  async PATCH(req: Request): Promise<Response> {
     console.log("in POST: handleConnectionSave - PATCH");
     try {
       const cookies = cookie.getCookies(req.headers);
 
       // if jwt exists, get user id from jwt, insert connection record
       if (cookies.jwt) {
-        const [header, payload, signature] = decode(cookies.jwt);
         const body = await req.json();
         const {
           connectionId,
@@ -129,8 +130,7 @@ export const handler: Handlers = {
           `
         UPDATE connections SET 
         connection_name = '${connectionName}', connection_address ='${address}', port_number = ${port}, default_db = '${defaultDB}', db_username = '${username}', db_password = '${password}'
-        WHERE id = ${connectionId}
-      ;`,
+        WHERE id = ${connectionId};`,
         );
 
         connection.end();
@@ -140,12 +140,15 @@ export const handler: Handlers = {
         });
       }
     } catch (err) {
-      return new Response(err, { status: 404 });
+      return new Response(JSON.stringify({ err }), { status: 404 });
     }
+    return new Response(JSON.stringify({ error: "error in middleware" }), {
+      status: 404,
+    });
   },
 
   // POST REQUEST
-  async DELETE(req: Request, ctx: HandlerContext): Promise<Response> {
+  async DELETE(req: Request): Promise<Response> {
     console.log("in POST: handleConnectionSave - DELETE");
     try {
       const cookies = cookie.getCookies(req.headers);
@@ -154,8 +157,6 @@ export const handler: Handlers = {
       if (cookies.jwt) {
         const body = await req.json();
         const { connectionId } = body;
-
-        console.log(connectionId);
 
         const POOL_CONNECTIONS = 3;
         const pool = new Pool(Deno.env.get("DB_URI"), POOL_CONNECTIONS, true);
@@ -174,7 +175,10 @@ export const handler: Handlers = {
         });
       }
     } catch (err) {
-      return new Response(err, { status: 404 });
+      return new Response(JSON.stringify({ err }), { status: 404 });
     }
+    return new Response(JSON.stringify({ error: "error in middleware" }), {
+      status: 404,
+    });
   },
 };
