@@ -80,18 +80,6 @@ export default function Connections() {
 
   // <------------ LIST OF CONNECTIONS ------------>
   function connectionsList() {
-    // const handleDelete = async (): Promise<void> => {
-    //   const reqBody = {
-    //     connectionId,
-    //   };
-
-    //   await fetch("/gui/api/handleConnectionSave", {
-    //     method: "DELETE",
-    //     headers: { "Content-Type": "application/json" },
-    //     body: JSON.stringify(reqBody),
-    //   });
-    //   window.location.reload();
-    // };
 
     const connections = connectList.map((ele, idx) => {
       return (

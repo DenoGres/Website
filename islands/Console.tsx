@@ -13,7 +13,6 @@ interface IModelDisplayRowObject {
 }
 
 export default function Console() {
-  //TODO: Currently state here is set as dummy data
   const [showModal, setShowModal] = useState<boolean>(false);
   const [queryName, setQueryName] = useState<string>("");
   const [queryText, setQueryText] = useState<string>("");
