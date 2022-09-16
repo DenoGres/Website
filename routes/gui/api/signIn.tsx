@@ -40,7 +40,7 @@ export const handler = {
 
       // check the PW against the DB
       if (checkUser.rows.length > 0) {
-        const checkPW: boolean = await bcrypt.compare(
+        const checkPW: boolean = await bcrypt.compareSync(
           password,
           checkUser.rows[0].password,
         );
