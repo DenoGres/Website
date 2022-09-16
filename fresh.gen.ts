@@ -11,8 +11,8 @@ import * as $4 from "./routes/docs/model.tsx";
 import * as $5 from "./routes/gui/api/getConnections.tsx";
 import * as $6 from "./routes/gui/api/handleConnectionSave.ts";
 import * as $7 from "./routes/gui/api/handleModelSave.ts";
-import * as $8 from "./routes/gui/api/handleQueryRun.ts";
-import * as $9 from "./routes/gui/api/handleQuerySave.ts";
+import * as $8 from "./routes/gui/api/handleQuerySave.ts";
+import * as $9 from "./routes/gui/api/handleRequests.ts";
 import * as $10 from "./routes/gui/api/logOut.tsx";
 import * as $11 from "./routes/gui/api/mwexp.ts";
 import * as $12 from "./routes/gui/api/setConnectionIdCookie.ts";
@@ -44,8 +44,8 @@ const manifest = {
     "./routes/gui/api/getConnections.tsx": $5,
     "./routes/gui/api/handleConnectionSave.ts": $6,
     "./routes/gui/api/handleModelSave.ts": $7,
-    "./routes/gui/api/handleQueryRun.ts": $8,
-    "./routes/gui/api/handleQuerySave.ts": $9,
+    "./routes/gui/api/handleQuerySave.ts": $8,
+    "./routes/gui/api/handleRequests.ts": $9,
     "./routes/gui/api/logOut.tsx": $10,
     "./routes/gui/api/mwexp.ts": $11,
     "./routes/gui/api/setConnectionIdCookie.ts": $12,

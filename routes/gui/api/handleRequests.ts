@@ -8,13 +8,12 @@ const queryCache: any = {};
 export const handler: Handlers = {
   async POST(req: Request, _ctx: HandlerContext): Promise<Response> {
     const reqBodyObj = await req.json();
-    // TODO: stretch: validate JWT before caching anything (uri / model); redirect if missing/inauthentic
-
+    // stretch: validate JWT before caching anything (uri / model); redirect if missing/inauthentic
     switch (reqBodyObj.task) {
       // if request is to log out user, clear cache here
       // using a loop to delete every k-v pair on cache;
       // alternatively could declare with 'let' and reassign to empty
-      case 'logout': {
+      case 'clear user cache': {
         for (const key in queryCache) {
           delete queryCache[key];
         }

@@ -26,7 +26,7 @@ export default function Console() {
   const [queryType, setQueryType] = useState<string>("new");
 
   const getModels = async (): Promise<any> => {
-    const res = await fetch("/gui/api/handleQueryRun", {
+    const res = await fetch("/gui/api/handleRequests", {
       method: "POST",
       body: JSON.stringify({ task: 'get models as text' }),
     });
@@ -75,7 +75,6 @@ export default function Console() {
         queryText,
         queryId 
       };
-    console.log(newQuery);
     await fetch("/gui/api/handleQuerySave", {
       method,
       headers: { "Content-Type": "application/json" },
@@ -105,7 +104,7 @@ export default function Console() {
     const bodyObj = {
       queryText,
     };
-    const res = await fetch("/gui/api/handleQueryRun", {
+    const res = await fetch("/gui/api/handleRequests", {
       method: "POST",
       body: JSON.stringify(bodyObj),
     });

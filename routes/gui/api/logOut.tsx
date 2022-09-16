@@ -13,6 +13,7 @@ export const handler = {
         { status: 200, headers: new Headers({}) },
       );
 
+      // currently removing cookie by setting to blank
       cookie.setCookie(res.headers, {
         name: "jwt",
         value: "",

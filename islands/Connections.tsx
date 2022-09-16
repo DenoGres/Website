@@ -46,13 +46,13 @@ export default function Connections() {
   // <------------ EVENT LISTENERS ------------>
 
   // on clicking connect, attempt to validate uri by retrieving models
-  // if successful, cache uri in handleQueryRun for further queries
+  // if successful, cache uri in handleRequests for further queries
   const handleUriSaveAndRedirect = async (e: MouseEvent) => {
     e.preventDefault();
     const uriText =
       // `postgres://${username}:${password}@${address}:${port}/${defaultDB}`;
       `postgres://${username}:${password}@${address}/${defaultDB}`;
-    const bodyObj = {
+    const reqBody = {
       uri: uriText,
       task: 'cache uri and validate'
     };
@@ -60,9 +60,10 @@ export default function Connections() {
       method: "POST",
       body: JSON.stringify({ connectionId }),
     });
-    const response = await fetch("/gui/api/handleQueryRun", {
+    const response = await fetch("/gui/api/handleRequests", {
       method: "POST",
-      body: JSON.stringify(bodyObj),
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(reqBody),
     });
     if (response.status === 400) {
       const error = await response.json();
