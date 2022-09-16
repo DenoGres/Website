@@ -92,18 +92,14 @@ export const handler: Handlers = {
 
   // DELETE REQUEST
   async DELETE(req: Request): Promise<Response> {
-    console.log("in POST: handleConnectionSave - DELETE");
-    const cookies = cookie.getCookies(req.headers);
+    console.log("in POST: handleQuerySave - DELETE");
     try {
-      if (cookies.jwt) {
-        console.log('in try block');
         const POOL_CONNECTIONS = 3;
         const pool = new Pool(Deno.env.get("DB_URI"), POOL_CONNECTIONS, true);
         const connection = await pool.connect();
 
-        const body = await req.json();
-        console.log(body);
-        const queryId = body.queryId;
+        const { queryId } = await req.json();
+        console.log(queryId);
 
         await connection.queryObject(
           `
@@ -116,12 +112,8 @@ export const handler: Handlers = {
         return new Response("Successfully deleted saved query", {
           status: 200,
         });
-      }
     } catch (err) {
       return new Response(err, { status: 404 });
     }
-    return new Response(JSON.stringify({ error: "error in middleware" }), {
-      status: 404,
-    });
   }
 };

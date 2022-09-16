@@ -48,7 +48,6 @@ export default function Console() {
     getModelsToDisplay();
   }, []);
 
-  // TODO: map results to interface (camelcased) MAYBE
   // on first load, make GET request to retrieve saved queries from DB
   useEffect(() => {
     const getQueriesToDisplay = async (): Promise<void> => {
@@ -93,12 +92,12 @@ export default function Console() {
       queryId
     };
     console.log(reqBody);
-    await fetch("/gui/api/handleConnectionSave", {
+    await fetch("/gui/api/handleQuerySave", {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(reqBody),
     });
-    // window.location.reload();
+    window.location.reload();
   };
 
   // Runs query and updates state to render result

@@ -45,8 +45,6 @@ export const handler: Handlers = {
     // if req body requests models in plain text (for FE render), try to access cached uri and proceed
     // will throw error to FE if uri not cached / invalid (e.g. did not properly connect before nav to explorer)
     if (reqBodyObj.getTextModels) {
-      // console.log("GETTING MODELS");
-      // console.log("query uri?:", queryCache.dbUri);
       try {
         const modelsListObject = await generateModels(queryCache.dbUri, {
           asText: true,
