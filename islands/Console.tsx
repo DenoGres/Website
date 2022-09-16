@@ -29,7 +29,7 @@ export default function Console() {
   const getModels = async (): Promise<any> => {
     const res = await fetch("/gui/api/handleQueryRun", {
       method: "POST",
-      body: JSON.stringify({ getTextModels: true }),
+      body: JSON.stringify({ task: 'get models as text' }),
     });
     if (res.status === 400) {
       return;

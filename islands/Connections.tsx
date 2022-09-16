@@ -54,6 +54,7 @@ export default function Connections() {
       `postgres://${username}:${password}@${address}/${defaultDB}`;
     const bodyObj = {
       uri: uriText,
+      task: 'cache uri and validate'
     };
     await fetch("/gui/api/setConnectionIdCookie", {
       method: "POST",
