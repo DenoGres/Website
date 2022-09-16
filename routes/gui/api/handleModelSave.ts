@@ -1,0 +1,14 @@
+import { HandlerContext, Handlers } from "$fresh/server.ts";
+
+// obtain plain text of model.ts and write file in user folder
+export const handler: Handlers = {
+  async POST(req: Request, _ctx: HandlerContext): Promise<Response> {
+    // could potentially use fileTextWriter to add import statement in model.ts
+    const modelFileText: string = await req.json();
+    console.log(modelFileText);
+    const path = "./user/model.ts";
+    Deno.writeTextFileSync(path, modelFileText);
+
+    return new Response("Successfully saved model file!", { status: 200 });
+  },
+};
