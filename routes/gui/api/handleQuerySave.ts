@@ -6,7 +6,7 @@ import connectToDb from "../../../utils/connectToDb.ts";
 
 export const handler: Handlers = {
   // GET REQUEST
-  async GET(req: Request, _ctx: HandlerContext): Promise<Response> {
+  async GET(req: Request, _ctx: HandlerContext): Promise<any> {
     try {
       const { connectionId } = cookie.getCookies(req.headers);
 
