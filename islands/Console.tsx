@@ -1,5 +1,6 @@
 import { useEffect, useState } from "preact/hooks";
 import Record from "../components/Record.tsx";
+import throttle from "../utils/throttle.ts";
 
 export interface IQueryObject {
   queryName: string;
@@ -74,8 +75,7 @@ export default function Console() {
   // ----EVENT LISTENERS -----
 
   // Saves query in external DB
-  const handleSave = async (e: MouseEvent): Promise<void> => {
-    e.preventDefault();
+  const handleSave = async (): Promise<void> => {
     const method = (queryType === "new") ? "POST" : "PATCH";
     const newQuery: IQueryObject = (queryType === "new") ? 
       {
@@ -97,8 +97,7 @@ export default function Console() {
   };
 
   // Deletes current query from external DB
-  const handleDelete = async (e: MouseEvent): Promise<void> => {
-    e.preventDefault();
+  const handleDelete = async (): Promise<void> => {
     const reqBody = {
       queryId
     };
@@ -112,8 +111,7 @@ export default function Console() {
   };
 
   // Runs query and updates state to render result
-  const handleRun = async (e: MouseEvent) => {
-    e.preventDefault();
+  const handleRun = async (): Promise<void> => {
     const bodyObj = {
       queryText,
     };
@@ -124,6 +122,11 @@ export default function Console() {
     const data: object[] = await res.json();
     setRecords(data);
   };
+
+  // create throttled versions of handlers
+  const throttledHandleSave = throttle(handleSave, 1000);
+  const throttledHandleDelete = throttle(handleDelete, 1000);
+  const throttledHandleRun = throttle(handleRun, 1000);
 
   // map saved queries to display components
   const savedQueries = queriesList.map((ele, idx) => {
@@ -332,7 +335,7 @@ export default function Console() {
             <button
               type="button"
               className="bg-deno-pink-100 px-5 mx-1 py-3 text-sm shadow-sm font-medium tracking-wider text-gray-600 rounded-full hover:shadow-2xl hover:bg-deno-pink-200"
-              onClick={handleSave}
+              onClick={throttledHandleSave}
             >
               {(queryType === "new") ? "Save" : "Update"}
             </button>
@@ -340,13 +343,13 @@ export default function Console() {
             type="button"
             className={"bg-gray-300 px-5 mx-1 py-3 text-sm shadow-sm font-medium tracking-wider text-gray-600 rounded-full hover:shadow-2xl hover:bg-gray-400" +
               ((queryType === "new") ? " hidden" : "")}
-            onClick={handleDelete}
+            onClick={throttledHandleDelete}
           >
             Delete
           </button>
             <button
               className="bg-deno-blue-100 px-5 mx-1 py-3 text-sm shadow-sm font-medium tracking-wider text-gray-600 rounded-full hover:shadow-2xl hover:bg-deno-blue-200"
-              onClick={handleRun}
+              onClick={throttledHandleRun}
             >
               Run
             </button>

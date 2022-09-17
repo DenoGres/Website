@@ -1,4 +1,5 @@
 import { useEffect, useState } from "preact/hooks";
+import throttle from "../utils/throttle.ts";
 
 export interface IConnectionObject {
   id: number;
@@ -61,8 +62,7 @@ export default function Connections() {
 
   // on clicking connect, attempt to validate uri by retrieving models
   // if successful, cache uri and models in handleRequests for further queries
-  const handleUriSaveAndRedirect = async (e: MouseEvent) => {
-    e.preventDefault();
+  const handleUriSaveAndRedirect = async (): Promise<void> => {
     const uriText =
       `postgres://${username}:${password}@${address}/${defaultDB}`;
     const reqBody = {
@@ -86,6 +86,9 @@ export default function Connections() {
     }
     window.location.href = "/gui/explorer";
   };
+
+  // create throttled versions of handler
+  const throttledHandleUriSaveAndRedirect = throttle(handleUriSaveAndRedirect, 1000);
 
   const displayErrorModal = async () => {
     await setShowErrorModal(true);
@@ -164,6 +167,10 @@ export default function Connections() {
       resetAllFields();
     };
 
+    // create throttled versions of handlers
+    const throttledHandleClick = throttle(handleClick, 1000);
+    const throttledHandleDelete = throttle(handleDelete, 1000);
+
     return (
       <form className="flex flex-col my-5 py-5">
         <label className={labelStyle}>Connection Name:</label>
@@ -218,7 +225,7 @@ export default function Connections() {
             Test Connection
           </button>
           <button
-            onClick={handleClick}
+            onClick={throttledHandleClick}
             type="button"
             className="bg-deno-pink-100 px-5 mx-1 py-3 text-sm shadow-sm font-medium tracking-wider text-gray-600 rounded-full hover:shadow-2xl hover:bg-deno-pink-200"
           >
@@ -228,7 +235,7 @@ export default function Connections() {
             type="button"
             className={"bg-gray-300 px-5 mx-1 py-3 text-sm shadow-sm font-medium tracking-wider text-gray-600 rounded-full hover:shadow-2xl hover:bg-gray-400" +
               ((connectionType === "new") ? " hidden" : "")}
-            onClick={handleDelete}
+            onClick={throttledHandleDelete}
           >
             Delete
           </button>
@@ -236,7 +243,7 @@ export default function Connections() {
             type="button"
             className={"bg-deno-blue-100 px-5 mx-1 py-3 text-sm shadow-sm font-medium tracking-wider text-gray-600 rounded-full hover:shadow-2xl hover:bg-deno-blue-200" +
               ((connectionType === "new") ? " hidden" : "")}
-            onClick={handleUriSaveAndRedirect}
+            onClick={throttledHandleUriSaveAndRedirect}
           >
             Connect
           </button>
