@@ -10,20 +10,23 @@ export const handler: Handlers = {
     try {
       const { connectionId } = cookie.getCookies(req.headers);
 
-      const connection = await connectToDb();
+      // Run query if a connection ID is defined, otherwise don't do anything
+      if (connectionId) {
+        const connection = await connectToDb();
 
-      const queryList: QueryObjectResult = await connection.queryObject(
-        `
-        SELECT * FROM queries WHERE connection_id = '${connectionId}'
-      ;`,
-      );
-      // close connection
-      connection.end();
+        const queryList: QueryObjectResult = await connection.queryObject(
+          `
+          SELECT * FROM queries WHERE connection_id = '${connectionId}'
+        ;`,
+        );
+        // close connection
+        connection.end();
 
-      return new Response(
-        JSON.stringify(queryList.rows),
-        { status: 200 },
-      );
+        return new Response(
+          JSON.stringify(queryList.rows),
+          { status: 200 },
+        );
+      }
     } catch (err) {
       return new Response(err, { status: 404 });
     }
@@ -105,5 +108,5 @@ export const handler: Handlers = {
     } catch (err) {
       return new Response(err, { status: 404 });
     }
-  }
+  },
 };
