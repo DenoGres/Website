@@ -22,12 +22,13 @@ export interface ModalStatus {
 
 // list of saved connections
 export default function Connections() {
+  const getData = async (): Promise<void> => {
+    const response = await fetch("/gui/api/handleConnectionSave");
+    const data = await response.json();
+    setConnectList(data);
+  };
+
   useEffect(() => {
-    const getData = async (): Promise<void> => {
-      const response = await fetch("/gui/api/handleConnectionSave");
-      const data = await response.json();
-      setConnectList(data);
-    };
     getData();
   }, []);
 
@@ -129,14 +130,16 @@ export default function Connections() {
         password,
       };
 
-      console.log(reqBody);
-
-      await fetch("/gui/api/handleConnectionSave", {
+      const updateConnection = await fetch("/gui/api/handleConnectionSave", {
         method,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(reqBody),
       });
-      window.location.reload();
+
+      // if connection has been updated, get a new connections list and update state
+      if (updateConnection.ok) {
+        getData();
+      }
     };
 
     const handleDelete = async (): Promise<void> => {
@@ -144,12 +147,15 @@ export default function Connections() {
         connectionId,
       };
 
-      await fetch("/gui/api/handleConnectionSave", {
+      const deleteConnection = await fetch("/gui/api/handleConnectionSave", {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(reqBody),
       });
-      window.location.reload();
+
+      if (deleteConnection.ok) {
+        getData();
+      }
     };
 
     return (
