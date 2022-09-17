@@ -25,7 +25,7 @@ export const handler: Handlers = {
         queryCache["dbUri"] = reqBodyObj.uri;
         try {
           queryCache["modelObj"] = await generateModels(queryCache.dbUri);
-        } catch (err) {
+        } catch (_err) {
           return new Response(
             JSON.stringify([{
               Error:

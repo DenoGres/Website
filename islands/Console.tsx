@@ -8,6 +8,12 @@ export interface IQueryObject {
   queryId?: number;
 }
 
+interface IQueryListItem {
+  query_name: string;
+  query_text: string;
+  id: number;
+}
+
 interface IModelDisplayRowObject {
   level: number;
   content: string;
@@ -20,7 +26,7 @@ export default function Console() {
   const [queryId, setQueryId] = useState<number>(-1);
 
   const [records, setRecords] = useState<object[]>([]);
-  const [queriesList, setQueriesList] = useState<any[]>([]);
+  const [queriesList, setQueriesList] = useState<IQueryListItem[]>([]);
   const [modelNames, setModelNames] = useState<string[]>([]);
   const [modelContent, setModelContent] = useState<object[]>([]);
   const [indexToDisplay, setIndexToDisplay] = useState<number>(NaN);
@@ -54,8 +60,7 @@ export default function Console() {
   const getQueriesToDisplay = async (): Promise<void> => {
     const response = await fetch("/gui/api/handleQuerySave");
     const queries = await response.json();
-    console.log(queries);
-    const sortedList = queries.sort((a: any, b: any) => b.id - a.id);
+    const sortedList = queries.sort((a: IQueryListItem, b: IQueryListItem) => b.id - a.id);
     setQueriesList(sortedList);
   };
 
@@ -119,7 +124,7 @@ export default function Console() {
       method: "POST",
       body: JSON.stringify(bodyObj),
     });
-    const data: object[] = await res.json();
+    const data: IQueryListItem[] = await res.json();
     setRecords(data);
   };
 

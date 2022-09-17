@@ -8,7 +8,7 @@ export default function jwtAuth(req: Request) {
     return false;
   }
 
-  const [header, payload, signature] = decode(cookies.jwt);
+  const [header, payload, signature]: [any, any, any] = decode(cookies.jwt);
   // if JWT is valid, render page else render error
   if (payload.payload.username) {
     return true;

@@ -31,7 +31,7 @@ export default function Connections() {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [showErrorModal, setShowErrorModal] = useState<boolean>(false);
-  const [errorMessage, setErrorMessage] = useState<any[]>([]);
+  const [errorMessage, setErrorMessage] = useState<ErrorMessage[]>([]);
   const [connectionType, setConnectionType] = useState<string>("new");
 
   // function to retrieve list of connections to render
@@ -80,8 +80,8 @@ export default function Connections() {
     });
     if (response.status === 400) {
       const error = await response.json();
-      await setErrorMessage(error);
-      await displayErrorModal();
+      setErrorMessage(error);
+      displayErrorModal();
       return;
     }
     window.location.href = "/gui/explorer";
@@ -90,8 +90,8 @@ export default function Connections() {
   // create throttled versions of handler
   const throttledHandleUriSaveAndRedirect = throttle(handleUriSaveAndRedirect, 1000);
 
-  const displayErrorModal = async () => {
-    await setShowErrorModal(true);
+  const displayErrorModal = (): void => {
+    setShowErrorModal(true);
   };
 
   // <------------ LIST OF CONNECTIONS ------------>
