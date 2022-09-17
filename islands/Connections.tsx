@@ -1,5 +1,5 @@
-import data from "https://deno.land/std@0.141.0/_wasm_crypto/crypto.wasm.mjs";
 import { useEffect, useState } from "preact/hooks";
+import throttle from "../utils/throttle.ts";
 
 export interface IConnectionObject {
   id: number;
@@ -22,15 +22,6 @@ export interface ModalStatus {
 
 // list of saved connections
 export default function Connections() {
-  useEffect(() => {
-    const getData = async (): Promise<void> => {
-      const response = await fetch("/gui/api/handleConnectionSave");
-      const data = await response.json();
-      setConnectList(data);
-    };
-    getData();
-  }, []);
-
   const [connectList, setConnectList] = useState<IConnectionObject[]>([]);
   const [connectionId, setConnectionId] = useState<number>();
   const [connectionName, setConnectionName] = useState<string>("");
@@ -40,21 +31,43 @@ export default function Connections() {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [showErrorModal, setShowErrorModal] = useState<boolean>(false);
-  const [errorMessage, setErrorMessage] = useState<any[]>([]);
+  const [errorMessage, setErrorMessage] = useState<ErrorMessage[]>([]);
   const [connectionType, setConnectionType] = useState<string>("new");
+
+  // function to retrieve list of connections to render
+  const getData = async (): Promise<void> => {
+    const response = await fetch("/gui/api/handleConnectionSave");
+    const data = await response.json();
+    setConnectList(data);
+  };
+
+  // render connection list on first load
+  useEffect(() => {
+    getData();
+  }, []);
+
+  // function to reset state for all fields
+  const resetAllFields = (): void => {
+    setConnectionId(NaN);
+    setConnectionName("");
+    setAddress("");
+    setPort(NaN);
+    setDefaultDB("");
+    setUsername("");
+    setPassword("");
+    setConnectionType("new");
+  };
 
   // <------------ EVENT LISTENERS ------------>
 
   // on clicking connect, attempt to validate uri by retrieving models
-  // if successful, cache uri in handleRequests for further queries
-  const handleUriSaveAndRedirect = async (e: MouseEvent) => {
-    e.preventDefault();
+  // if successful, cache uri and models in handleRequests for further queries
+  const handleUriSaveAndRedirect = async (): Promise<void> => {
     const uriText =
-      // `postgres://${username}:${password}@${address}:${port}/${defaultDB}`;
       `postgres://${username}:${password}@${address}/${defaultDB}`;
     const reqBody = {
       uri: uriText,
-      task: 'cache uri and validate'
+      task: "cache uri and validate",
     };
     await fetch("/gui/api/setConnectionIdCookie", {
       method: "POST",
@@ -67,21 +80,22 @@ export default function Connections() {
     });
     if (response.status === 400) {
       const error = await response.json();
-      await setErrorMessage(error);
-      await displayErrorModal();
+      setErrorMessage(error);
+      displayErrorModal();
       return;
     }
-    // must be a better way to do this. maybe can get preact router working?
     window.location.href = "/gui/explorer";
   };
 
-  const displayErrorModal = async () => {
-    await setShowErrorModal(true);
+  // create throttled versions of handler
+  const throttledHandleUriSaveAndRedirect = throttle(handleUriSaveAndRedirect, 1000);
+
+  const displayErrorModal = (): void => {
+    setShowErrorModal(true);
   };
 
   // <------------ LIST OF CONNECTIONS ------------>
   function connectionsList() {
-
     const connections = connectList.map((ele, idx) => {
       return (
         <button
@@ -107,8 +121,6 @@ export default function Connections() {
     return (
       <div className="flex flex-col">
         {connections}
-        <div className="flex flex-row justify-end my-1">
-        </div>
       </div>
     );
   }
@@ -132,14 +144,13 @@ export default function Connections() {
         password,
       };
 
-      console.log(reqBody);
-
       await fetch("/gui/api/handleConnectionSave", {
         method,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(reqBody),
       });
-      window.location.reload();
+      getData();
+      resetAllFields();
     };
 
     const handleDelete = async (): Promise<void> => {
@@ -147,13 +158,18 @@ export default function Connections() {
         connectionId,
       };
 
-      await fetch("/gui/api/handleConnectionSave", {
+      const deleteConnection = await fetch("/gui/api/handleConnectionSave", {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(reqBody),
       });
-      window.location.reload();
+      getData();
+      resetAllFields();
     };
+
+    // create throttled versions of handlers
+    const throttledHandleClick = throttle(handleClick, 1000);
+    const throttledHandleDelete = throttle(handleDelete, 1000);
 
     return (
       <form className="flex flex-col my-5 py-5">
@@ -209,7 +225,7 @@ export default function Connections() {
             Test Connection
           </button>
           <button
-            onClick={handleClick}
+            onClick={throttledHandleClick}
             type="button"
             className="bg-deno-pink-100 px-5 mx-1 py-3 text-sm shadow-sm font-medium tracking-wider text-gray-600 rounded-full hover:shadow-2xl hover:bg-deno-pink-200"
           >
@@ -219,7 +235,7 @@ export default function Connections() {
             type="button"
             className={"bg-gray-300 px-5 mx-1 py-3 text-sm shadow-sm font-medium tracking-wider text-gray-600 rounded-full hover:shadow-2xl hover:bg-gray-400" +
               ((connectionType === "new") ? " hidden" : "")}
-            onClick={handleDelete}
+            onClick={throttledHandleDelete}
           >
             Delete
           </button>
@@ -227,7 +243,7 @@ export default function Connections() {
             type="button"
             className={"bg-deno-blue-100 px-5 mx-1 py-3 text-sm shadow-sm font-medium tracking-wider text-gray-600 rounded-full hover:shadow-2xl hover:bg-deno-blue-200" +
               ((connectionType === "new") ? " hidden" : "")}
-            onClick={handleUriSaveAndRedirect}
+            onClick={throttledHandleUriSaveAndRedirect}
           >
             Connect
           </button>
@@ -242,18 +258,9 @@ export default function Connections() {
         <h2 className="mb-3 text-center">Connections List</h2>
         {connectionsList()}
         <button
-          className="text-sm shadow-sm font-medium text-gray-600 text-left flex-1 p-3 bg-deno-pink-100 tracking-wider rounded flex flex-row justify-between my-1"
+          className="text-sm shadow-sm font-medium text-gray-600 text-left w-full p-3 bg-deno-pink-100 tracking-wider rounded flex flex-row justify-between my-1"
           type="button"
-          onClick={(e) => {
-            setConnectionId(NaN);
-            setConnectionName("");
-            setAddress("");
-            setPort(NaN);
-            setDefaultDB("");
-            setUsername("");
-            setPassword("");
-            setConnectionType("new");
-          }}
+          onClick={resetAllFields}
         >
           Add New Connection
         </button>

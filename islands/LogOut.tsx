@@ -1,7 +1,15 @@
-import { useEffect } from "preact/hooks";
+import { useEffect, useState } from "preact/hooks";
 
 // list of saved Migrations
 export default function LogOut() {
+  const [count, setCount] = useState<number>(3);
+
+  const updateCount = () => {
+    setInterval(() => {
+      setCount((prevCount) => prevCount - 1);
+    }, 1000);
+  };
+
   useEffect(() => {
     const logout = async () => {
       setTimeout(() => window.location.href = "/gui/", 3000);
@@ -9,10 +17,11 @@ export default function LogOut() {
       await fetch("/gui/api/handleRequests", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ task: 'clear user cache'})
-      })
+        body: JSON.stringify({ task: "clear user cache" }),
+      });
     };
     logout();
+    updateCount();
   }, []);
 
   return (
@@ -20,6 +29,11 @@ export default function LogOut() {
       <div className="w-full bg-white rounded mx-3 p-3 items-center">
         {/* <h2 className="mb-3">LogOut</h2> */}
         <p>Thank you for using DenoGres. Logging out...</p>
+        <p>
+          Blasting off in <span className="font-bold text-lg">{count}</span>
+          {" "}
+          seconds!!
+        </p>
       </div>
     </div>
   );
