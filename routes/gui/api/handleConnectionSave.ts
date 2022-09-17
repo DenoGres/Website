@@ -57,7 +57,6 @@ export const handler: Handlers = {
 
   // POST REQUEST
   async POST(req: Request): Promise<Response> {
-    console.log("in POST: handleConnectionSave - POST");
     try {
       const cookies = cookie.getCookies(req.headers);
 
@@ -69,7 +68,7 @@ export const handler: Handlers = {
         const { connectionName, address, port, username, defaultDB, password } =
           body;
 
-          const connection = await connectToDb();
+        const connection = await connectToDb();
 
         const getUser: QueryObjectResult = await connection.queryObject(
           `
@@ -101,7 +100,6 @@ export const handler: Handlers = {
 
   // PATCH REQUEST
   async PATCH(req: Request): Promise<Response> {
-    console.log("in POST: handleConnectionSave - PATCH");
     try {
       const cookies = cookie.getCookies(req.headers);
 
@@ -143,7 +141,6 @@ export const handler: Handlers = {
 
   // POST REQUEST
   async DELETE(req: Request): Promise<Response> {
-    console.log("in POST: handleConnectionSave - DELETE");
     try {
       const cookies = cookie.getCookies(req.headers);
 
