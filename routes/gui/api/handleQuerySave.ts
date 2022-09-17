@@ -1,7 +1,7 @@
 import { HandlerContext, Handlers } from "$fresh/server.ts";
 import * as cookie from "cookie/cookie.ts";
 import { QueryObjectResult } from "pg/query/query.ts";
-import formatQueryText from "../../../utils/formatQueryTextToSave.ts";
+import formatQueryText from "../../../utils/formatQueryToSave.ts";
 import connectToDb from "../../../utils/connectToDb.ts";
 
 export const handler: Handlers = {

@@ -1,3 +1,4 @@
+// write the body of AsyncFunction to run query based on user input
 export default function (uri: string, userQueryStr: string): string {
   // replace any weirdly formatted quotation marks from webview to single quotes
   userQueryStr = userQueryStr

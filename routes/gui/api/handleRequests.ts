@@ -11,8 +11,6 @@ export const handler: Handlers = {
     // stretch: validate JWT before caching anything (uri / model); redirect if missing/inauthentic
     switch (reqBodyObj.task) {
       // if request is to log out user, clear cache here
-      // using a loop to delete every k-v pair on cache;
-      // alternatively could declare with 'let' and reassign to empty
       case 'clear user cache': {
         for (const key in queryCache) {
           delete queryCache[key];
