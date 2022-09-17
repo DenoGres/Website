@@ -17,6 +17,7 @@ interface payload {
 export const handler: Handlers = {
   // GET REQUEST
   async GET(req: Request): Promise<Response> {
+    let connection;
     try {
       const cookies = cookie.getCookies(req.headers);
 
@@ -24,7 +25,7 @@ export const handler: Handlers = {
       if (cookies.jwt) {
         const payload = decode(cookies.jwt)[1] as payload;
 
-        const connection = await connectToDb();
+        connection = await connectToDb();
 
         const getUser: QueryObjectResult = await connection.queryObject(
           `
@@ -49,6 +50,10 @@ export const handler: Handlers = {
       }
     } catch (err) {
       return new Response(JSON.stringify({ err }), { status: 404 });
+    } finally {
+      if (connection) {
+        connection.end();
+      }
     }
     return new Response(JSON.stringify({ error: "Error in middleware" }), {
       status: 404,
@@ -57,6 +62,7 @@ export const handler: Handlers = {
 
   // POST REQUEST
   async POST(req: Request): Promise<Response> {
+    let connection; 
     try {
       const cookies = cookie.getCookies(req.headers);
 
@@ -68,7 +74,7 @@ export const handler: Handlers = {
         const { connectionName, address, port, username, defaultDB, password } =
           body;
 
-        const connection = await connectToDb();
+        connection = await connectToDb();
 
         const getUser: QueryObjectResult = await connection.queryObject(
           `
@@ -92,6 +98,10 @@ export const handler: Handlers = {
       }
     } catch (err) {
       return new Response(JSON.stringify({ err }), { status: 404 });
+    } finally {
+      if (connection) {
+        connection.end();
+      }
     }
     return new Response(JSON.stringify({ error: "Error in middleware" }), {
       status: 404,
@@ -100,6 +110,7 @@ export const handler: Handlers = {
 
   // PATCH REQUEST
   async PATCH(req: Request): Promise<Response> {
+    let connection;
     try {
       const cookies = cookie.getCookies(req.headers);
 
@@ -116,7 +127,7 @@ export const handler: Handlers = {
           password,
         } = body;
 
-        const connection = await connectToDb();
+        connection = await connectToDb();
 
         await connection.queryObject(
           `
@@ -133,6 +144,10 @@ export const handler: Handlers = {
       }
     } catch (err) {
       return new Response(JSON.stringify({ err }), { status: 404 });
+    } finally {
+      if (connection) {
+        connection.end();
+      }
     }
     return new Response(JSON.stringify({ error: "error in middleware" }), {
       status: 404,
@@ -141,6 +156,7 @@ export const handler: Handlers = {
 
   // POST REQUEST
   async DELETE(req: Request): Promise<Response> {
+    let connection;
     try {
       const cookies = cookie.getCookies(req.headers);
 
@@ -149,7 +165,7 @@ export const handler: Handlers = {
         const body = await req.json();
         const { connectionId } = body;
 
-        const connection = await connectToDb();
+        connection = await connectToDb();
 
         await connection.queryObject(
           `
@@ -165,6 +181,10 @@ export const handler: Handlers = {
       }
     } catch (err) {
       return new Response(JSON.stringify({ err }), { status: 404 });
+    } finally {
+      if (connection) {
+        connection.end();
+      }
     }
     return new Response(JSON.stringify({ error: "error in middleware" }), {
       status: 404,

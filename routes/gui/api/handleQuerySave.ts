@@ -7,12 +7,13 @@ import connectToDb from "../../../utils/connectToDb.ts";
 export const handler: Handlers = {
   // GET REQUEST
   async GET(req: Request, _ctx: HandlerContext): Promise<any> {
+    let connection;
     try {
       const { connectionId } = cookie.getCookies(req.headers);
 
       // Run query if a connection ID is defined, otherwise don't do anything
       if (connectionId) {
-        const connection = await connectToDb();
+        connection = await connectToDb();
 
         const queryList: QueryObjectResult = await connection.queryObject(
           `
@@ -29,16 +30,21 @@ export const handler: Handlers = {
       }
     } catch (err) {
       return new Response(err, { status: 404 });
+    } finally {
+      if (connection) {
+        connection.end();
+      }
     }
   },
 
   // POST REQUEST
   async POST(req: Request, _ctx: HandlerContext): Promise<Response> {
     console.log("in POST: handleQuerySave - POST");
+    let connection;
     try {
       const { connectionId } = cookie.getCookies(req.headers);
 
-      const connection = await connectToDb();
+      connection = await connectToDb();
 
       const { queryName, queryText } = await req.json();
       const formattedQuery = formatQueryText(queryText);
@@ -56,17 +62,22 @@ export const handler: Handlers = {
       });
     } catch (err) {
       return new Response(err, { status: 404 });
+    } finally {
+      if (connection) {
+        connection.end();
+      }
     }
   },
 
   // PATCH REQUEST
   async PATCH(req: Request, _ctx: HandlerContext): Promise<Response> {
     console.log("in PATCH: handleQuerySave - PATCH");
+    let connection;
     try {
       const { queryName, queryText, queryId } = await req.json();
       const formattedQuery = formatQueryText(queryText);
 
-      const connection = await connectToDb();
+      connection = await connectToDb();
 
       await connection.queryObject(
         `
@@ -83,16 +94,21 @@ export const handler: Handlers = {
       });
     } catch (err) {
       return new Response(err, { status: 404 });
+    } finally {
+      if (connection) {
+        connection.end();
+      }
     }
   },
 
   // DELETE REQUEST
   async DELETE(req: Request, _ctx: HandlerContext): Promise<Response> {
     console.log("in POST: handleQuerySave - DELETE");
+    let connection;
     try {
       const { queryId } = await req.json();
 
-      const connection = await connectToDb();
+      connection = await connectToDb();
 
       await connection.queryObject(
         `
@@ -107,6 +123,10 @@ export const handler: Handlers = {
       });
     } catch (err) {
       return new Response(err, { status: 404 });
+    } finally {
+      if (connection) {
+        connection.end();
+      }
     }
   },
 };
