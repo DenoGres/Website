@@ -15,8 +15,8 @@ export const handler = {
     try {
       const body: Ilogin = await req.json();
       const { username, password } = body;
-      const salt: string = await bcrypt.genSalt(8);
-      const hashedPW: string = await bcrypt.hash(password, salt);
+      const salt: string = await bcrypt.genSaltSync(8);
+      const hashedPW: string = await bcrypt.hashSync(password, salt);
 
       const POOL_CONNECTIONS = 3;
       const pool = new Pool(Deno.env.get("DB_URI"), POOL_CONNECTIONS, true);

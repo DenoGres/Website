@@ -5,7 +5,7 @@ import Login from "../../islands/Login.tsx";
 export default function index() {
   return (
     <Layout>
-      <div className="w-full flex flex-row ml-3">
+      <div className="w-full flex flex-row">
         <div className="flex flex-col w-full">
           <div className="flex flex-row h-full p-auto bg-white rounded relative">
             <img

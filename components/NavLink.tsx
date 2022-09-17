@@ -1,5 +1,5 @@
 function NavLink(
-  props: { href: string; active: string; svg: h.JSX.Element },
+  props: { href: string; active: string; svg: Element },
 ) {
   const { href, active, svg } = props;
 

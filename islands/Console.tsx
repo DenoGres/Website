@@ -1,10 +1,17 @@
 import { useEffect, useState } from "preact/hooks";
 import Record from "../components/Record.tsx";
+import throttle from "../utils/throttle.ts";
 
 export interface IQueryObject {
   queryName: string;
   queryText: string;
   queryId?: number;
+}
+
+interface IQueryListItem {
+  query_name: string;
+  query_text: string;
+  id: number;
 }
 
 interface IModelDisplayRowObject {
@@ -19,12 +26,13 @@ export default function Console() {
   const [queryId, setQueryId] = useState<number>(-1);
 
   const [records, setRecords] = useState<object[]>([]);
-  const [queriesList, setQueriesList] = useState<any[]>([]);
+  const [queriesList, setQueriesList] = useState<IQueryListItem[]>([]);
   const [modelNames, setModelNames] = useState<string[]>([]);
   const [modelContent, setModelContent] = useState<object[]>([]);
-  const [indexToDisplay, setIndexToDisplay] = useState<number>(-1);
+  const [indexToDisplay, setIndexToDisplay] = useState<number>(NaN);
   const [queryType, setQueryType] = useState<string>("new");
 
+  // retrieve models as stringifiable plain objects (i.e. not classes) to render
   const getModels = async (): Promise<any> => {
     const res = await fetch("/gui/api/handleRequests", {
       method: "POST",
@@ -47,23 +55,32 @@ export default function Console() {
     getModelsToDisplay();
   }, []);
 
+  // fetch all saved queries related to this connection and display
+  // sorted in descending query ID order
+  const getQueriesToDisplay = async (): Promise<void> => {
+    const response = await fetch("/gui/api/handleQuerySave");
+    const queries = await response.json();
+    const sortedList = queries.sort((a: IQueryListItem, b: IQueryListItem) => b.id - a.id);
+    setQueriesList(sortedList);
+  };
+
   // on first load, make GET request to retrieve saved queries from DB
   useEffect(() => {
-    const getQueriesToDisplay = async (): Promise<void> => {
-      const response = await fetch("/gui/api/handleQuerySave");
-      const queries = await response.json();
-      console.log(queries);
-      const sortedList = queries.sort((a: any, b: any) => b.id - a.id);
-      setQueriesList(sortedList);
-    };
     getQueriesToDisplay();
   }, []);
+
+  // function to reset state for all fields
+  const resetAllFields = (): void => {
+    setQueryName("");
+    setQueryText("");
+    setQueryId(NaN);
+    setQueryType("new");
+  };
 
   // ----EVENT LISTENERS -----
 
   // Saves query in external DB
-  const handleSave = async (e: MouseEvent): Promise<void> => {
-    e.preventDefault();
+  const handleSave = async (): Promise<void> => {
     const method = (queryType === "new") ? "POST" : "PATCH";
     const newQuery: IQueryObject = (queryType === "new") ? 
       {
@@ -80,27 +97,26 @@ export default function Console() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newQuery),
     });
-    window.location.reload();
+    getQueriesToDisplay();
+    resetAllFields();
   };
 
   // Deletes current query from external DB
-  const handleDelete = async (e: MouseEvent): Promise<void> => {
-    e.preventDefault();
+  const handleDelete = async (): Promise<void> => {
     const reqBody = {
       queryId
     };
-    console.log(reqBody);
     await fetch("/gui/api/handleQuerySave", {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(reqBody),
     });
-    window.location.reload();
+    getQueriesToDisplay();
+    resetAllFields();
   };
 
   // Runs query and updates state to render result
-  const handleRun = async (e: MouseEvent) => {
-    e.preventDefault();
+  const handleRun = async (): Promise<void> => {
     const bodyObj = {
       queryText,
     };
@@ -108,9 +124,14 @@ export default function Console() {
       method: "POST",
       body: JSON.stringify(bodyObj),
     });
-    const data: object[] = await res.json();
+    const data: IQueryListItem[] = await res.json();
     setRecords(data);
   };
+
+  // create throttled versions of handlers
+  const throttledHandleSave = throttle(handleSave, 1000);
+  const throttledHandleDelete = throttle(handleDelete, 1000);
+  const throttledHandleRun = throttle(handleRun, 1000);
 
   // map saved queries to display components
   const savedQueries = queriesList.map((ele, idx) => {
@@ -233,12 +254,7 @@ export default function Console() {
             <button
               className="bg-deno-pink-100 text-sm shadow-sm p-3 my-1 font-medium tracking-wider text-gray-600 rounded text-left"
               type="button"
-              onClick={(e) => {
-                setQueryName("");
-                setQueryText("");
-                setQueryId(-1);
-                setQueryType("new");
-              }}
+              onClick={resetAllFields}
             >
               Add New Query
             </button>
@@ -249,15 +265,6 @@ export default function Console() {
           <div className="flex flex-col w-full overflow-y-auto">
             {activeModelNames}
           </div>
-          {
-            /* <button
-            type="button"
-            className="bg-gray-300 px-5 mx-1 py-3 text-sm shadow-sm font-medium tracking-wider text-gray-600 rounded-full hover:shadow-2xl hover:bg-gray-400"
-            onClick={() => setShowModal(true)}
-          >
-            Import Model File
-          </button> */
-          }
           {/* <-------- Model File MODAL--------> */}
           {showModal
             ? (
@@ -279,33 +286,9 @@ export default function Console() {
                         </button>
                       </div>
                       {/*body*/}
-                      {
-                        /* <div className="relative px-6 flex-auto">
-                        <textarea
-                          className={textArea}
-                          onInput={(e) => {
-                            setModelText(e.currentTarget.value);
-                          }}
-                          value={modelText}
-                          id="queryInput"
-                          name="queryInput"
-                          rows={20}
-                          cols={70}
-                        />
-                      </div> */
-                      }
                       {activeModelContent[indexToDisplay]}
                       {/*footer*/}
                       <div className="flex items-center justify-end p-6 border-solid border-slate-200 rounded-b">
-                        {
-                          /* <button
-                          className="bg-gray-500 text-white font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-300"
-                          type="button"
-                          onClick={handleModelSave}
-                        >
-                          Save
-                        </button> */
-                        }
                         <button
                           className="bg-gray-500 text-white font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-300"
                           type="button"
@@ -357,7 +340,7 @@ export default function Console() {
             <button
               type="button"
               className="bg-deno-pink-100 px-5 mx-1 py-3 text-sm shadow-sm font-medium tracking-wider text-gray-600 rounded-full hover:shadow-2xl hover:bg-deno-pink-200"
-              onClick={handleSave}
+              onClick={throttledHandleSave}
             >
               {(queryType === "new") ? "Save" : "Update"}
             </button>
@@ -365,13 +348,13 @@ export default function Console() {
             type="button"
             className={"bg-gray-300 px-5 mx-1 py-3 text-sm shadow-sm font-medium tracking-wider text-gray-600 rounded-full hover:shadow-2xl hover:bg-gray-400" +
               ((queryType === "new") ? " hidden" : "")}
-            onClick={handleDelete}
+            onClick={throttledHandleDelete}
           >
             Delete
           </button>
             <button
               className="bg-deno-blue-100 px-5 mx-1 py-3 text-sm shadow-sm font-medium tracking-wider text-gray-600 rounded-full hover:shadow-2xl hover:bg-deno-blue-200"
-              onClick={handleRun}
+              onClick={throttledHandleRun}
             >
               Run
             </button>

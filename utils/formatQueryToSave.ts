@@ -1,3 +1,4 @@
+// format query string to escape quotes to store in external db
 export default (queryText: string): string => {
   let result = '';
   for (let i = 0; i < queryText.length; i++) {

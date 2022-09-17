@@ -57,6 +57,11 @@ const allMethodsAreValid = (methodsArr: string[], methods: IMethodsDict): boolea
   return true;
 };
 
+// check if "query" method is invoked to send query properly
+const hasInvokedQuery = (queryStr: string): boolean => {
+  return queryStr.slice(-9) === '.query();';
+};
+
 // helper function to parse query string into array of terms (model name + methods)
 const separateQueryTerms = (queryStr: string): string[] => {
   return queryStr.replace(/\(.*?\)/g, '').replace(/;$/, '').split('.');
@@ -72,6 +77,11 @@ export const checkInput = (queryStr: string, modelsObj?: IModel): IError | null 
   const termsArray: string[] = separateQueryTerms(queryStr);
   const modelName: string | undefined = termsArray.shift();
 
+  if (!hasInvokedQuery(queryStr)) {
+    return { Error: `
+      Invalid query syntax. Please make sure your query ends in ".query();" to send request correctly.
+    ` };
+  }
   if (!isValidModel(modelName, modelsObj)) {
     return { Error: 'Model does not exist in database instance.'};
   }
