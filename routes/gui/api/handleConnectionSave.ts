@@ -1,5 +1,4 @@
 import { Handlers } from "$fresh/server.ts";
-// import { Pool } from "pg/mod.ts";
 import * as cookie from "cookie/cookie.ts";
 import { decode } from "djwt/mod.ts";
 import { QueryObjectResult } from "pg/query/query.ts";
