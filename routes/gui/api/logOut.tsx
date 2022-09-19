@@ -28,6 +28,13 @@ export const handler = {
         httpOnly: true,
       });
 
+      cookie.setCookie(res.headers, {
+        name: "userId",
+        value: "",
+        path: "/",
+        httpOnly: true,
+      });
+
       return res;
     } catch (err) {
       return new Response(

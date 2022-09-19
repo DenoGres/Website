@@ -6,6 +6,10 @@ import * as cookie from "cookie/cookie.ts";
 
 const queryCache: any = {};
 
+/*
+TODO: stretch: can implement middleware pattern in Fresh.js 
+TODO: and break down this handler into multiple specialized handlers
+*/ 
 export const handler: Handlers = {
   async POST(req: Request, _ctx: HandlerContext): Promise<Response> {
     const reqBodyObj = await req.json();
@@ -18,16 +22,18 @@ export const handler: Handlers = {
         queryCache[userId] = {};
       }
     }
-    // stretch: validate JWT before caching anything (uri / model); clear any existing cache if missing/inauthentic
+    /* 
+    TODO: stretch: can implement more robust validation & caching
+    */
     switch (reqBodyObj.task) {
-      // if request is to log out user, clear cache here
+      // if request is to log out user, clear user cache 
       case 'clear user cache': {
         delete queryCache[userId];
         return new Response(null, { status: 200 });
       }
-      // if request body contains db uri, validate by attempting to retrieve models
+      // validate by attempting to retrieve models
       // if successful, cache both uri and models under user
-      // otherwise, delete uri key on user cache
+      // otherwise, delete uri key on user cache so it does not persist
       case 'cache uri and validate': {
         queryCache[userId]["dbUri"] = reqBodyObj.uri;
         try {
@@ -47,8 +53,7 @@ export const handler: Handlers = {
           { status: 200 },
         );
       }
-      // if req body requests models in plain text (for FE render), try to access cached uri and proceed
-      // will throw error to FE if uri not cached / invalid (e.g. did not properly connect before nav to explorer)
+      // generates models in stringifiable plain text to render on FE
       case 'get models as text' : {
         try {
           const modelsListObject = await generateModels(queryCache[userId].dbUri, {
@@ -104,8 +109,7 @@ export const handler: Handlers = {
         const newFunc = AsyncFunction("input", funcStr);
 
         // evaluate the function, passing in the denogres models
-        // catch any db errors not previously caught via input validation (e.g. invalid column name)
-        // pass back the postgres error since it is descriptive and useful!
+        // postgres will catch any db errors not previously caught via input validation (e.g. invalid column name)
         try {
           const response = await newFunc(denogresModels);
 

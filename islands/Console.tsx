@@ -82,16 +82,9 @@ export default function Console() {
   // Saves query in external DB
   const handleSave = async (): Promise<void> => {
     const method = (queryType === "new") ? "POST" : "PATCH";
-    const newQuery: IQueryObject = (queryType === "new") ? 
-      {
-        queryName,
-        queryText,
-      } :
-      {
-        queryName,
-        queryText,
-        queryId 
-      };
+    const newQuery: IQueryObject = (queryType === "new") 
+      ? { queryName, queryText }
+      : { queryName, queryText, queryId };
     await fetch("/gui/api/handleQuerySave", {
       method,
       headers: { "Content-Type": "application/json" },
@@ -103,9 +96,7 @@ export default function Console() {
 
   // Deletes current query from external DB
   const handleDelete = async (): Promise<void> => {
-    const reqBody = {
-      queryId
-    };
+    const reqBody = { queryId };
     await fetch("/gui/api/handleQuerySave", {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
@@ -117,9 +108,7 @@ export default function Console() {
 
   // Runs query and updates state to render result
   const handleRun = async (): Promise<void> => {
-    const bodyObj = {
-      queryText,
-    };
+    const bodyObj = { queryText };
     const res = await fetch("/gui/api/handleRequests", {
       method: "POST",
       body: JSON.stringify(bodyObj),

@@ -3,8 +3,6 @@ import { Pool } from "pg/mod.ts";
 import * as bcrypt from "bcrypt/mod.ts";
 import { QueryObjectResult } from "pg/query/query.ts";
 
-//import * as postgres from "https://deno.land/x/postgres/mod.ts";
-
 export interface Ilogin {
   username: string;
   password: string;
