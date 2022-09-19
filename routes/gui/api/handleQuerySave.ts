@@ -39,7 +39,6 @@ export const handler: Handlers = {
 
   // POST REQUEST
   async POST(req: Request, _ctx: HandlerContext): Promise<Response> {
-    console.log("in POST: handleQuerySave - POST");
     let connection;
     try {
       const { connectionId } = cookie.getCookies(req.headers);
@@ -71,7 +70,6 @@ export const handler: Handlers = {
 
   // PATCH REQUEST
   async PATCH(req: Request, _ctx: HandlerContext): Promise<Response> {
-    console.log("in PATCH: handleQuerySave - PATCH");
     let connection;
     try {
       const { queryName, queryText, queryId } = await req.json();
@@ -103,7 +101,6 @@ export const handler: Handlers = {
 
   // DELETE REQUEST
   async DELETE(req: Request, _ctx: HandlerContext): Promise<Response> {
-    console.log("in POST: handleQuerySave - DELETE");
     let connection;
     try {
       const { queryId } = await req.json();

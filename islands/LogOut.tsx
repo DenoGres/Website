@@ -1,6 +1,5 @@
 import { useEffect, useState } from "preact/hooks";
 
-// list of saved Migrations
 export default function LogOut() {
   const [count, setCount] = useState<number>(3);
 
