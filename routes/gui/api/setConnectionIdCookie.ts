@@ -1,8 +1,10 @@
 import { HandlerContext, Handlers } from "$fresh/server.ts";
 import * as cookie from "cookie/cookie.ts";
 
+// when user connects to valid uri, set connectionId as cookie
+// to associate query CRUD under the db uri
+// can extract all cookie functionality into one module in future
 export const handler: Handlers = {
-  // GET REQUEST
   async POST(req: Request, _ctx: HandlerContext): Promise<Response> {
     const { connectionId } = await req.json();
     const res = new Response(
