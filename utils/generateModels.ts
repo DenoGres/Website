@@ -41,7 +41,7 @@ export const generateModels = async (
       modelsList[className] = class extends Model {};
     }
     modelsList[className].table = key;
-    modelsList[className].columns = tableListObj[key].columns;
+    modelsList[className].columns = tableListObj[key];
   }
 
   modelsList = deleteFalseKeys(modelsList);
