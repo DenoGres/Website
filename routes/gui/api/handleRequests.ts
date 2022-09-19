@@ -2,28 +2,38 @@ import { HandlerContext, Handlers } from "$fresh/server.ts";
 import writeQueryText from "../../../utils/writeQueryText.ts";
 import { checkInput, extractType, IError } from "../../../utils/checkInputs.ts";
 import { generateModels } from "../../../utils/generateModels.ts";
+import * as cookie from "cookie/cookie.ts";
 
 const queryCache: any = {};
 
 export const handler: Handlers = {
   async POST(req: Request, _ctx: HandlerContext): Promise<Response> {
     const reqBodyObj = await req.json();
-    // stretch: validate JWT before caching anything (uri / model); redirect if missing/inauthentic
+    const { userId } = cookie.getCookies(req.headers);
+    if (!userId) {
+      return new Response(null, { status: 400 });
+    } else {
+      // initialize user cache if not present
+      if (!(userId in queryCache)) {
+        queryCache[userId] = {};
+      }
+    }
+    // stretch: validate JWT before caching anything (uri / model); clear any existing cache if missing/inauthentic
     switch (reqBodyObj.task) {
       // if request is to log out user, clear cache here
       case 'clear user cache': {
-        for (const key in queryCache) {
-          delete queryCache[key];
-        }
+        delete queryCache[userId];
         return new Response(null, { status: 200 });
       }
       // if request body contains db uri, validate by attempting to retrieve models
-      // if successful, cache both uri and models
+      // if successful, cache both uri and models under user
+      // otherwise, delete uri key on user cache
       case 'cache uri and validate': {
-        queryCache["dbUri"] = reqBodyObj.uri;
+        queryCache[userId]["dbUri"] = reqBodyObj.uri;
         try {
-          queryCache["modelObj"] = await generateModels(queryCache.dbUri);
+          queryCache[userId]["modelObj"] = await generateModels(queryCache[userId].dbUri);
         } catch (_err) {
+          delete queryCache[userId].dbUri;
           return new Response(
             JSON.stringify([{
               Error:
@@ -41,7 +51,7 @@ export const handler: Handlers = {
       // will throw error to FE if uri not cached / invalid (e.g. did not properly connect before nav to explorer)
       case 'get models as text' : {
         try {
-          const modelsListObject = await generateModels(queryCache.dbUri, {
+          const modelsListObject = await generateModels(queryCache[userId].dbUri, {
             asText: true,
           });
           const modelNamesArr = [];
@@ -60,8 +70,8 @@ export const handler: Handlers = {
       default: {
         // otherwise receive query string from req body; retrieve uri & models from cache
         const queryStr = reqBodyObj.queryText;
-        const userUri = queryCache.dbUri;
-        const denogresModels = queryCache.modelObj;
+        const userUri = queryCache[userId].dbUri;
+        const denogresModels = queryCache[userId].modelObj;
 
         // handle missing uri (user did not connect before sending query request)
         if (!userUri) {

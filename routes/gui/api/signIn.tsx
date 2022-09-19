@@ -76,6 +76,20 @@ export const handler = {
               httpOnly: true,
             });
 
+            cookie.setCookie(res.headers, {
+              name: "userId",
+              value: String(checkUser.rows[0].id),
+              path: "/",
+              httpOnly: true,
+            });
+
+            cookie.setCookie(res.headers, {
+              name: "connectionId",
+              value: "",
+              path: "/",
+              httpOnly: true,
+            });
+
             return res;
           }
         }
