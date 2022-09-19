@@ -12,7 +12,7 @@
     "bcrypt/": "https://deno.land/x/bcrypt@v0.4.0/",
     "cookie/": "https://deno.land/std@0.155.0/http/",
     "djwt/": "https://deno.land/x/djwt@v2.7/",
-    "denogres/": "https://deno.land/x/denogresdev@v1.0.5/",
-    "denogres-functions/": "https://deno.land/x/denogresdev@v1.0.5/src/functions/"
+    "denogres/": "https://deno.land/x/denogresdev@v1.0.14/",
+    "denogres-functions/": "https://deno.land/x/denogresdev@v1.0.14/src/functions/"
   }
 }
