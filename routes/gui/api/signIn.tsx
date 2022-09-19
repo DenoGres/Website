@@ -20,7 +20,6 @@ export const handler = {
     _ctx: HandlerContext,
   ): Promise<Response> {
     try {
-      console.log("in signIn Handler");
       const body: Ilogin = await req.json();
       const { username, password } = body;
 
