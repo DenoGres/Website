@@ -112,7 +112,6 @@ export const handler: Handlers = {
         // postgres will catch any db errors not previously caught via input validation (e.g. invalid column name)
         try {
           const response = await newFunc(denogresModels);
-
           if (queryType === "insert") {
             return new Response(
               JSON.stringify([{
@@ -143,7 +142,9 @@ export const handler: Handlers = {
               { status: 200 },
             );
           }
-
+          if (response === undefined) {
+            return new Response(JSON.stringify([{ Error: `A database error has occurred. Please check your query syntax.` }]));
+          }
           return new Response(response);
         } catch (err) {
           return new Response(JSON.stringify([{ Error: `${err}` }]), {
