@@ -169,6 +169,7 @@ export const handler: Handlers = {
 
         await connection.queryObject(
           `
+          DELETE FROM queries WHERE connection_id = '${connectionId}';
           DELETE FROM connections WHERE id = '${connectionId}'
         ;`,
         );
