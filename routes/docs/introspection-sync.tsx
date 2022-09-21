@@ -65,6 +65,7 @@ export default function IntrospectionSync() {
             require an additional sync to ensure the database schema is updated
             to reflect accordingly (see the following section.)
             <br />
+            <br />
             To introspect and generate the associated models within the model.ts
             file, execute the the following CLI command:
           </p>
@@ -84,8 +85,11 @@ export default function IntrospectionSync() {
             accordingly to maintain synchronicity between the two. In addition
             to --db-pull, Denogres also includes --db-sync functionality that
             will revise the PostgreSQL schema based on the DenoGres model.ts
-            file. Once ompleted changes to your model have been made, execute
-            the following CLI command:
+            file.
+            <br />
+            <br />
+            Once completed changes to your model have been made, execute the
+            following CLI command:
           </p>
           <br />
           <div class={box}>
