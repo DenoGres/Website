@@ -152,7 +152,8 @@ export default function Migrations() {
             creation, as well as any comments associated with those files.
           </p>
         </main>
-        <br />
+        <footer class="my-24">
+        </footer>
       </div>
     </div>
   );

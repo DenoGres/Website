@@ -29,6 +29,16 @@ export default function DocsNav() {
             <span>Synchronizing Your Database</span>
           </a>
         </li>
+        <li class="relative">
+          <a
+            class="flex items-center text-sm py-4 px-6 h-10 overflow-hidden text-white text-ellipsis whitespace-nowrap rounded hover:text-[#B293B6] hover:bg-blue-50 transition duration-300 ease-in-out"
+            href="/docs/seed"
+            data-mdb-ripple="true"
+            data-mdb-ripple-color="primary"
+          >
+            <span>Seeding Your Database</span>
+          </a>
+        </li>
         <li class="relative" id="sidenavSecEx4">
           <a
             href="/docs/model"
