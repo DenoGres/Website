@@ -29,14 +29,14 @@ export default function Migrations() {
           <br />
           <p class={description}>
             DenoGres has built-in functionality to automatically generate a
-            backup a model that was created whenever either of the the following
-            commands are run:
+            backup of a model that was created whenever either of the the
+            following commands are run:
           </p>
           <br />
           <div class={box}>
             Denogres --db-pull
             <br />
-            Denogres -db-sync
+            Denogres --db-sync
           </div>
           <br />
           <p class={description}>
@@ -58,7 +58,7 @@ export default function Migrations() {
           <br />
           <p class={description}>
             This directory will be subsequently stored within a Migrations
-            folder which can be found within in the root project directory. The
+            folder which can be found within the root project directory. The
             path to the folder will be as follows:
           </p>
           <br />
@@ -143,14 +143,13 @@ export default function Migrations() {
           <br />
           <p class={description}>
             Any time the user executes either --db-pull or --db-sync, Denogres
-            will prompts the user to include an additional comment. This comment
-            allows users to summarize any important changes that occurred as a
-            result of the sync/pull, as well as any additional notes to be
-            associated with the Model. When the cli command --log is ran,
-            denogres will generate a historical log of all previous Model files,
-            how those files were generated (either through pull or sync), the
-            date and time of each creation, as well as any comments associated
-            with those files.
+            will prompt the user to include a comment. This comment allows users
+            to summarize any important changes that occurred as a result of the
+            sync/pull, as well as any additional notes to be associated with the
+            Model. When the cli command --log is ran, denogres will generate a
+            historical log of all previous Model files, how those files were
+            generated (either through pull or sync), the date and time of each
+            creation, as well as any comments associated with those files.
           </p>
         </main>
         <br />
