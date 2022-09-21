@@ -34,9 +34,9 @@ export default function Migrations() {
           </p>
           <br />
           <div class={box}>
-            Denogres --db-pull
+            denogres --db-pull
             <br />
-            Denogres --db-sync
+            denogres --db-sync
           </div>
           <br />
           <p class={description}>
