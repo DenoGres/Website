@@ -21,11 +21,10 @@ export default function ModelPage() {
           <h1 class={h1}>How to Set Up Model Class</h1>
           <p class={description}>
             <br />
-            Model’s are representation of tables in the database. In DenoGres,
-            to create a new Model, you also need to declare interface with the
-            same name as the Model. This makes type-checking easily integrated
-            when you create new instances of the particular model classes.{" "}
-            <br />
+            Models are representation of tables in the database. In DenoGres, to
+            create a new Model, you also need to declare interface with the same
+            name as the Model. This makes type-checking easily integrated when
+            you create new instances of the particular model classes. <br />
             <br />
             For each new class you’re creating (in addition to auto-generated
             models through “db-pull”), it must have ‘table’ and ‘columns’ as

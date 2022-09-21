@@ -19,7 +19,7 @@ export default function IntrospectionSync() {
         </aside>
         <main class="col-span-1 md:col-span-2 lg:col-span-3 xl:col-span-4">
           <br />
-          <h1 class={h1}>Syncing Your Database</h1>
+          <h1 class={h1}>Synchronizing Your Database</h1>
           <br />
           <p class={description}>
             Denogres features bi-directional synchronization that is designed to
@@ -97,7 +97,8 @@ export default function IntrospectionSync() {
           </div>
           <br />
         </main>
-        <br />
+        <footer class="my-24">
+        </footer>
       </div>
     </div>
   );
