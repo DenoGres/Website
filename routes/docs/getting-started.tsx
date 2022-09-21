@@ -23,8 +23,9 @@ export default function GettingStartedPage() {
           <h1 class={h1}>Welcome To DenoGres</h1>
           <p class={description}>
             <br />
-            To begin, let's download DenoGres! Execute the below in the terminal
-            - this will give you access to DenoGres's CLI functionality.
+            To begin, let's download DenoGres! Execute the following CLI command
+            in the terminal - this will give you access to DenoGres's CLI
+            functionality.
             <br />
           </p>
           <br />
@@ -73,6 +74,8 @@ export default function GettingStartedPage() {
           </div>
           <br />
         </main>
+        <footer class="my-24">
+        </footer>
       </div>
     </div>
   );

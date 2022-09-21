@@ -7,7 +7,7 @@ export default function Migrations() {
   const h3 = "mx-auto max-w-screen-md font-bold text-xl";
   const comment = "text-[#97C2DB]";
   const description = "mx-auto max-w-screen-md";
-  const list = "mx-auto max-w-screen-md list-disc";
+  const list = "pl-5 mx-auto max-w-screen-md list-disc";
   const box =
     "border rounded shadow-md mx-auto box-content bg-gray-100 text-black font-mono max-w-screen-md p-4 border-4";
   const anchor = "absolute";
@@ -43,7 +43,7 @@ export default function Migrations() {
             Note that backups are listed in the order they were created.
           </p>
           <br />
-          <h2 class={h2}>Db Pull Backup</h2>
+          <h2 class={h2}>Backups: --db-pull</h2>
           <br />
           <p class={description}>
             Whenever a database pull is initiated, denogres will create a new
@@ -92,7 +92,7 @@ export default function Migrations() {
           </p>
           <br />
 
-          <h2 class={h2}>Db Sync Backup</h2>
+          <h2 class={h2}>Backups: --db-sync</h2>
           <br />
           <p class={description}>
             When the user invokes the -–db-sync command, denogres will create a
@@ -139,7 +139,7 @@ export default function Migrations() {
             </ul>
           </p>
           <br />
-          <h2 class={h2}>Deno Log</h2>
+          <h2 class={h2}>DenoGres Comment Logs</h2>
           <br />
           <p class={description}>
             Any time the user executes either --db-pull or --db-sync, Denogres
