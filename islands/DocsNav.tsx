@@ -26,7 +26,7 @@ export default function DocsNav() {
             data-mdb-ripple="true"
             data-mdb-ripple-color="primary"
           >
-            <span>Syncing Your Database</span>
+            <span>Synchronizing Your Database</span>
           </a>
         </li>
         <li class="relative" id="sidenavSecEx4">
