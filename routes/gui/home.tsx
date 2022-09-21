@@ -63,8 +63,8 @@ export default function home() {
                 </p>
                 <h2 className="mt-10 mb-5">Documentation</h2>
                 <p>
-                More information on DenoGres and the DenoGres GUI can be
-                found on the documentation website at: https://denogres.deno.dev/
+                  More information on DenoGres and the DenoGres GUI can be
+                  found on the documentation website at: https://denogres.deno.dev/
                 </p>
               </p>
             </div>
