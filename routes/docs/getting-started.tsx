@@ -23,14 +23,15 @@ export default function GettingStartedPage() {
           <h1 class={h1}>Welcome To DenoGres</h1>
           <p class={description}>
             <br />
-            To begin, let's download DenoGres! Execute the below in the terminal
-            - this will give you access to DenoGres's CLI functionality.
+            To begin, let's download DenoGres! Execute the following CLI command
+            in the terminal - this will give you access to DenoGres's CLI
+            functionality.
             <br />
           </p>
           <br />
           <div class={box}>
-            deno install --allow-read --allow-write --allow-net --allow-env
-            --name denogres https://deno.land/x/denogres/mod.ts
+            deno install --allow-read --allow-write --allow-net --allow-env 
+            --allow-run --name denogres https://deno.land/x/denogres/mod.ts
           </div>
           <br />
           <p class={description}>
@@ -43,10 +44,15 @@ export default function GettingStartedPage() {
           </h2>
           <br />
           <p class={description}>
-            Before using DenoGres in a project, run the below. In your project's
-            root directory, a .env file, for your database connection URI, and a
-            models folder, for your model.ts file, will be created.
+            Before using DenoGres in a project, run the command below. This will 
+            create the following in your project's root directory: 
           </p>
+          <br />
+          <ul>
+            <li class={description}>1. an .env file for your database connection URI</li>
+            <li class={description}>2. a models folder for your model.ts file</li>
+            <li class={description}>3. a Migrations folder for migration logs and model snapshots</li>
+          </ul>
           <br />
           <div class={box}>
             denogres --init
@@ -73,6 +79,8 @@ export default function GettingStartedPage() {
           </div>
           <br />
         </main>
+        <footer class="my-24">
+        </footer>
       </div>
     </div>
   );

@@ -23,26 +23,32 @@ export default function DevelopmentPage() {
           </h1>
           <br />
           <p class={description}>
-            DenoGres contains some functionality that is still in development -
-            including database sync functionality. The sync functionality:
+            DenoGres is continually evolving. Features currently in development
+            include:
             <br />
             <br />
             <ul class="list-disc">
               <li class={description}>
-                Identifies instances within the models/model.ts file where user
-                updates have caused the database and TypeScript models to be
-                out-of-sync
+                Database sync method (denogres --db-sync) will account for
+                multiple associations and composite unique keys.
               </li>
               <li class={description}>
-                Creates and executes queries to update the database so all
-                points of reference once again align
+                "Compare" command (denogres --compare) will be implemented to
+                display side-by-side diff between previous models.
+              </li>
+              <li class={description}>
+                Migrations log will be visible within the GUI, so that users can
+                track/view/compare model versions.
+              </li>
+              <li class={description}>
+                ERD-style diagrams will be generated within the GUI, so users
+                have a comprehensive view of the data model.
+              </li>
+              <li class={description}>
+                Additional support for MySQL, SQL Server, etc.
               </li>
             </ul>
           </p>
-          <br />
-          <div class={box}>
-            denogres --db-sync
-          </div>
           <br />
         </main>
       </div>
