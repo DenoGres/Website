@@ -42,7 +42,44 @@ export default function seed() {
           <h2 class={h2}>Seed.ts file structure</h2>
           <br />
           <p class={description}>
+            Seed data is stored within the seed.ts file as a collection of
+            variables assigned to arrays of objects. The variable name used
+            should correspond to the table within your database schema, and each
+            object within the array is associated to a row of data to be
+            inserted within your database. Each object contains properties which
+            are tied to columns within those particular tables, and the property
+            values are the desired values for those columns.
           </p>
+          <br />
+          <div class={box}>
+            const people = {"["}
+            <br />
+            &nbsp;&nbsp;{"{"}
+            <br />
+            &nbsp;&nbsp;&nbsp;&nbsp;name: "Anthony",<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;species_id: 2<br />
+            &nbsp;&nbsp;{"},"}
+            <br />
+            &nbsp;&nbsp;{"{"}
+            <br />
+            &nbsp;&nbsp;&nbsp;&nbsp;name: "Eddie",<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;species_id: 3<br />
+            &nbsp;&nbsp;{"},"}
+            <br />
+            &nbsp;&nbsp;{"{"}
+            <br />
+            &nbsp;&nbsp;&nbsp;&nbsp;name: "Carlos",<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;species_id: 1<br />
+            &nbsp;&nbsp;{"},"}
+            <br />
+            &nbsp;&nbsp;{"{"}
+            <br />
+            &nbsp;&nbsp;&nbsp;&nbsp;name: "Henry",<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;species_id: 1<br />
+            &nbsp;&nbsp;{"},"}
+            <br />
+            {"]"};
+          </div>
         </main>
         <footer class="my-24">
         </footer>
