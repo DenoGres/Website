@@ -42,8 +42,6 @@ export default function seed() {
           <h2 class={h2}>Seed.ts file structure</h2>
           <br />
           <p class={description}>
-            After running the init command, update the .env file to contain your
-            database's connection URI.
           </p>
         </main>
         <footer class="my-24">

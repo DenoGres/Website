@@ -149,10 +149,10 @@ export default function ModelPage() {
           <h2 class={h2}>Deleting Models</h2>
           <br />
           <p class={description}>
-            Simply delete the interface and the associated Model class within
-            model.ts and run --db-sync to synchronize those changes to your
-            database schema. DenoGres will delete the asssociated table from
-            your database schema.
+            Delete the interface and the associated Model class within model.ts
+            and run --db-sync to synchronize those changes to your database
+            schema. DenoGres will automatically delete the asssociated table
+            from your database schema.
           </p>
           <br />
         </main>
