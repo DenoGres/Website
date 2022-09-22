@@ -12,12 +12,12 @@ export default function LogOut() {
   useEffect(() => {
     const logout = async () => {
       setTimeout(() => window.location.href = "/gui/", 3000);
-      await fetch("/gui/api/logOut");
       await fetch("/gui/api/handleRequests", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ task: "clear user cache" }),
       });
+      await fetch("/gui/api/logOut");
     };
     logout();
     updateCount();

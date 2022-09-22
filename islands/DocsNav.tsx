@@ -11,7 +11,7 @@ export default function DocsNav() {
       <ul class="relative px-1">
         <li class="relative">
           <a
-            class="flex items-center text-sm py-2 px-6 h-10 overflow-hidden text-white text-ellipsis whitespace-nowrap rounded hover:text-[#B293B6] hover:bg-blue-50 transition duration-300 ease-in-out"
+            class="flex items-center text-sm py-4 px-6 h-10 overflow-hidden text-white text-ellipsis whitespace-nowrap rounded hover:text-[#B293B6] hover:bg-blue-50 transition duration-300 ease-in-out"
             href="/docs/getting-started"
             data-mdb-ripple="true"
             data-mdb-ripple-color="primary"
@@ -21,18 +21,28 @@ export default function DocsNav() {
         </li>
         <li class="relative">
           <a
-            class="flex items-center text-sm py-2 px-6 h-10 overflow-hidden text-white text-ellipsis whitespace-nowrap rounded hover:text-[#B293B6] hover:bg-blue-50 transition duration-300 ease-in-out"
+            class="flex items-center text-sm py-4 px-6 h-10 overflow-hidden text-white text-ellipsis whitespace-nowrap rounded hover:text-[#B293B6] hover:bg-blue-50 transition duration-300 ease-in-out"
             href="/docs/introspection-sync"
             data-mdb-ripple="true"
             data-mdb-ripple-color="primary"
           >
-            <span>Syncing Your Database</span>
+            <span>Synchronizing Your Database</span>
+          </a>
+        </li>
+        <li class="relative">
+          <a
+            class="flex items-center text-sm py-4 px-6 h-10 overflow-hidden text-white text-ellipsis whitespace-nowrap rounded hover:text-[#B293B6] hover:bg-blue-50 transition duration-300 ease-in-out"
+            href="/docs/seed"
+            data-mdb-ripple="true"
+            data-mdb-ripple-color="primary"
+          >
+            <span>Seeding Your Database</span>
           </a>
         </li>
         <li class="relative" id="sidenavSecEx4">
           <a
             href="/docs/model"
-            class="flex items-center text-sm py-2 px-6 h-10 overflow-hidden text-white text-ellipsis whitespace-nowrap rounded hover:text-[#B293B6] hover:bg-blue-50 transition duration-300 ease-in-out cursor-pointer"
+            class="flex items-center text-sm py-4 px-6 h-10 overflow-hidden text-white text-ellipsis whitespace-nowrap rounded hover:text-[#B293B6] hover:bg-blue-50 transition duration-300 ease-in-out cursor-pointer"
             data-mdb-ripple="true"
             data-mdb-ripple-color="primary"
             data-bs-toggle="collapse"
@@ -46,7 +56,7 @@ export default function DocsNav() {
         <li class="relative" id="sidenavSecEx2">
           <a
             href="/docs/methods"
-            class="flex items-center text-sm py-2 px-6 h-10 overflow-hidden text-white text-ellipsis whitespace-nowrap rounded hover:text-[#B293B6] hover:bg-blue-50 transition duration-300 ease-in-out cursor-pointer"
+            class="flex items-center text-sm py-4 px-6 h-10 overflow-hidden text-white text-ellipsis whitespace-nowrap rounded hover:text-[#B293B6] hover:bg-blue-50 transition duration-300 ease-in-out cursor-pointer"
             data-mdb-ripple="true"
             data-mdb-ripple-color="primary"
             data-bs-toggle="collapse"
@@ -65,7 +75,7 @@ export default function DocsNav() {
             <li class="relative">
               <a
                 href="/docs/methods#instance"
-                class="flex items-center text-xs py-2 pl-12 pr-6 h-6 overflow-hidden text-white text-ellipsis whitespace-nowrap rounded hover:text-[#B293B6] hover:bg-blue-50 transition duration-300 ease-in-out"
+                class="flex items-center text-xs py-4 pl-12 pr-6 h-6 overflow-hidden text-white text-ellipsis whitespace-nowrap rounded hover:text-[#B293B6] hover:bg-blue-50 transition duration-300 ease-in-out"
                 data-mdb-ripple="true"
                 data-mdb-ripple-color="primary"
               >
@@ -75,7 +85,7 @@ export default function DocsNav() {
             <li class="relative">
               <a
                 href="/docs/methods#model"
-                class="flex items-center text-xs py-2 pl-12 pr-6 h-6 overflow-hidden text-white text-ellipsis whitespace-nowrap rounded hover:text-[#B293B6] hover:bg-blue-50 transition duration-300 ease-in-out"
+                class="flex items-center text-xs py-4 pl-12 pr-6 h-6 overflow-hidden text-white text-ellipsis whitespace-nowrap rounded hover:text-[#B293B6] hover:bg-blue-50 transition duration-300 ease-in-out"
                 data-mdb-ripple="true"
                 data-mdb-ripple-color="primary"
               >
@@ -87,7 +97,7 @@ export default function DocsNav() {
         <li class="relative" id="sidenavSecEx3">
           <a
             href="/docs/associations"
-            class="flex items-center text-sm py-2 px-6 h-10 overflow-hidden text-white text-ellipsis whitespace-nowrap rounded hover:text-[#B293B6] hover:bg-blue-50 transition duration-300 ease-in-out cursor-pointer"
+            class="flex items-center text-sm py-4 px-6 h-10 overflow-hidden text-white text-ellipsis whitespace-nowrap rounded hover:text-[#B293B6] hover:bg-blue-50 transition duration-300 ease-in-out cursor-pointer"
             data-mdb-ripple="true"
             data-mdb-ripple-color="primary"
             data-bs-toggle="collapse"
@@ -106,7 +116,7 @@ export default function DocsNav() {
             <li class="relative">
               <a
                 href="/docs/associations#one-to-one"
-                class="flex items-center text-xs py-2 pl-12 pr-6 h-6 overflow-hidden text-white text-ellipsis whitespace-nowrap rounded hover:text-[#B293B6] hover:bg-blue-50 transition duration-300 ease-in-out"
+                class="flex items-center text-xs py-4 pl-12 pr-6 h-6 overflow-hidden text-white text-ellipsis whitespace-nowrap rounded hover:text-[#B293B6] hover:bg-blue-50 transition duration-300 ease-in-out"
                 data-mdb-ripple="true"
                 data-mdb-ripple-color="primary"
               >
@@ -116,7 +126,7 @@ export default function DocsNav() {
             <li class="relative">
               <a
                 href="/docs/associations#one-to-many"
-                class="flex items-center text-xs py-2 pl-12 pr-6 h-6 overflow-hidden text-white text-ellipsis whitespace-nowrap rounded hover:text-[#B293B6] hover:bg-blue-50 transition duration-300 ease-in-out"
+                class="flex items-center text-xs py-4 pl-12 pr-6 h-6 overflow-hidden text-white text-ellipsis whitespace-nowrap rounded hover:text-[#B293B6] hover:bg-blue-50 transition duration-300 ease-in-out"
                 data-mdb-ripple="true"
                 data-mdb-ripple-color="primary"
               >
@@ -126,7 +136,7 @@ export default function DocsNav() {
             <li class="relative">
               <a
                 href="/docs/associations#many-to-many"
-                class="flex items-center text-xs py-2 pl-12 pr-6 h-6 overflow-hidden text-white text-ellipsis whitespace-nowrap rounded hover:text-[#B293B6] hover:bg-blue-50 transition duration-300 ease-in-out"
+                class="flex items-center text-xs py-4 pl-12 pr-6 h-6 overflow-hidden text-white text-ellipsis whitespace-nowrap rounded hover:text-[#B293B6] hover:bg-blue-50 transition duration-300 ease-in-out"
                 data-mdb-ripple="true"
                 data-mdb-ripple-color="primary"
               >
@@ -138,7 +148,7 @@ export default function DocsNav() {
         <li class="relative" id="sidenavSecEx5">
           <a
             href="/docs/migrations"
-            class="flex items-center text-sm py-2 px-6 h-10 overflow-hidden text-white text-ellipsis whitespace-nowrap rounded hover:text-[#B293B6] hover:bg-blue-50 transition duration-300 ease-in-out cursor-pointer"
+            class="flex items-center text-sm py-4 px-6 h-10 overflow-hidden text-white text-ellipsis whitespace-nowrap rounded hover:text-[#B293B6] hover:bg-blue-50 transition duration-300 ease-in-out cursor-pointer"
             data-mdb-ripple="true"
             data-mdb-ripple-color="primary"
             data-bs-toggle="collapse"
@@ -152,7 +162,7 @@ export default function DocsNav() {
         <li class="relative" id="sidenavSecEx5">
           <a
             href="/docs/gui"
-            class="flex items-center text-sm py-2 px-6 h-10 overflow-hidden text-white text-ellipsis whitespace-nowrap rounded hover:text-[#B293B6] hover:bg-blue-50 transition duration-300 ease-in-out cursor-pointer"
+            class="flex items-center text-sm py-4 px-6 h-10 overflow-hidden text-white text-ellipsis whitespace-nowrap rounded hover:text-[#B293B6] hover:bg-blue-50 transition duration-300 ease-in-out cursor-pointer"
             data-mdb-ripple="true"
             data-mdb-ripple-color="primary"
             data-bs-toggle="collapse"
@@ -171,7 +181,7 @@ export default function DocsNav() {
             <li class="relative">
               <a
                 href="/docs/gui#database"
-                class="flex items-center text-xs py-2 pl-12 pr-6 h-6 overflow-hidden text-white text-ellipsis whitespace-nowrap rounded hover:text-[#B293B6] hover:bg-blue-50 transition duration-300 ease-in-out"
+                class="flex items-center text-xs py-4 pl-12 pr-6 h-6 overflow-hidden text-white text-ellipsis whitespace-nowrap rounded hover:text-[#B293B6] hover:bg-blue-50 transition duration-300 ease-in-out"
                 data-mdb-ripple="true"
                 data-mdb-ripple-color="primary"
               >
@@ -181,7 +191,7 @@ export default function DocsNav() {
             <li class="relative">
               <a
                 href="/docs/gui#queries"
-                class="flex items-center text-xs py-2 pl-12 pr-6 h-6 overflow-hidden text-white text-ellipsis whitespace-nowrap rounded hover:text-[#B293B6] hover:bg-blue-50 transition duration-300 ease-in-out"
+                class="flex items-center text-xs py-4 pl-12 pr-6 h-6 overflow-hidden text-white text-ellipsis whitespace-nowrap rounded hover:text-[#B293B6] hover:bg-blue-50 transition duration-300 ease-in-out"
                 data-mdb-ripple="true"
                 data-mdb-ripple-color="primary"
               >
@@ -193,7 +203,7 @@ export default function DocsNav() {
         <li class="relative" id="sidenavSecEx5">
           <a
             href="/docs/development"
-            class="flex items-center text-sm py-2 px-6 h-10 overflow-hidden text-white text-ellipsis whitespace-nowrap rounded hover:text-[#B293B6] hover:bg-blue-50 transition duration-300 ease-in-out cursor-pointer"
+            class="flex items-center text-sm py-4 px-6 h-10 overflow-hidden text-white text-ellipsis whitespace-nowrap rounded hover:text-[#B293B6] hover:bg-blue-50 transition duration-300 ease-in-out cursor-pointer"
             data-mdb-ripple="true"
             data-mdb-ripple-color="primary"
             data-bs-toggle="collapse"

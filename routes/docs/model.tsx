@@ -3,9 +3,11 @@ import DocsNav from "../../islands/DocsNav.tsx";
 
 export default function ModelPage() {
   const h1 = "mx-auto max-w-screen-md font-bold text-3xl";
+  const h2 = "mx-auto max-w-screen-md font-bold text-2xl";
   const description = "mx-auto max-w-screen-md";
   const box =
     "border rounded shadow-md mx-auto box-content bg-gray-100 text-black font-mono max-w-screen-md p-4 border-4";
+  const list = "pl-5 mx-auto max-w-screen-md list-disc";
 
   return (
     <div class="min-h-screen min-w-screen text-white bg-gradient-to-b from-gray-600 to-gray-800">
@@ -18,22 +20,83 @@ export default function ModelPage() {
         </aside>
         <main class="col-span-1 md:col-span-2 lg:col-span-3 xl:col-span-4">
           <br />
-          <h1 class={h1}>How to Set Up Model Class</h1>
+          <h1 class={h1}>How to Set Up Model Classes</h1>
           <p class={description}>
             <br />
-            Model’s are representation of tables in the database. In DenoGres,
-            to create a new Model, you also need to declare interface with the
-            same name as the Model. This makes type-checking easily integrated
-            when you create new instances of the particular model classes.{" "}
+            Models are object representations of tables present within your
+            database schema. In order to create a new Model within DenoGres,
+            users will need to declare an accompanying interface which has the
+            same name as the Model. This step is necessary in order to addresses
+            type-checking when you generate new instances of the particular
+            model classes.
+          </p>
+          <br />
+          <h2 class={h2}>Creating Models</h2>
+          <br />
+          <p class={description}>
+            To create a new table within your PostgreSQL database, create a new
+            class which extends the Model class, along with an accompanying
+            Interface. Note that each newly created class{" "}
+            <span class="fw-bold">MUST</span>{" "}
+            have the following static properties.
             <br />
             <br />
-            For each new class you’re creating (in addition to auto-generated
-            models through “db-pull”), it must have ‘table’ and ‘columns’ as
-            static properties. ‘table’ should be the name of the table in the
-            database, ‘columns’ property should contain all the fields in that
-            table. In the ‘columns’ you will need to specify each field’s name,
-            type, and additional attributes such as ‘notNull’, and constraint
-            such as ‘primaryKey’.
+            1. <span class="font-bold">Table:</span>{" "}
+            Name of the table within your PostgreSQL database schema
+            <br />
+            <br />
+            2. <span class="font-bold">Column:</span>{" "}
+            This property should be assigned as an object, which contains
+            properties corresponding to columns within the table. The values
+            assigned to these properties should also be objects, which contain
+            properties defining the attributes and constraints related to the
+            particular column in question.
+            <br />
+            <br />
+            Below is a list of properties/constraints that can be applied to a
+            given column, as well as possible values that can be associated with
+            those properties/constraints:
+          </p>
+
+          <ul class={list}>
+            <br />
+            <li>
+              <span class="font-bold">primaryKey:</span> Boolean
+            </li>
+            <li>
+              <span class="font-bold">notNull:</span> Boolean
+            </li>
+            <li>
+              <span class="font-bold">unique:</span> Boolean
+            </li>
+            <li>
+              <span class="font-bold">checks:</span>{" "}
+              Object [key: string]: string
+            </li>
+            <li>
+              <span class="font-bold">defaultVal:</span>{" "}
+              string | number | boolean | Date
+            </li>
+            <li>
+              <span class="font-bold">checks:</span>{" "}
+              Object [key: string]: string
+            </li>
+            <li>
+              <span class="font-bold">autoIncrement:</span> boolean
+            </li>
+            <li>
+              <span class="font-bold">association:</span>{" "}
+              {"{ name: string, mappedTable: string, mappedColumn: string }"}
+            </li>
+            <li>
+              <span class="font-bold">(name of the check):</span>{" "}
+              {"{ [(name of the check): string]: string }"}
+            </li>
+          </ul>
+          <br />
+          <p class={description}>
+            Included below is a snippet of what a Model within your model.ts
+            file should potentially look like:
           </p>
           <br />
           <div class={box}>
@@ -72,7 +135,29 @@ export default function ModelPage() {
             <br />
             {"}"}
           </div>
+          <br />
+          <h2 class={h2}>Updating Models</h2>
+          <br />
+          <p class={description}>
+            To update tables within your database schema, simply make changes to
+            the interface and the associated Model class within model.ts and run
+            --db-sync to synchronize those changes to your database schema.
+            DenoGres will delete the asssociated table from your database
+            schema.
+          </p>
+          <br />
+          <h2 class={h2}>Deleting Models</h2>
+          <br />
+          <p class={description}>
+            Delete the interface and the associated Model class within model.ts
+            and run --db-sync to synchronize those changes to your database
+            schema. DenoGres will automatically delete the asssociated table
+            from your database schema.
+          </p>
+          <br />
         </main>
+        <footer class="my-24">
+        </footer>
         <br />
       </div>
     </div>
