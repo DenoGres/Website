@@ -1,5 +1,7 @@
+import { h } from "preact";
+
 function NavLink(
-  props: { href: string; active: string; svg: Element },
+  props: { href: string; active: string; svg: h.JSX.Element },
 ) {
   const { href, active, svg } = props;
 
