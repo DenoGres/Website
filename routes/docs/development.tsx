@@ -7,6 +7,8 @@ export default function DevelopmentPage() {
   const box =
     "border rounded shadow-md mx-auto box-content bg-gray-100 text-black font-mono max-w-screen-md p-4 border-4 ...";
 
+  const list = "pl-5 mx-auto max-w-screen-md list-disc";
+
   return (
     <div class="min-h-screen min-w-screen text-white bg-gradient-to-b from-gray-600 to-gray-800">
       <div class="sticky top-0 z-50">
@@ -27,7 +29,7 @@ export default function DevelopmentPage() {
             include:
             <br />
             <br />
-            <ul class="list-disc">
+            <ul class={list}>
               <li class={description}>
                 Database sync method (denogres --db-sync) will account for
                 multiple associations and composite unique keys.
