@@ -35,18 +35,16 @@ export default function MethodsPage() {
             </p>
             <br />
             <div class={box}>
-              const person = new Person();{" "}
-              <span class={comment}>// create new instance of model</span>
+              <p class={comment}>// create new instance of model</p>
+              const person = new Person(); <br />
               <br />
-              <br />
-              <span class={comment}>// create properties</span>
-              <br />
+              <p class={comment}>// create properties</p>
               person.name = 'Deno';<br />
               person.hair_color = 'purple';<br />
               person.age = '100';<br />
               <br />
-              await person.save();{" "}
-              <span class={comment}>// inserts created properties</span>
+              <p class={comment}>// inserts created properties</p>
+              await person.save();
             </div>
             <br />
             <h3 class={h3}>update</h3>
@@ -56,13 +54,11 @@ export default function MethodsPage() {
             <br />
             <div class={box}>
               <a class={anchor} name="model"></a>
-              person.hair_color = 'blue';{" "}
-              <span class={comment}>// reassign property value</span>
+              <p class={comment}>// reassign property value</p>
+              person.hair_color = 'blue'; <br />
               <br />
-              await person.update();{" "}
-              <span class={comment}>
-                // updates reassigned value in database
-              </span>
+              <p class={comment}>// updates reassigned value in database</p>
+              await person.update();
             </div>
             <br />
             <br />
@@ -79,7 +75,8 @@ export default function MethodsPage() {
             </p>
             <br />
             <div class={box}>
-              Person.insert('name = Deno', 'hair_color = purple').query();
+              <p class={comment}>// inserts a new row in the database</p>
+              await Person.insert('name = Deno', 'hair_color = purple').query();
             </div>
             <br />
             <h3 class={h3}>edit</h3>
@@ -89,7 +86,8 @@ export default function MethodsPage() {
             </p>
             <br />
             <div class={box}>
-              Person.edit('hair_color = blue').query();
+              <p class={comment}>// edits all values in a column</p>
+              await Person.edit('hair_color = blue').query();
             </div>
             <br />
             <h3 class={h3}>delete</h3>
@@ -98,11 +96,11 @@ export default function MethodsPage() {
             </p>
             <br />
             <div class={box}>
-              Person.delete();{" "}
-              <span class={comment}>// deletes entire model</span>
+              <p class={comment}>// deletes entire model</p>
+              await Person.delete().query();<br />
               <br />
-              Person.delete().where('name = Deno');{" "}
-              <span class={comment}>// deletes where condition is met</span>
+              <p class={comment}>// deletes where condition is met</p>
+              await Person.delete().where('name = Deno').query();{" "}
             </div>
             <br />
             <h3 class={h3}>select</h3>
@@ -112,19 +110,20 @@ export default function MethodsPage() {
             </p>
             <br />
             <div class={box}>
-              Person.select('*').query();{" "}
-              <span class={comment}>
-                // returns all columns in current model
-              </span>
+              <p class={comment}>
+                // either will return all columns in current model
+              </p>
+              await Person.select().query();
               <br />
-              Person.select('name', 'hair_color').query();{" "}
-              <span class={comment}>// returns selected columns</span>
+              await Person.select('*').query(); <br />
               <br />
+              <p class={comment}>// returns selected columns</p>
+              await Person.select('name', 'hair_color').query(); <br />
               <br />
               <p class={comment}>
                 // returns selected column where condition is met
               </p>
-              Person.select('name').where('hair_color = black').query();
+              await Person.select('name').where('hair_color = black').query();
             </div>
             <br />
             <h3 class={h3}>where</h3>
@@ -140,14 +139,15 @@ export default function MethodsPage() {
               <p class={comment}>
                 // return selected column where conditions are met
               </p>
-              Person.select('name').where('NOT age {"<"}{" "}
+              await Person.select('name').where('NOT age {"<"}{" "}
               100', 'AND gender = male').query();
               <br />
               <br />
               <p class={comment}>
                 // returns all columns where conditions are met
               </p>
-              Person.where('hair_color = black', 'OR eye_color = blue').query();
+              await Person.where('hair_color = black', 'OR eye_color =
+              blue').query();
             </div>
             <br />
             <h3 class={h3}>limit</h3>
@@ -157,7 +157,10 @@ export default function MethodsPage() {
             </p>
             <br />
             <div class={box}>
-              Person.select('name').where('hair_color =
+              <p class={comment}>
+                // returns 5 columns where conditions are met
+              </p>
+              await Person.select('name').where('hair_color =
               black').limit(5).query();
             </div>
             <br />
@@ -169,8 +172,9 @@ export default function MethodsPage() {
             </p>
             <br />
             <div class={box}>
-              Person.select('*').group('name').having('SUM(height) {">"}{" "}
-              100').query();
+              <p class={comment}></p>
+              await Person.select('name').group('name',
+              'height').having('SUM(height) {"<"} 100').query();
             </div>
             <br />
             <h3 class={h3}>innerJoin</h3>
