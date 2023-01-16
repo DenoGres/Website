@@ -1,44 +1,32 @@
-import MeshGradient from "https://esm.sh/mesh-gradient.js@0.0.5";
+import { Head } from "$fresh/runtime.ts";
+import { Gradient } from "../static/gradient.js";
 import { useEffect } from "preact/hooks";
 
-const COLORS = [
-  "#765b7f",
-  "#297789",
-  "#d1e5eb",
-  "#e7c9f0",
-];
-
-export default function Gradient() {
-  // create instance of Gradient Class
-  const gradient = new MeshGradient();
-  const canvasId = "my-canvas";
-
+export default function GradientBG() {
   useEffect(() => {
-    // initialize new gradient
-    // @Params
-    // 1. id of canvas elememt
-    // 2. array of colors in hexcode
-    gradient.initGradient("#" + canvasId, COLORS);
-    // Mesh Id
-    // Any positive numeric value which acts as a seed for mesh pattern
-    gradient?.changePosition(780);
+    const gradient = new Gradient();
+    gradient.initGradient("#gradient-canvas");
   }, []);
 
-  const regenerate = () => {
-    const value = Math.floor(Math.random() * 1000);
-    // change pattern by changing mesh Id
-    gradient?.changePosition(value);
-  };
-
   return (
-    <canvas
-      id={canvasId}
-      style={{
-        position: "fixed",
-        width: "100vw",
-        height: "100vh",
-        zIndex: "-1",
-      }}
-    />
+    <>
+      <Head>
+        <title>Fresh App</title>
+      </Head>
+      <canvas
+        id="gradient-canvas"
+        data-transition-in
+        style={{
+          position: "fixed",
+          width: "100vw",
+          height: "100vh",
+          zIndex: "-1",
+          "--gradient-color-1": "#297789",
+          "--gradient-color-2": "#24616b",
+          "--gradient-color-3": "#765b7f",
+          "--gradient-color-4": "#976aa5",
+        }}
+      />
+    </>
   );
 }
