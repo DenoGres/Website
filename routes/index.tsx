@@ -2,10 +2,12 @@ import { render } from "preact";
 import { apply, setup } from "twind";
 import { style } from "twind/style";
 import NavBar from "../islands/NavBar.tsx";
+import Gradient from "../islands/Gradient.tsx";
 
 export default function Home() {
   return (
-    <div class="min-h-screen bg-gradient-to-b from-gray-500 via-gray-800 to-gray-900">
+    <div>
+      <Gradient />
       <div class="sticky top-0">
         <NavBar />
       </div>
