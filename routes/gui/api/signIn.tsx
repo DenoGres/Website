@@ -30,9 +30,8 @@ export const handler = {
       // check if user exists, if user does not exist - return 404
       const checkUser: QueryObjectResult<checkUser> = await connection
         .queryObject(
-          `
-      SELECT id, username, password FROM users WHERE username = '${username}'
-      `,
+          "SELECT id, username, password FROM users WHERE username = $1",
+          [username],
         );
 
       connection.end();

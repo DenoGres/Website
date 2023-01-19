@@ -22,15 +22,15 @@ export const handler = {
 
       // write to DB
       const checkUser: QueryObjectResult = await connection.queryObject(
-        `
-        SELECT * FROM users WHERE username = '${username}'
-        `,
+        "SELECT * FROM users WHERE username = $1",
+        [username],
       );
 
       if (checkUser.rows.length === 0) {
         // TODO: set up JWT and redirect passing JWT
         await connection.queryObject(
-          `INSERT INTO users (username, password) VALUES ('${username}', '${hashedPW}')`,
+          "INSERT INTO users (username, password) VALUES ($1, $2)",
+          [username, hashedPW],
         );
 
         connection.end();

@@ -67,7 +67,7 @@ export default function LoginSignup() {
     } else {
       setErrorMessage({
         show: true,
-        text: "That account is already taken. Please try again.",
+        text: "Invalid credentials. Please try again.",
       });
     }
   };
