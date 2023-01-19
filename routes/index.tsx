@@ -19,7 +19,8 @@ export default function Home() {
         width="500px"
         alt="the DenoGres logo: a blue elephant and a purple dinosaur"
       />
-      <p class="text-2xl text-center text-white">
+      {
+        /* <p class="text-2xl text-center text-white">
         <br />
         DenoGres is a new Object-Relationship Mapper (ORM) for the Deno runtime
         environment!
@@ -34,7 +35,8 @@ export default function Home() {
         tables in TypeScript! To learn more and get started, dive into our
         documentation.
       </p>
-      <br />
+      <br /> */
+      }
     </div>
   );
 }

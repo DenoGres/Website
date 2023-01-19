@@ -22,9 +22,9 @@ export default function GradientBG() {
           height: "100vh",
           zIndex: "-1",
           "--gradient-color-1": "#297789",
-          "--gradient-color-2": "#24616b",
-          "--gradient-color-3": "#765b7f",
-          "--gradient-color-4": "#976aa5",
+          "--gradient-color-2": "#70b9d0",
+          "--gradient-color-3": "#d9bfe2",
+          "--gradient-color-4": "#abd3dd",
         }}
       />
     </>
