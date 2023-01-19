@@ -43,6 +43,6 @@ export const handler = {
       console.log(err);
     }
 
-    return new Response("Invalid Credentials", { status: 404 });
+    return new Response("Invalid Credentials", { status: 400 });
   },
 };

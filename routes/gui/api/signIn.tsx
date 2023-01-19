@@ -97,12 +97,12 @@ export const handler = {
 
       return new Response(
         JSON.stringify({ err: "Login failed - invalid credentials." }),
-        { status: 404 },
+        { status: 400 },
       );
     } catch (err) {
       return new Response(
         JSON.stringify({ err }),
-        { status: 404 },
+        { status: 500 },
       );
     }
   },

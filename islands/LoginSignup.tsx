@@ -1,6 +1,6 @@
 import { useState } from "preact/hooks";
 
-export interface loginStatus {
+export interface errorMessage {
   show: boolean;
   text: string;
 }
@@ -10,10 +10,11 @@ interface reqBody {
   password: string;
 }
 
-export default function Login() {
+export default function LoginSignup() {
+  const [status, setStatus] = useState<"login" | "signup">("login");
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [loginStatus, setLoginStatus] = useState<loginStatus>({
+  const [errorMessage, setErrorMessage] = useState<errorMessage>({
     show: false,
     text: "",
   });
@@ -24,7 +25,7 @@ export default function Login() {
 
   const login = async (e?: Event): Promise<void> => {
     if (username === "" || password === "") {
-      setLoginStatus({
+      setErrorMessage({
         show: true,
         text: "Username/Password fields cannot be blank. Please try again.",
       });
@@ -44,7 +45,7 @@ export default function Login() {
         window.location.href = "/gui/home";
       } else {
         const data = await response.json();
-        setLoginStatus({ show: true, text: data.err });
+        setErrorMessage({ show: true, text: data.err });
       }
     }
   };
@@ -64,23 +65,31 @@ export default function Login() {
     if (response.ok) {
       login();
     } else {
-      setLoginStatus({
+      setErrorMessage({
         show: true,
         text: "That account is already taken. Please try again.",
       });
     }
   };
 
-  const statusStyle: string = "text-red-600 z-50" +
-    ((loginStatus.show) ? " visible" : " invisible");
+  const errorMessageStyle: string = "text-red-600 z-50" +
+    ((errorMessage.show) ? " visible" : " invisible");
 
-  const statusText: string = loginStatus.text;
+  const handleChangeStatus = () => {
+    setStatus(status === "login" ? "signup" : "login");
+    setUsername("");
+    setPassword("");
+    setErrorMessage({
+      show: false,
+      text: "",
+    });
+  };
 
   return (
     <div className="flex flex-col px-5 z-10 w-5/12 h-96 m-auto bg-deno-blue-100 drop-shadow-2xl rounded">
       <div className="flex-1">
         <h2 className="py-5 font-extrabold text-lg">
-          Denogres Login
+          Denogres {status === "login" ? "Login" : "Signup"}
         </h2>
         <label className={labelStyle}>Username:</label>
         <input
@@ -91,7 +100,7 @@ export default function Login() {
           value={username}
         >
         </input>
-        <label className={labelStyle}>Password</label>
+        <label className={labelStyle}>Password:</label>
         <input
           className={inputStyle}
           onInput={(e) => {
@@ -102,23 +111,23 @@ export default function Login() {
         >
         </input>
         <div
-          className={statusStyle}
+          className={errorMessageStyle}
         >
-          {statusText}
+          {errorMessage.text}
         </div>
       </div>
       <div className="flex flex-row justify-end pb-5">
         <button
           className="px-5 mx-1 py-3 text-sm font-medium tracking-wider text-gray-700 rounded-full hover:shadow-2xl hover:bg-deno-blue-200"
-          onClick={login}
+          onClick={status === "login" ? login : signup}
         >
-          Login
+          {status === "login" ? "Login" : "Signup"}
         </button>
         <button
           className="px-5 mx-1 py-3 text-sm font-medium tracking-wider text-gray-700 rounded-full hover:shadow-2xl hover:bg-deno-blue-200"
-          onClick={signup}
+          onClick={handleChangeStatus}
         >
-          Sign Up
+          {status === "login" ? "Create account" : "Back to login"}
         </button>
       </div>
     </div>
