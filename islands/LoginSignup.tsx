@@ -19,6 +19,10 @@ export default function LoginSignup() {
     text: "",
   });
 
+  const resetErrorMessage = () => {
+    setTimeout(() => setErrorMessage({ show: false, text: "" }), 2000);
+  };
+
   const labelStyle = "py-3";
   const inputStyle =
     "my-3 py-2 px-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-11/12";
@@ -29,6 +33,7 @@ export default function LoginSignup() {
         show: true,
         text: "Username/Password fields cannot be blank. Please try again.",
       });
+      resetErrorMessage();
     } else {
       const reqBody: reqBody = {
         username,
@@ -46,6 +51,7 @@ export default function LoginSignup() {
       } else {
         const data = await response.json();
         setErrorMessage({ show: true, text: data.err });
+        resetErrorMessage();
       }
     }
   };
@@ -69,6 +75,7 @@ export default function LoginSignup() {
         show: true,
         text: "Invalid credentials. Please try again.",
       });
+      resetErrorMessage();
     }
   };
 
@@ -85,8 +92,12 @@ export default function LoginSignup() {
     });
   };
 
+  const boxColor = status === "login" ? "bg-deno-blue-100" : "bg-deno-pink-100";
+
   return (
-    <div className="flex flex-col px-5 z-10 w-5/12 h-96 m-auto bg-deno-blue-100 drop-shadow-2xl rounded">
+    <div
+      className={`flex flex-col px-5 z-10 w-5/12 h-96 m-auto ${boxColor} rounded`}
+    >
       <div className="flex-1">
         <h2 className="py-5 font-extrabold text-lg">
           Denogres {status === "login" ? "Login" : "Signup"}
@@ -116,18 +127,18 @@ export default function LoginSignup() {
           {errorMessage.text}
         </div>
       </div>
-      <div className="flex flex-row justify-end pb-5">
+      <div className="flex flex-row justify-between pb-5">
+        <button
+          className="px-2 py-3 text-sm font-medium tracking-wider text-gray-700 rounded-full hover:shadow-2xl hover:bg-deno-blue-200"
+          onClick={handleChangeStatus}
+        >
+          {status === "login" ? "Create account" : "Back to login"}
+        </button>
         <button
           className="px-5 mx-1 py-3 text-sm font-medium tracking-wider text-gray-700 rounded-full hover:shadow-2xl hover:bg-deno-blue-200"
           onClick={status === "login" ? login : signup}
         >
           {status === "login" ? "Login" : "Signup"}
-        </button>
-        <button
-          className="px-5 mx-1 py-3 text-sm font-medium tracking-wider text-gray-700 rounded-full hover:shadow-2xl hover:bg-deno-blue-200"
-          onClick={handleChangeStatus}
-        >
-          {status === "login" ? "Create account" : "Back to login"}
         </button>
       </div>
     </div>
