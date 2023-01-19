@@ -49,7 +49,7 @@ export default function MethodsPage() {
               person.age = '100';<br />
               <br />
               <p class={comment}>// inserts created properties</p>
-              person.save();
+              await person.save();
             </div>
             <br />
             <h3 class={h3}>update</h3>
@@ -63,7 +63,7 @@ export default function MethodsPage() {
               person.hair_color = 'blue'; <br />
               <br />
               <p class={comment}>// updates reassigned value in database</p>
-              person.update();
+              await person.update();
             </div>
             <br />
             <br />
@@ -304,18 +304,18 @@ export default function MethodsPage() {
               <br />
               <br />
               When a single query in the transaction chain fails, all of the
-              queries will be rolledback so the database state is never
-              changed.To complete the transaction you can invoke endTransaction
+              queries will be rolled back so the database state is never
+              changed. To complete the transaction you can invoke endTransaction
               directly on the model, or chain endTransaction onto your last
               query.
             </p>
             <br />
             <div class={box}>
               Person.insert('name = Alex').transaction(); <br />
-              Animals.delete().where('name = Spot').transaction(); <br />
+              Animal.delete().where('name = Spot').transaction(); <br />
               Person.insert('nae = Rachel').endTransaction();
               <span class={comment}>
-                // throws an error since 'nae' isn't a column, rollsback all
+                // throws an error since 'nae' isn't a column, rolls back all
                 previous queries and returns the error for the query that failed
               </span>
             </div>
