@@ -4,6 +4,11 @@ import { style } from "twind/style";
 import NavBar from "../islands/NavBar.tsx";
 import Gradient from "../islands/Gradient.tsx";
 
+const imageOutline = {
+  filter: `drop-shadow(1px 1px 0 #4a4a4a40) 
+          drop-shadow(-1px -1px 0 #4a4a4a40)`,
+};
+
 export default function Home() {
   return (
     <div>
@@ -13,6 +18,7 @@ export default function Home() {
       </div>
       <br />
       <img
+        style={imageOutline}
         class="mx-auto"
         src="/logo.png"
         height="500px"
