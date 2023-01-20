@@ -25,6 +25,11 @@ export default function MethodsPage() {
           <br />
           <h1 class={h1}>How to use DenoGres Methods</h1>
           <br />
+          <div class={description}>
+            Note: all methods in this section are asynchronous methods. It is
+            encouraged to use ES6 async/await syntax but promise chaining and
+            callbacks are valid ways to invoke these methods as well.
+          </div>
           <p class={description}>
             <br />
             <h2 class={h2}>Instance Methods</h2>
@@ -35,18 +40,16 @@ export default function MethodsPage() {
             </p>
             <br />
             <div class={box}>
-              const person = new Person();{" "}
-              <span class={comment}>// create new instance of model</span>
+              <p class={comment}>// create new instance of model</p>
+              const person = new Person(); <br />
               <br />
-              <br />
-              <span class={comment}>// create properties</span>
-              <br />
+              <p class={comment}>// create properties</p>
               person.name = 'Deno';<br />
               person.hair_color = 'purple';<br />
               person.age = '100';<br />
               <br />
-              await person.save();{" "}
-              <span class={comment}>// inserts created properties</span>
+              <p class={comment}>// inserts created properties</p>
+              await person.save();
             </div>
             <br />
             <h3 class={h3}>update</h3>
@@ -56,13 +59,11 @@ export default function MethodsPage() {
             <br />
             <div class={box}>
               <a class={anchor} name="model"></a>
-              person.hair_color = 'blue';{" "}
-              <span class={comment}>// reassign property value</span>
+              <p class={comment}>// reassign property value</p>
+              person.hair_color = 'blue'; <br />
               <br />
-              await person.update();{" "}
-              <span class={comment}>
-                // updates reassigned value in database
-              </span>
+              <p class={comment}>// updates reassigned value in database</p>
+              await person.update();
             </div>
             <br />
             <br />
@@ -79,6 +80,7 @@ export default function MethodsPage() {
             </p>
             <br />
             <div class={box}>
+              <p class={comment}>// inserts a new row in the database</p>
               Person.insert('name = Deno', 'hair_color = purple').query();
             </div>
             <br />
@@ -89,6 +91,7 @@ export default function MethodsPage() {
             </p>
             <br />
             <div class={box}>
+              <p class={comment}>// edits all values in a column</p>
               Person.edit('hair_color = blue').query();
             </div>
             <br />
@@ -98,11 +101,11 @@ export default function MethodsPage() {
             </p>
             <br />
             <div class={box}>
-              Person.delete();{" "}
-              <span class={comment}>// deletes entire model</span>
+              <p class={comment}>// deletes entire model</p>
+              Person.delete().query();<br />
               <br />
-              Person.delete().where('name = Deno');{" "}
-              <span class={comment}>// deletes where condition is met</span>
+              <p class={comment}>// deletes where condition is met</p>
+              Person.delete().where('name = Deno').query();{" "}
             </div>
             <br />
             <h3 class={h3}>select</h3>
@@ -112,14 +115,15 @@ export default function MethodsPage() {
             </p>
             <br />
             <div class={box}>
-              Person.select('*').query();{" "}
-              <span class={comment}>
-                // returns all columns in current model
-              </span>
+              <p class={comment}>
+                // either will return all columns in current model
+              </p>
+              Person.select().query();
               <br />
-              Person.select('name', 'hair_color').query();{" "}
-              <span class={comment}>// returns selected columns</span>
+              Person.select('*').query(); <br />
               <br />
+              <p class={comment}>// returns selected columns</p>
+              Person.select('name', 'hair_color').query(); <br />
               <br />
               <p class={comment}>
                 // returns selected column where condition is met
@@ -157,6 +161,9 @@ export default function MethodsPage() {
             </p>
             <br />
             <div class={box}>
+              <p class={comment}>
+                // returns 5 columns where conditions are met
+              </p>
               Person.select('name').where('hair_color =
               black').limit(5).query();
             </div>
@@ -169,8 +176,10 @@ export default function MethodsPage() {
             </p>
             <br />
             <div class={box}>
-              Person.select('*').group('name').having('SUM(height) {">"}{" "}
-              100').query();
+              <p class={comment}></p>
+              Person.select('name').group('name', 'height').having('SUM(height)
+              {" "}
+              {"<"} 100').query();
             </div>
             <br />
             <h3 class={h3}>innerJoin</h3>
@@ -181,7 +190,7 @@ export default function MethodsPage() {
             <br />
             <div class={box}>
               Person.select('name', 's.name').innerJoin('person.s_id', 'id',
-              's');
+              's').query();
             </div>
             <br />
             <h3 class={h3}>leftJoin</h3>
@@ -193,7 +202,7 @@ export default function MethodsPage() {
             <br />
             <div class={box}>
               Person.select('name', 's.name').leftJoin('person.s_id', 'id',
-              's');
+              's').query();
             </div>
             <br />
             <h3 class={h3}>rightjoin</h3>
@@ -205,7 +214,7 @@ export default function MethodsPage() {
             <br />
             <div class={box}>
               Person.select('name', 's.name').rightJoin('person.s_id', 'id',
-              's');
+              's').query();
             </div>
             <br />
             <h3 class={h3}>fullJoin</h3>
@@ -216,7 +225,7 @@ export default function MethodsPage() {
             <br />
             <div class={box}>
               Person.select('name', 's.name').innerJoin('person.s_id', 'id',
-              's');
+              's').query();
             </div>
             <br />
             <h3 class={h3}>group</h3>
@@ -240,12 +249,12 @@ export default function MethodsPage() {
               <p class={comment}>
                 // returns all columns ordered by ascending age, then id
               </p>
-              Person.select('*').order('ASC', 'age', 'id');<br />
+              Person.select('*').order('ASC', 'age', 'id').query();<br />
               <br />
               <p class={comment}>
                 // returns selected columns ordered by descending age
               </p>
-              Person.select('name', 'age').order('DESC', 'age');
+              Person.select('name', 'age').order('DESC', 'age').query();
             </div>
             <br />
             <h3 class={h3}>avg-count-sum-min-max</h3>
@@ -256,26 +265,27 @@ export default function MethodsPage() {
             </p>
             <br />
             <div class={box}>
-              Person.avg('cost');{" "}
+              Person.avg('cost').query();{" "}
               <span class={comment}>// returns average of selected column</span>
               <br />
-              Person.count('cost');{" "}
+              Person.count('cost').query();{" "}
               <span class={comment}>// returns count of selected column</span>
               <br />
-              Person.sum('cost');{" "}
+              Person.sum('cost').query();{" "}
               <span class={comment}>// returns sum of selected column</span>
               <br />
-              Person.min('cost');{" "}
+              Person.min('cost').query();{" "}
               <span class={comment}>
                 // returns min value of selected column
               </span>
               <br />
-              Person.max('cost');{" "}
+              Person.max('cost').query();{" "}
               <span class={comment}>
                 // returns max value of selected column
               </span>
             </div>
             <br />
+            <a class={anchor} name="queries-and-transaction"></a>
             <h3 class={h3}>query</h3>
             <p class={description}>
               Chain with other methods to send current query to database
@@ -285,6 +295,30 @@ export default function MethodsPage() {
               Person.select('*').query();
             </div>
             <br />
+            <br />
+            <h3 class={h3}>transaction | endTransaction</h3>
+            <p class={description}>
+              Chain at the end of other model methods to create or continue a
+              transaction. Transactions can be used across several models to
+              group queries together.
+              <br />
+              <br />
+              When a single query in the transaction chain fails, all of the
+              queries will be rolled back so the database state is never
+              changed. To complete the transaction you can invoke endTransaction
+              directly on the model, or chain endTransaction onto your last
+              query.
+            </p>
+            <br />
+            <div class={box}>
+              Person.insert('name = Alex').transaction(); <br />
+              Animal.delete().where('name = Spot').transaction(); <br />
+              Person.insert('nae = Rachel').endTransaction();
+              <span class={comment}>
+                // throws an error since 'nae' isn't a column, rolls back all
+                previous queries and returns the error for the query that failed
+              </span>
+            </div>
             <br />
           </p>
         </main>

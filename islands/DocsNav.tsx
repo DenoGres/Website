@@ -92,6 +92,16 @@ export default function DocsNav() {
                 Model Methods
               </a>
             </li>
+            <li class="relative">
+              <a
+                href="/docs/methods#queries-and-transaction"
+                class="flex items-center text-xs py-4 pl-12 pr-6 h-6 overflow-hidden text-white text-ellipsis whitespace-nowrap rounded hover:text-[#B293B6] hover:bg-blue-50 transition duration-300 ease-in-out"
+                data-mdb-ripple="true"
+                data-mdb-ripple-color="primary"
+              >
+                Queries and Transactions
+              </a>
+            </li>
           </ul>
         </li>
         <li class="relative" id="sidenavSecEx3">

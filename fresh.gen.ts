@@ -29,10 +29,11 @@ import * as $22 from "./routes/index.tsx";
 import * as $$0 from "./islands/Connections.tsx";
 import * as $$1 from "./islands/Console.tsx";
 import * as $$2 from "./islands/DocsNav.tsx";
-import * as $$3 from "./islands/LogOut.tsx";
-import * as $$4 from "./islands/LoginSignup.tsx";
-import * as $$5 from "./islands/Migrations.tsx";
-import * as $$6 from "./islands/NavBar.tsx";
+import * as $$3 from "./islands/Gradient.tsx";
+import * as $$4 from "./islands/LogOut.tsx";
+import * as $$5 from "./islands/Login.tsx";
+import * as $$6 from "./islands/Migrations.tsx";
+import * as $$7 from "./islands/NavBar.tsx";
 
 const manifest = {
   routes: {
@@ -64,10 +65,11 @@ const manifest = {
     "./islands/Connections.tsx": $$0,
     "./islands/Console.tsx": $$1,
     "./islands/DocsNav.tsx": $$2,
-    "./islands/LogOut.tsx": $$3,
-    "./islands/LoginSignup.tsx": $$4,
-    "./islands/Migrations.tsx": $$5,
-    "./islands/NavBar.tsx": $$6,
+    "./islands/Gradient.tsx": $$3,
+    "./islands/LogOut.tsx": $$4,
+    "./islands/Login.tsx": $$5,
+    "./islands/Migrations.tsx": $$6,
+    "./islands/NavBar.tsx": $$7,
   },
   baseUrl: import.meta.url,
   config,
