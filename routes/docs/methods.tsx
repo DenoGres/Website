@@ -81,7 +81,7 @@ export default function MethodsPage() {
             <br />
             <div class={box}>
               <p class={comment}>// inserts a new row in the database</p>
-              Person.insert('name = Deno', 'hair_color = purple').query();
+              await Person.insert('name = Deno', 'hair_color = purple').query();
             </div>
             <br />
             <h3 class={h3}>edit</h3>
@@ -92,7 +92,7 @@ export default function MethodsPage() {
             <br />
             <div class={box}>
               <p class={comment}>// edits all values in a column</p>
-              Person.edit('hair_color = blue').query();
+              await Person.edit('hair_color = blue').query();
             </div>
             <br />
             <h3 class={h3}>delete</h3>
@@ -102,10 +102,10 @@ export default function MethodsPage() {
             <br />
             <div class={box}>
               <p class={comment}>// deletes entire model</p>
-              Person.delete().query();<br />
+              await Person.delete().query();<br />
               <br />
               <p class={comment}>// deletes where condition is met</p>
-              Person.delete().where('name = Deno').query();{" "}
+              await Person.delete().where('name = Deno').query();{" "}
             </div>
             <br />
             <h3 class={h3}>select</h3>
@@ -118,17 +118,17 @@ export default function MethodsPage() {
               <p class={comment}>
                 // either will return all columns in current model
               </p>
-              Person.select().query();
+              await Person.select().query();
               <br />
-              Person.select('*').query(); <br />
+              await Person.select('*').query(); <br />
               <br />
               <p class={comment}>// returns selected columns</p>
-              Person.select('name', 'hair_color').query(); <br />
+              await Person.select('name', 'hair_color').query(); <br />
               <br />
               <p class={comment}>
                 // returns selected column where condition is met
               </p>
-              Person.select('name').where('hair_color = black').query();
+              await Person.select('name').where('hair_color = black').query();
             </div>
             <br />
             <h3 class={h3}>where</h3>
@@ -144,14 +144,15 @@ export default function MethodsPage() {
               <p class={comment}>
                 // return selected column where conditions are met
               </p>
-              Person.select('name').where('NOT age {"<"}{" "}
+              await Person.select('name').where('NOT age {"<"}{" "}
               100', 'AND gender = male').query();
               <br />
               <br />
               <p class={comment}>
                 // returns all columns where conditions are met
               </p>
-              Person.where('hair_color = black', 'OR eye_color = blue').query();
+              await Person.where('hair_color = black', 'OR eye_color =
+              blue').query();
             </div>
             <br />
             <h3 class={h3}>limit</h3>
@@ -164,7 +165,7 @@ export default function MethodsPage() {
               <p class={comment}>
                 // returns 5 columns where conditions are met
               </p>
-              Person.select('name').where('hair_color =
+              await Person.select('name').where('hair_color =
               black').limit(5).query();
             </div>
             <br />
@@ -177,9 +178,8 @@ export default function MethodsPage() {
             <br />
             <div class={box}>
               <p class={comment}></p>
-              Person.select('name').group('name', 'height').having('SUM(height)
-              {" "}
-              {"<"} 100').query();
+              await Person.select('name').group('name',
+              'height').having('SUM(height) {"<"} 100').query();
             </div>
             <br />
             <h3 class={h3}>innerJoin</h3>
@@ -189,8 +189,8 @@ export default function MethodsPage() {
             </p>
             <br />
             <div class={box}>
-              Person.select('name', 's.name').innerJoin('person.s_id', 'id',
-              's').query();
+              await Person.select('name', 's.name').innerJoin('person.s_id',
+              'id', 's').query();
             </div>
             <br />
             <h3 class={h3}>leftJoin</h3>
@@ -201,8 +201,8 @@ export default function MethodsPage() {
             </p>
             <br />
             <div class={box}>
-              Person.select('name', 's.name').leftJoin('person.s_id', 'id',
-              's').query();
+              await Person.select('name', 's.name').leftJoin('person.s_id',
+              'id', 's').query();
             </div>
             <br />
             <h3 class={h3}>rightjoin</h3>
@@ -213,8 +213,8 @@ export default function MethodsPage() {
             </p>
             <br />
             <div class={box}>
-              Person.select('name', 's.name').rightJoin('person.s_id', 'id',
-              's').query();
+              await Person.select('name', 's.name').rightJoin('person.s_id',
+              'id', 's').query();
             </div>
             <br />
             <h3 class={h3}>fullJoin</h3>
@@ -224,8 +224,8 @@ export default function MethodsPage() {
             </p>
             <br />
             <div class={box}>
-              Person.select('name', 's.name').innerJoin('person.s_id', 'id',
-              's').query();
+              await Person.select('name', 's.name').innerJoin('person.s_id',
+              'id', 's').query();
             </div>
             <br />
             <h3 class={h3}>group</h3>
@@ -235,7 +235,7 @@ export default function MethodsPage() {
             </p>
             <br />
             <div class={box}>
-              Person.select('name').group('people.name').query();
+              await Person.select('name').group('people.name').query();
             </div>
             <br />
             <h3 class={h3}>order</h3>
@@ -249,12 +249,12 @@ export default function MethodsPage() {
               <p class={comment}>
                 // returns all columns ordered by ascending age, then id
               </p>
-              Person.select('*').order('ASC', 'age', 'id').query();<br />
+              await Person.select('*').order('ASC', 'age', 'id').query();<br />
               <br />
               <p class={comment}>
                 // returns selected columns ordered by descending age
               </p>
-              Person.select('name', 'age').order('DESC', 'age').query();
+              await Person.select('name', 'age').order('DESC', 'age').query();
             </div>
             <br />
             <h3 class={h3}>avg-count-sum-min-max</h3>
@@ -265,21 +265,21 @@ export default function MethodsPage() {
             </p>
             <br />
             <div class={box}>
-              Person.avg('cost').query();{" "}
+              await Person.avg('cost').query();{" "}
               <span class={comment}>// returns average of selected column</span>
               <br />
-              Person.count('cost').query();{" "}
+              await Person.count('cost').query();{" "}
               <span class={comment}>// returns count of selected column</span>
               <br />
-              Person.sum('cost').query();{" "}
+              await Person.sum('cost').query();{" "}
               <span class={comment}>// returns sum of selected column</span>
               <br />
-              Person.min('cost').query();{" "}
+              await Person.min('cost').query();{" "}
               <span class={comment}>
                 // returns min value of selected column
               </span>
               <br />
-              Person.max('cost').query();{" "}
+              await Person.max('cost').query();{" "}
               <span class={comment}>
                 // returns max value of selected column
               </span>
@@ -292,7 +292,7 @@ export default function MethodsPage() {
             </p>
             <br />
             <div class={box}>
-              Person.select('*').query();
+              await Person.select('*').query();
             </div>
             <br />
             <br />
@@ -311,9 +311,9 @@ export default function MethodsPage() {
             </p>
             <br />
             <div class={box}>
-              Person.insert('name = Alex').transaction(); <br />
-              Animal.delete().where('name = Spot').transaction(); <br />
-              Person.insert('nae = Rachel').endTransaction();
+              await Person.insert('name = Alex').transaction(); <br />
+              await Animal.delete().where('name = Spot').transaction(); <br />
+              await Person.insert('nae = Rachel').endTransaction();
               <span class={comment}>
                 // throws an error since 'nae' isn't a column, rolls back all
                 previous queries and returns the error for the query that failed
