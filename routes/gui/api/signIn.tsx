@@ -30,9 +30,8 @@ export const handler = {
       // check if user exists, if user does not exist - return 404
       const checkUser: QueryObjectResult<checkUser> = await connection
         .queryObject(
-          `
-      SELECT id, username, password FROM users WHERE username = '${username}'
-      `,
+          "SELECT id, username, password FROM users WHERE username = $1",
+          [username],
         );
 
       connection.end();
@@ -97,12 +96,12 @@ export const handler = {
 
       return new Response(
         JSON.stringify({ err: "Login failed - invalid credentials." }),
-        { status: 404 },
+        { status: 400 },
       );
     } catch (err) {
       return new Response(
         JSON.stringify({ err }),
-        { status: 404 },
+        { status: 500 },
       );
     }
   },
