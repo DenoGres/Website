@@ -1,6 +1,4 @@
-import { render } from "preact";
-import { apply, setup } from "twind";
-import { style } from "twind/style";
+import { Head } from "$fresh/runtime.ts";
 import NavBar from "../islands/NavBar.tsx";
 import Gradient from "../islands/Gradient.tsx";
 
@@ -12,6 +10,9 @@ const imageOutline = {
 export default function Home() {
   return (
     <div>
+      <Head>
+        <title>DenoGres</title>
+      </Head>
       <Gradient />
       <div class="sticky top-0">
         <NavBar />
