@@ -3,8 +3,8 @@ import NavBar from "../islands/NavBar.tsx";
 import Gradient from "../islands/Gradient.tsx";
 
 const imageOutline = {
-  filter: `drop-shadow(1px 1px 0 #4a4a4a40) 
-          drop-shadow(-1px -1px 0 #4a4a4a40)`,
+  filter: `drop-shadow(1px 1px 0 #4a4a4a60) 
+          drop-shadow(-1px -1px 0 #4a4a4a60)`,
 };
 
 export default function Home() {

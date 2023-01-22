@@ -31,7 +31,7 @@ import * as $$1 from "./islands/Console.tsx";
 import * as $$2 from "./islands/DocsNav.tsx";
 import * as $$3 from "./islands/Gradient.tsx";
 import * as $$4 from "./islands/LogOut.tsx";
-import * as $$5 from "./islands/Login.tsx";
+import * as $$5 from "./islands/LoginSignup.tsx";
 import * as $$6 from "./islands/Migrations.tsx";
 import * as $$7 from "./islands/NavBar.tsx";
 
@@ -67,7 +67,7 @@ const manifest = {
     "./islands/DocsNav.tsx": $$2,
     "./islands/Gradient.tsx": $$3,
     "./islands/LogOut.tsx": $$4,
-    "./islands/Login.tsx": $$5,
+    "./islands/LoginSignup.tsx": $$5,
     "./islands/Migrations.tsx": $$6,
     "./islands/NavBar.tsx": $$7,
   },

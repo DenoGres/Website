@@ -1,5 +1,7 @@
+import { Head } from "$fresh/runtime.ts";
 import NavBar from "../../islands/NavBar.tsx";
 import DocsNav from "../../islands/DocsNav.tsx";
+import Gradient from "../../islands/Gradient.tsx";
 
 export default function GettingStartedPage() {
   const h1 = "mx-auto max-w-screen-md font-bold text-5xl";
@@ -10,7 +12,11 @@ export default function GettingStartedPage() {
     "border rounded shadow-md mx-auto box-content bg-gray-100 text-black font-mono max-w-screen-md p-4 border-4 ...";
 
   return (
-    <div class="text-white min-h-screen min-w-screen bg-gradient-to-b from-gray-600 to-gray-800">
+    <div class="text-[#27272a] min-h-screen min-w-screen">
+      <Head>
+        <title>DenoGres</title>
+      </Head>
+      <Gradient />
       <div class="sticky top-0">
         <NavBar />
       </div>
@@ -30,7 +36,7 @@ export default function GettingStartedPage() {
           </p>
           <br />
           <div class={box}>
-            deno install --allow-read --allow-write --allow-net --allow-env 
+            deno install --allow-read --allow-write --allow-net --allow-env
             --allow-run --name denogres https://deno.land/x/denogres/mod.ts
           </div>
           <br />
@@ -44,14 +50,20 @@ export default function GettingStartedPage() {
           </h2>
           <br />
           <p class={description}>
-            Before using DenoGres in a project, run the command below. This will 
-            create the following in your project's root directory: 
+            Before using DenoGres in a project, run the command below. This will
+            create the following in your project's root directory:
           </p>
           <br />
           <ul>
-            <li class={description}>1. an .env file for your database connection URI</li>
-            <li class={description}>2. a models folder for your model.ts file</li>
-            <li class={description}>3. a Migrations folder for migration logs and model snapshots</li>
+            <li class={description}>
+              1. an .env file for your database connection URI
+            </li>
+            <li class={description}>
+              2. a models folder for your model.ts file
+            </li>
+            <li class={description}>
+              3. a Migrations folder for migration logs and model snapshots
+            </li>
           </ul>
           <br />
           <div class={box}>
