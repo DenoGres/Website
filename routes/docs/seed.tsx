@@ -1,5 +1,7 @@
+import { Head } from "$fresh/runtime.ts";
 import NavBar from "../../islands/NavBar.tsx";
 import DocsNav from "../../islands/DocsNav.tsx";
+import Gradient from "../../islands/Gradient.tsx";
 
 export default function seed() {
   const h1 = "mx-auto max-w-screen-md font-bold text-3xl";
@@ -9,7 +11,11 @@ export default function seed() {
     "border rounded shadow-md mx-auto box-content bg-gray-100 text-black font-mono max-w-screen-md p-4 border-4 ...";
 
   return (
-    <div class="min-h-screen min-w-screen text-white bg-gradient-to-b from-gray-600 to-gray-800">
+    <div class="min-h-screen min-w-screen text-[#27272a]">
+      <Head>
+        <title>DenoGres</title>
+      </Head>
+      <Gradient />
       <div class="sticky top-0">
         <NavBar />
       </div>

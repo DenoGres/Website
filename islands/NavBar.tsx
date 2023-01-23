@@ -3,7 +3,6 @@ export default function NavBar() {
 
   return (
     <nav class="flex justify-end ... w-full px-r py-5 text-white">
-      <a class={button + " bg-[#97C2DB]"} href="/">Home</a>
       <a class={button + " bg-[#B293B6]"} href="/docs/getting-started">
         Docs
       </a>
