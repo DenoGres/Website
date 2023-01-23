@@ -49,11 +49,22 @@ export default function DevelopmentPage() {
                 track/view/compare model versions.
               </li>
               <li class={description}>
-                ERD-style diagrams will be generated within the GUI, so users
-                have a comprehensive view of the data model.
+                A Diagram page will offer a live ERD to visualize the user's
+                database
               </li>
               <li class={description}>
                 Additional support for MySQL, SQL Server, etc.
+              </li>
+              <li class={description}>
+                Two-way ERD that allows users to change relational data that is
+                then reflected onto their actual database.
+              </li>
+              <li class={description}>
+                A setter method will be appended to a model when an association
+                is established with another model.
+              </li>
+              <li class={description}>
+                The manyToMany function will create a new join table.
               </li>
             </ul>
           </p>
