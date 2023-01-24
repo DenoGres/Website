@@ -9,7 +9,7 @@ const imageOutline = {
 
 export default function Home() {
   return (
-    <div>
+    <div class="h-screen">
       <Head>
         <title>DenoGres</title>
       </Head>
@@ -17,15 +17,16 @@ export default function Home() {
       <div class="sticky top-0">
         <NavBar />
       </div>
-      <br />
-      <img
-        style={imageOutline}
-        class="mx-auto"
-        src="/logo.png"
-        height="500px"
-        width="500px"
-        alt="the DenoGres logo: a blue elephant and a purple dinosaur"
-      />
+      <div class="flex h-5/6">
+        <img
+          style={imageOutline}
+          class="mx-auto my-auto"
+          src="/logo.png"
+          height="500px"
+          width="500px"
+          alt="the DenoGres logo: a blue elephant and a purple dinosaur"
+        />
+      </div>
     </div>
   );
 }
