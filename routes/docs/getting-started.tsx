@@ -7,7 +7,7 @@ export default function GettingStartedPage() {
   const h1 = "mx-auto max-w-screen-md font-bold text-5xl";
   const h2 = "mx-auto max-w-screen-md font-bold text-3xl";
 
-  const description = "mx-auto max-w-screen-md";
+  const description = "mx-auto max-w-screen-md md:text-4xl";
   const box =
     "border rounded shadow-md mx-auto box-content bg-gray-100 text-black font-mono max-w-screen-md p-4 border-4 ...";
 
