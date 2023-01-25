@@ -14,12 +14,12 @@ export default function DocsNav() {
         </li>
         <li class="relative">
           <a
-            class="flex items-center text-sm lg:text-xl md:text-lg py-4 px-6 h-10 overflow-hidden text-[#27272a] text-ellipsis whitespace-nowrap rounded hover:text-[#B293B6] hover:bg-blue-50 transition duration-300 ease-in-out"
+            class="flex items-center lg:text-xl md:text-lg sm:text-md py-4 px-6 h-10 overflow-hidden text-[#27272a] text-ellipsis whitespace-nowrap rounded hover:text-[#B293B6] hover:bg-blue-50 transition duration-300 ease-in-out"
             href="/docs/introspection-sync"
             data-mdb-ripple="true"
             data-mdb-ripple-color="primary"
           >
-            <span>Synchronizing Your Database</span>
+            <span>Syncing Your Database</span>
           </a>
         </li>
         <li class="relative">

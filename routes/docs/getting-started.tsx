@@ -20,7 +20,7 @@ export default function GettingStartedPage() {
       <div class="sticky top-0">
         <NavBar />
       </div>
-      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 max-h-[80vh]">
+      <div class="gap-5 mx-5 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 max-h-[80vh]">
         <aside class="self-start col-span-1 max-h-[80vh] overflow-y-auto mt-5">
           <DocsNav />
         </aside>

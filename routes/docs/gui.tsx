@@ -8,9 +8,8 @@ export default function Gui() {
   const h2 = "mx-auto max-w-screen-md font-bold lg:text-4xl md:text-3xl";
   const description = "mx-auto max-w-screen-md lg:text-2xl md:text-xl";
   const gif = "max-w-screen-md mx-auto";
-  const anchor = "absolute";
   const box =
-    "border rounded shadow-md mx-auto box-content bg-gray-100 text-black lg:text-xl md:text-lg font-mono max-w-screen-md p-4 border-4";
+    "overflow-x-auto border rounded shadow-md mx-auto box-content bg-gray-100 text-black lg:text-xl md:text-lg font-mono max-w-screen-md p-4 border-4";
 
   return (
     <div class="text-[#27272a] min-h-screen min-w-screen overflow-hidden">
@@ -61,7 +60,6 @@ export default function Gui() {
             time:
           </p>
           <br />
-          <a class={anchor} name="database"></a>
           <img class={gif} src="../navbar_icons.jpeg" width="300px"></img>
           <br />
           <br />
@@ -80,7 +78,6 @@ export default function Gui() {
             “Connect” to connect to the database. You will be redirected to the
             query explorer upon successful connection.
           </p>
-          <a class={anchor} name="queries"></a>
           <br />
           <img class={gif} src="../connect_and_redirect.gif"></img>
           <br />
