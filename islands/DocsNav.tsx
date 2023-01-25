@@ -1,14 +1,7 @@
 export default function DocsNav() {
   return (
     <nav class="sm:w-72 md:w-80 lg:w-auto" id="sidenavSecExample">
-      <a href="/">
-        <img
-          src="/favicon.ico"
-          class="w-20 sm:w-20 md:w-24 lg:w-28 fixed left-5 top-5"
-          alt="Logo"
-        />
-      </a>
-      <ul class="relative px-3 pt-8">
+      <ul class="relative">
         <li class="relative">
           <a
             class="flex items-center lg:text-xl md:text-lg sm:text-md py-4 px-6 h-10 overflow-hidden text-[#27272a] text-ellipsis whitespace-nowrap rounded hover:text-[#B293B6] hover:bg-blue-50 transition duration-300 ease-in-out"
