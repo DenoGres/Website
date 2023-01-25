@@ -4,10 +4,10 @@ import DocsNav from "../../islands/DocsNav.tsx";
 import Gradient from "../../islands/Gradient.tsx";
 
 export default function DevelopmentPage() {
-  const h1 = "mx-auto max-w-screen-md font-bold text-3xl";
-  const description = "mx-auto max-w-screen-md";
+  const h1 = "mx-auto max-w-screen-md font-bold lg:text-5xl md:text-4xl";
+  const description = "mx-auto max-w-screen-md lg:text-2xl md:text-xl";
   const box =
-    "border rounded shadow-md mx-auto box-content bg-gray-100 text-black font-mono max-w-screen-md p-4 border-4 ...";
+    "border rounded shadow-md mx-auto box-content bg-gray-100 text-black  lg:text-xl md:text-lg font-mono max-w-screen-md p-4 border-4 ...";
 
   const list = "pl-5 mx-auto max-w-screen-md list-disc";
 

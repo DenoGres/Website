@@ -4,12 +4,12 @@ import DocsNav from "../../islands/DocsNav.tsx";
 import Gradient from "../../islands/Gradient.tsx";
 
 export default function GettingStartedPage() {
-  const h1 = "mx-auto max-w-screen-md font-bold text-5xl";
-  const h2 = "mx-auto max-w-screen-md font-bold text-3xl";
+  const h1 = "mx-auto max-w-screen-md font-bold lg:text-5xl md:text-4xl";
+  const h2 = "mx-auto max-w-screen-md font-bold lg:text-4xl md:text-3xl";
 
-  const description = "mx-auto max-w-screen-md md:text-4xl";
+  const description = "mx-auto max-w-screen-md lg:text-2xl md:text-xl";
   const box =
-    "border rounded shadow-md mx-auto box-content bg-gray-100 text-black font-mono max-w-screen-md p-4 border-4 ...";
+    "border rounded shadow-md mx-auto box-content bg-gray-100 text-black font-mono lg:text-xl md:text-lg max-w-screen-md p-4 border-4 ...";
 
   return (
     <div class="text-[#27272a] min-h-screen min-w-screen">
