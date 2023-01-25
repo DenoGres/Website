@@ -310,7 +310,10 @@ export default function MethodsPage() {
             </p>
             <br />
             <div class={box}>
-              const luke = await Person.select().where('name = Luke').queryInstance()  
+            await Country.hasOne(Capital);<br />
+              const canada = await Country.where('name =
+              Canada').queryInstance();<br />
+              const canadaCapital = await canada.getCapital();<br /> 
             </div> 
             <br />
             <h3 class={h3}>transaction | endTransaction</h3>
