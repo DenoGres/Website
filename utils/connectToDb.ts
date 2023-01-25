@@ -6,4 +6,4 @@ export default async (): Promise<PoolClient> => {
   const pool = new Pool(Deno.env.get("DB_URI"), POOL_CONNECTIONS, true);
   const connection = await pool.connect();
   return connection;
-}
+};

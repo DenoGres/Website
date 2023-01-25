@@ -4,13 +4,14 @@ import DocsNav from "../../islands/DocsNav.tsx";
 import Gradient from "../../islands/Gradient.tsx";
 
 export default function MethodsPage() {
-  const h1 = "mx-auto max-w-screen-md font-bold text-3xl";
-  const h2 = "mx-auto max-w-screen-md font-bold text-2xl";
-  const h3 = "mx-auto max-w-screen-md font-bold text-xl";
-  const comment = "text-[#386979]";
-  const description = "mx-auto max-w-screen-md";
+  const h1 = "mx-auto max-w-screen-md font-bold lg:text-5xl md:text-4xl";
+  const h2 = "mx-auto max-w-screen-md font-bold lg:text-4xl md:text-3xl";
+  const h3 = "mx-auto max-w-screen-md font-bold lg:text-3xl md:text-2xl";
+  const comment = "text-[#386979] lg:text-xl md:text-lg";
+  const description = "mx-auto max-w-screen-md lg:text-2xl md:text-xl";
+
   const box =
-    "border rounded shadow-md mx-auto box-content bg-gray-100 text-black font-mono max-w-screen-md p-4 border-4 ...";
+    "border rounded shadow-md mx-auto box-content bg-gray-100 text-black lg:text-xl md:text-lg font-mono max-w-screen-md p-4 border-4 ...";
   const anchor = "absolute";
 
   return (
@@ -74,6 +75,7 @@ export default function MethodsPage() {
             <br />
             <br />
             <h2 class={h2}>Model Methods</h2>
+            <br />
             <p class={description}>
               Note: ensure single spaces are entered around comparison operators
               ( =, {">, <, >=, <=, <>"} )
@@ -303,18 +305,19 @@ export default function MethodsPage() {
             <br />
             <h3 class={h3}>queryInstance</h3>
             <p class={description}>
-              Chain with methods to send query to database and create a 
-              new instance of a model with key value pairs representing the 
-              first row returned from the query. This is generally used in conjuction with the association methods 
-              to set getter functions on that instance of the model.
+              Chain with methods to send query to database and create a new
+              instance of a model with key value pairs representing the first
+              row returned from the query. This is generally used in conjuction
+              with the association methods to set getter functions on that
+              instance of the model.
             </p>
             <br />
             <div class={box}>
-            await Country.hasOne(Capital);<br />
+              await Country.hasOne(Capital);<br />
               const canada = await Country.where('name =
               Canada').queryInstance();<br />
-              const canadaCapital = await canada.getCapital();<br /> 
-            </div> 
+              const canadaCapital = await canada.getCapital();<br />
+            </div>
             <br />
             <h3 class={h3}>transaction | endTransaction</h3>
             <p class={description}>

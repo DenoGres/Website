@@ -20,10 +20,8 @@ export default function Home() {
       <div class="flex h-5/6">
         <img
           style={imageOutline}
-          class="mx-auto my-auto"
+          class="m-auto h-[65vh] "
           src="/logo.png"
-          height="500px"
-          width="500px"
           alt="the DenoGres logo: a blue elephant and a purple dinosaur"
         />
       </div>

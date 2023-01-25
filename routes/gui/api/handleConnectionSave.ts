@@ -62,7 +62,7 @@ export const handler: Handlers = {
 
   // POST REQUEST
   async POST(req: Request): Promise<Response> {
-    let connection; 
+    let connection;
     try {
       const cookies = cookie.getCookies(req.headers);
 
