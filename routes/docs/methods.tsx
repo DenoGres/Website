@@ -75,6 +75,7 @@ export default function MethodsPage() {
             <br />
             <br />
             <h2 class={h2}>Model Methods</h2>
+            <br />
             <p class={description}>
               Note: ensure single spaces are entered around comparison operators
               ( =, {">, <, >=, <=, <>"} )
