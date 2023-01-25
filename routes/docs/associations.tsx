@@ -4,6 +4,7 @@ import DocsNav from "../../islands/DocsNav.tsx";
 import Gradient from "../../islands/Gradient.tsx";
 
 export default function AssociationsPage() {
+
   const h1 = "mx-auto max-w-screen-md font-bold lg:text-5xl md:text-4xl";
   const h2 = "mx-auto max-w-screen-md font-bold lg:text-4xl md:text-3xl";
   const h3 = "mx-auto max-w-screen-md font-bold lg:text-3xl md:text-2xl";
