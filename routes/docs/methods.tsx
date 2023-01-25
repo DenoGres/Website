@@ -9,6 +9,7 @@ export default function MethodsPage() {
   const h3 = "mx-auto max-w-screen-md font-bold lg:text-3xl md:text-2xl";
   const comment = "text-[#97C2DB] lg:text-xl md:text-lg";
   const description = "mx-auto max-w-screen-md lg:text-2xl md:text-xl";
+
   const box =
     "border rounded shadow-md mx-auto box-content bg-gray-100 text-black lg:text-xl md:text-lg font-mono max-w-screen-md p-4 border-4 ...";
   const anchor = "absolute";
@@ -301,6 +302,20 @@ export default function MethodsPage() {
               await Person.select('*').query();
             </div>
             <br />
+            <h3 class={h3}>queryInstance</h3>
+            <p class={description}>
+              Chain with methods to send query to database and create a 
+              new instance of a model with key value pairs representing the 
+              first row returned from the query. This is generally used in conjuction with the association methods 
+              to set getter functions on that instance of the model.
+            </p>
+            <br />
+            <div class={box}>
+            await Country.hasOne(Capital);<br />
+              const canada = await Country.where('name =
+              Canada').queryInstance();<br />
+              const canadaCapital = await canada.getCapital();<br /> 
+            </div> 
             <br />
             <h3 class={h3}>transaction | endTransaction</h3>
             <p class={description}>
