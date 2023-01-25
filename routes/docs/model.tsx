@@ -12,7 +12,7 @@ export default function ModelPage() {
   const list = "pl-5 mx-auto max-w-screen-md list-disc lg:text-2xl md:text-xl";
 
   return (
-    <div class="min-h-screen min-w-screen text-[#27272a]">
+    <div class="text-[#27272a] min-h-screen min-w-screen overflow-hidden">
       <Head>
         <title>DenoGres</title>
       </Head>
@@ -20,11 +20,11 @@ export default function ModelPage() {
       <div class="sticky top-0">
         <NavBar />
       </div>
-      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-        <aside class="self-start sticky top-24 col-span-1">
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 max-h-[80vh]">
+        <aside class="self-start col-span-1 max-h-[80vh] overflow-y-auto mt-5">
           <DocsNav />
         </aside>
-        <main class="col-span-1 md:col-span-2 lg:col-span-3 xl:col-span-4">
+        <main class="col-span-1 md:col-span-2 lg:col-span-3 xl:col-span-4 max-h-[80vh] overflow-y-auto">
           <br />
           <h1 class={h1}>How to Set Up Model Classes</h1>
           <p class={description}>
