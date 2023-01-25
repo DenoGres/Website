@@ -1,4 +1,4 @@
-import { introspect } from "denogres-functions/introspect.ts"
+import { introspect } from "denogres-functions/introspect.ts";
 import { createClassName } from "denogres-functions/StringFormat.ts";
 import { Model } from "denogres/mod.ts";
 

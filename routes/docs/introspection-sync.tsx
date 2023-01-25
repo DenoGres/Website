@@ -1,23 +1,29 @@
+import { Head } from "$fresh/runtime.ts";
 import NavBar from "../../islands/NavBar.tsx";
 import DocsNav from "../../islands/DocsNav.tsx";
+import Gradient from "../../islands/Gradient.tsx";
 
 export default function IntrospectionSync() {
-  const h1 = "mx-auto max-w-screen-md font-bold text-3xl";
-  const h2 = "mx-auto max-w-screen-md font-bold text-2xl";
-  const description = "mx-auto max-w-screen-md";
+  const h1 = "mx-auto max-w-screen-md font-bold lg:text-5xl md:text-4xl";
+  const h2 = "mx-auto max-w-screen-md font-bold lg:text-4xl md:text-3xl";
+  const description = "mx-auto max-w-screen-md lg:text-2xl md:text-xl";
   const box =
-    "border rounded shadow-md mx-auto box-content bg-gray-100 text-black font-mono max-w-screen-md p-4 border-4 ...";
+    "overflow-x-auto border rounded shadow-md mx-auto box-content bg-gray-100 text-black lg:text-xl md:text-lg font-mono max-w-screen-md p-4 border-4 ...";
 
   return (
-    <div class="min-h-screen min-w-screen text-white bg-gradient-to-b from-gray-600 to-gray-800">
+    <div class="text-[#27272a] min-h-screen min-w-screen overflow-hidden">
+      <Head>
+        <title>DenoGres</title>
+      </Head>
+      <Gradient />
       <div class="sticky top-0">
         <NavBar />
       </div>
-      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-        <aside class="self-start sticky top-24 col-span-1">
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 max-h-[80vh]">
+        <aside class="self-start col-span-1 max-h-[80vh] overflow-y-auto mt-5">
           <DocsNav />
         </aside>
-        <main class="col-span-1 md:col-span-2 lg:col-span-3 xl:col-span-4">
+        <main class="col-span-1 md:col-span-2 lg:col-span-3 xl:col-span-4 max-h-[80vh] overflow-y-auto">
           <br />
           <h1 class={h1}>Synchronizing Your Database</h1>
           <br />

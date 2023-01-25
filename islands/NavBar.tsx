@@ -1,15 +1,23 @@
 export default function NavBar() {
-  const button = "border rounded shadow-md px-4 py-2 mx-4";
-
+  const button =
+    "border rounded shadow-md 2xl:px-[1vw] 2xl:py-[0.8vh] mx-4 2xl:text-[1vw] text-base px-4 py-2";
   return (
-    <nav class="flex justify-end ... w-full px-r py-5 text-white bg-gray-800 dark:bg-gray-800">
-      <a class={button + " bg-[#97C2DB]"} href="/">Home</a>
-      <a class={button + " bg-[#B293B6]"} href="/docs/getting-started">
+    <nav class="flex justify-start items-center w-full px-5 py-5 text-white">
+      {location && location.pathname !== "/" && (
+        <a href="/">
+          <img
+            src="/favicon.ico"
+            class="w-20 sm:w-20 md:w-24 lg:w-28"
+            alt="Logo"
+          />
+        </a>
+      )}
+      <a class={button + " bg-[#B293B6] ml-auto"} href="/docs/getting-started">
         Docs
       </a>
       <a
         class={button + " bg-gray-700"}
-        href="https://github.com/oslabs-beta/DenoGres"
+        href="https://github.com/open-source-labs/DenoGres"
       >
         GitHub
       </a>
