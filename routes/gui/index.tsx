@@ -1,6 +1,5 @@
 import Layout from "../../components/Layout.tsx";
-import NavBarGUI from "../../components/NavBarGUI.tsx";
-import Login from "../../islands/Login.tsx";
+import LoginSignup from "../../islands/LoginSignup.tsx";
 
 export default function index() {
   return (
@@ -13,7 +12,7 @@ export default function index() {
               alt="bg"
               class="absolute bottom-0 left-0 w-full z-0 h-full bg-gray-900 object-cover rounded"
             />
-            <Login />
+            <LoginSignup />
           </div>
         </div>
       </div>

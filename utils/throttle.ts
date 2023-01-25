@@ -11,5 +11,5 @@ export default (f: any, t: number): any => {
     setTimeout(() => {
       throttled = false;
     }, t);
-  }
+  };
 };
