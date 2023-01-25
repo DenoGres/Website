@@ -7,7 +7,7 @@ export default function AssociationsPage() {
   const h1 = "mx-auto max-w-screen-md font-bold text-3xl";
   const h2 = "mx-auto max-w-screen-md font-bold text-2xl";
   const h3 = "mx-auto max-w-screen-md font-bold text-xl";
-  const comment = "text-[#97C2DB]";
+  const comment = "text-[#386979]";
   const description = "mx-auto max-w-screen-md";
   const box =
     "border rounded shadow-md mx-auto box-content bg-gray-100 text-black font-mono max-w-screen-md p-4 border-4";
