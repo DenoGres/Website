@@ -10,11 +10,10 @@ export default function AssociationsPage() {
   const comment = "text-[#386979] lg:text-xl md:text-lg";
   const description = "mx-auto max-w-screen-md lg:text-2xl md:text-xl";
   const box =
-    "border rounded shadow-md mx-auto box-content bg-gray-100 text-black font-mono max-w-screen-md p-4 border-4 lg:text-xl md:text-lg";
-  const anchor = "absolute";
+    "overflow-x-auto border rounded shadow-md mx-auto box-content bg-gray-100 text-black font-mono max-w-screen-md p-4 border-4 lg:text-xl md:text-lg";
 
   return (
-    <div class="min-h-screen min-w-screen text-[#27272a]">
+    <div class="text-[#27272a] min-h-screen min-w-screen overflow-hidden">
       <Head>
         <title>DenoGres</title>
       </Head>
@@ -22,12 +21,11 @@ export default function AssociationsPage() {
       <div class="sticky top-0">
         <NavBar />
       </div>
-      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-        <aside class="self-start sticky top-24 col-span-1">
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 max-h-[80vh]">
+        <aside class="self-start col-span-1 max-h-[80vh] overflow-y-auto mt-5">
           <DocsNav />
         </aside>
-        <a class={anchor} name="one-to-one"></a>
-        <main class="col-span-1 md:col-span-2 lg:col-span-3 xl:col-span-4">
+        <main class="col-span-1 md:col-span-2 lg:col-span-3 xl:col-span-4 max-h-[80vh] overflow-y-auto">
           <br />
           <h1 class={h1}>Associations</h1>
           <br />
@@ -195,7 +193,6 @@ export default function AssociationsPage() {
               the profile's id
             </p>
             <br />
-            <a class={anchor} name="one-to-many"></a>
             <div class={box}>
               await foo.addProfile({"{ id: 3 }"})
             </div>
@@ -371,7 +368,6 @@ export default function AssociationsPage() {
               REFERENCES teams ON DELETE SET NULL ON UPDATE CASCADE
             </div>
             <br />
-            <a class={anchor} name="many-to-many"></a>
             <p class={description}>
               Then invoke hasMany() method. This will attach 'getUsers()'
               instance method to the Team model.

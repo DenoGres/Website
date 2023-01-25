@@ -9,10 +9,10 @@ export default function GettingStartedPage() {
 
   const description = "mx-auto max-w-screen-md lg:text-2xl md:text-xl";
   const box =
-    "border rounded shadow-md mx-auto box-content bg-gray-100 text-black font-mono lg:text-xl md:text-lg max-w-screen-md p-4 border-4 ...";
+    "overflow-x-auto border rounded shadow-md mx-auto box-content bg-gray-100 text-black font-mono lg:text-xl md:text-lg max-w-screen-md p-4 border-4 ...";
 
   return (
-    <div class="text-[#27272a] min-h-screen min-w-screen">
+    <div class="text-[#27272a] min-h-screen min-w-screen overflow-hidden">
       <Head>
         <title>DenoGres</title>
       </Head>
@@ -20,11 +20,11 @@ export default function GettingStartedPage() {
       <div class="sticky top-0">
         <NavBar />
       </div>
-      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-        <aside class="self-start sticky top-24 col-span-1">
+      <div class="gap-5 mx-5 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 max-h-[80vh]">
+        <aside class="self-start col-span-1 max-h-[80vh] overflow-y-auto mt-5">
           <DocsNav />
         </aside>
-        <main class="col-span-1 md:col-span-2 lg:col-span-3 xl:col-span-4">
+        <main class="col-span-1 md:col-span-2 lg:col-span-3 xl:col-span-4 max-h-[80vh] overflow-y-auto">
           <br />
           <h1 class={h1}>Welcome To DenoGres</h1>
           <p class={description}>
