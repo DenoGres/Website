@@ -21,7 +21,7 @@ export default function GettingStartedPage() {
         <NavBar />
       </div>
       <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 max-h-[80vh]">
-        <aside class="self-start col-span-1 max-h-[80vh] overflow-y-auto p-5">
+        <aside class="self-start col-span-1 max-h-[80vh] overflow-y-auto mt-5">
           <DocsNav />
         </aside>
         <main class="col-span-1 md:col-span-2 lg:col-span-3 xl:col-span-4 max-h-[80vh] overflow-y-auto">
