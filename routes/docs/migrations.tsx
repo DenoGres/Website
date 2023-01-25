@@ -7,7 +7,7 @@ export default function Migrations() {
   const h1 = "mx-auto max-w-screen-md font-bold lg:text-5xl md:text-4xl";
   const h2 = "mx-auto max-w-screen-md font-bold lg:text-4xl md:text-3xl";
   const h3 = "mx-auto max-w-screen-md font-bold lg:text-3xl md:text-2xl";
-  const comment = "text-[#97C2DB] lg:text-xl md:text-lg";
+  const comment = "text-[#386979] lg:text-xl md:text-lg";
   const description = "mx-auto max-w-screen-md lg:text-2xl md:text-xl";
   const list = "pl-5 mx-auto max-w-screen-md list-disc lg:text-2xl md:text-xl";
   const box =

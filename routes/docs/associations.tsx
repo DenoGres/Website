@@ -7,7 +7,7 @@ export default function AssociationsPage() {
   const h1 = "mx-auto max-w-screen-md font-bold lg:text-5xl md:text-4xl";
   const h2 = "mx-auto max-w-screen-md font-bold lg:text-4xl md:text-3xl";
   const h3 = "mx-auto max-w-screen-md font-bold lg:text-3xl md:text-2xl";
-  const comment = "text-[#97C2DB] lg:text-xl md:text-lg";
+  const comment = "text-[#386979] lg:text-xl md:text-lg";
   const description = "mx-auto max-w-screen-md lg:text-2xl md:text-xl";
   const box =
     "border rounded shadow-md mx-auto box-content bg-gray-100 text-black font-mono max-w-screen-md p-4 border-4 lg:text-xl md:text-lg";
