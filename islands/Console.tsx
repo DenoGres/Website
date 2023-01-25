@@ -36,7 +36,7 @@ export default function Console() {
   const getModels = async (): Promise<any> => {
     const res = await fetch("/gui/api/handleRequests", {
       method: "POST",
-      body: JSON.stringify({ task: 'get models as text' }),
+      body: JSON.stringify({ task: "get models as text" }),
     });
     if (res.status === 400) {
       return;
@@ -60,7 +60,9 @@ export default function Console() {
   const getQueriesToDisplay = async (): Promise<void> => {
     const response = await fetch("/gui/api/handleQuerySave");
     const queries = await response.json();
-    const sortedList = queries.sort((a: IQueryListItem, b: IQueryListItem) => b.id - a.id);
+    const sortedList = queries.sort((a: IQueryListItem, b: IQueryListItem) =>
+      b.id - a.id
+    );
     setQueriesList(sortedList);
   };
 
@@ -82,7 +84,7 @@ export default function Console() {
   // Saves query in external DB
   const handleSave = async (): Promise<void> => {
     const method = (queryType === "new") ? "POST" : "PATCH";
-    const newQuery: IQueryObject = (queryType === "new") 
+    const newQuery: IQueryObject = (queryType === "new")
       ? { queryName, queryText }
       : { queryName, queryText, queryId };
     await fetch("/gui/api/handleQuerySave", {
@@ -334,13 +336,13 @@ export default function Console() {
               {(queryType === "new") ? "Save" : "Update"}
             </button>
             <button
-            type="button"
-            className={"bg-gray-300 px-5 mx-1 py-3 text-sm shadow-sm font-medium tracking-wider text-gray-600 rounded-full hover:shadow-2xl hover:bg-gray-400" +
-              ((queryType === "new") ? " hidden" : "")}
-            onClick={throttledHandleDelete}
-          >
-            Delete
-          </button>
+              type="button"
+              className={"bg-gray-300 px-5 mx-1 py-3 text-sm shadow-sm font-medium tracking-wider text-gray-600 rounded-full hover:shadow-2xl hover:bg-gray-400" +
+                ((queryType === "new") ? " hidden" : "")}
+              onClick={throttledHandleDelete}
+            >
+              Delete
+            </button>
             <button
               className="bg-deno-blue-100 px-5 mx-1 py-3 text-sm shadow-sm font-medium tracking-wider text-gray-600 rounded-full hover:shadow-2xl hover:bg-deno-blue-200"
               onClick={throttledHandleRun}

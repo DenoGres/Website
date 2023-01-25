@@ -2,10 +2,11 @@
 export default function (uri: string, userQueryStr: string): string {
   // replace any unicode format quotation marks from webview to plain quotation marks
   userQueryStr = userQueryStr
-    .replaceAll('‘', '\'')
-    .replaceAll('’', '\'')
-    .replaceAll('“', '"');
-  const fullQueryString: string = userQueryStr.slice(0, -2) + '\'' + uri + '\'' + userQueryStr.slice(-2);
+    .replaceAll("‘", "'")
+    .replaceAll("’", "'")
+    .replaceAll("“", '"');
+  const fullQueryString: string = userQueryStr.slice(0, -2) + "'" + uri + "'" +
+    userQueryStr.slice(-2);
   // return body of async function to run; custom stringifier to take care of bigint
   return `
     const denogres = input \n
@@ -16,4 +17,4 @@ export default function (uri: string, userQueryStr: string): string {
     ); \n
     return stringified;
   `;
-};
+}

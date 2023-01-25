@@ -11,12 +11,6 @@ export default {
   darkMode: "class",
   mode: "silent",
   theme: {
-    // fontSize: {
-    //   sm: ['14px', '20px'],
-    //   base: ['32px', '24px'],
-    //   lg: ['20px', '28px'],
-    //   xl: ['2rem', '32px'],
-    // },
     extend: {
       colors: {
         "deno-pink-100": "hsl(282, 31%, 80%)",

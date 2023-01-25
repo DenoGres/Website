@@ -88,7 +88,10 @@ export default function Connections() {
   };
 
   // create throttled versions of handler
-  const throttledHandleUriSaveAndRedirect = throttle(handleUriSaveAndRedirect, 1000);
+  const throttledHandleUriSaveAndRedirect = throttle(
+    handleUriSaveAndRedirect,
+    1000,
+  );
 
   const displayErrorModal = (): void => {
     setShowErrorModal(true);

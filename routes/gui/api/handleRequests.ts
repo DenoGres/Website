@@ -7,9 +7,9 @@ import * as cookie from "cookie/cookie.ts";
 const queryCache: any = {};
 
 /*
-TODO: stretch: can implement middleware pattern in Fresh.js 
+TODO: stretch: can implement middleware pattern in Fresh.js
 TODO: and break down this handler into multiple specialized handlers
-*/ 
+*/
 export const handler: Handlers = {
   async POST(req: Request, _ctx: HandlerContext): Promise<Response> {
     const reqBodyObj = await req.json();
@@ -22,22 +22,24 @@ export const handler: Handlers = {
         queryCache[userId] = {};
       }
     }
-    /* 
+    /*
     TODO: stretch: can implement more robust validation & caching
     */
     switch (reqBodyObj.task) {
-      // if request is to log out user, clear user cache 
-      case 'clear user cache': {
+      // if request is to log out user, clear user cache
+      case "clear user cache": {
         delete queryCache[userId];
         return new Response(null, { status: 200 });
       }
       // validate by attempting to retrieve models
       // if successful, cache both uri and models under user
       // otherwise, delete uri key on user cache so it does not persist
-      case 'cache uri and validate': {
+      case "cache uri and validate": {
         queryCache[userId]["dbUri"] = reqBodyObj.uri;
         try {
-          queryCache[userId]["modelObj"] = await generateModels(queryCache[userId].dbUri);
+          queryCache[userId]["modelObj"] = await generateModels(
+            queryCache[userId].dbUri,
+          );
         } catch (_err) {
           delete queryCache[userId].dbUri;
           return new Response(
@@ -54,11 +56,14 @@ export const handler: Handlers = {
         );
       }
       // generates models in stringifiable plain text to render on FE
-      case 'get models as text' : {
+      case "get models as text": {
         try {
-          const modelsListObject = await generateModels(queryCache[userId].dbUri, {
-            asText: true,
-          });
+          const modelsListObject = await generateModels(
+            queryCache[userId].dbUri,
+            {
+              asText: true,
+            },
+          );
           const modelNamesArr = [];
           const modelContentArr = [];
           for (const key in modelsListObject) {
@@ -143,7 +148,12 @@ export const handler: Handlers = {
             );
           }
           if (response === undefined) {
-            return new Response(JSON.stringify([{ Error: `A database error has occurred. Please check your query syntax.` }]));
+            return new Response(
+              JSON.stringify([{
+                Error:
+                  `A database error has occurred. Please check your query syntax.`,
+              }]),
+            );
           }
           return new Response(response);
         } catch (err) {

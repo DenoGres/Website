@@ -29,8 +29,10 @@ export default function home() {
               </div>
               <br></br>
               <p>
-                <strong>Welcome to the Denogres App, a GUI for the new, comprehensive ORM
-                for PostgreSQL in Deno runtime.</strong>
+                <strong>
+                  Welcome to the Denogres App, a GUI for the new, comprehensive
+                  ORM for PostgreSQL in Deno runtime.
+                </strong>
               </p>
               <p>
                 <h2 className="mt-10 mb-5">Navigation Guide</h2>
@@ -63,8 +65,8 @@ export default function home() {
                 </p>
                 <h2 className="mt-10 mb-5">Documentation</h2>
                 <p>
-                  More information on DenoGres and the DenoGres GUI can be
-                  found on the documentation website at: https://denogres.deno.dev/
+                  More information on DenoGres and the DenoGres GUI can be found
+                  on the documentation website at: https://denogres.deno.dev/
                 </p>
               </p>
             </div>
