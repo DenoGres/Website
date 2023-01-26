@@ -1,4 +1,4 @@
-import { Gradient } from "../static/gradient.js";
+import { Gradient } from "../utils/gradient.js";
 import { useEffect } from "preact/hooks";
 
 export default function GradientBG() {
