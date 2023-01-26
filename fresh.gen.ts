@@ -34,6 +34,7 @@ import * as $$4 from "./islands/LogOut.tsx";
 import * as $$5 from "./islands/LoginSignup.tsx";
 import * as $$6 from "./islands/Migrations.tsx";
 import * as $$7 from "./islands/NavBar.tsx";
+import * as $$8 from "./islands/NavBarHome.tsx";
 
 const manifest = {
   routes: {
@@ -70,6 +71,7 @@ const manifest = {
     "./islands/LoginSignup.tsx": $$5,
     "./islands/Migrations.tsx": $$6,
     "./islands/NavBar.tsx": $$7,
+    "./islands/NavBarHome.tsx": $$8,
   },
   baseUrl: import.meta.url,
   config,
