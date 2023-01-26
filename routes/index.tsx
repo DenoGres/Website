@@ -1,5 +1,5 @@
 import { Head } from "$fresh/runtime.ts";
-import NavBar from "../islands/NavBar.tsx";
+import NavBarHome from "../islands/NavBarHome.tsx";
 import Gradient from "../islands/Gradient.tsx";
 
 const imageOutline = {
@@ -15,7 +15,7 @@ export default function Home() {
       </Head>
       <Gradient />
       <div class="sticky top-0">
-        <NavBar />
+        <NavBarHome />
       </div>
       <div class="flex h-5/6">
         <img
